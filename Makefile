@@ -1,11 +1,11 @@
-PROGRAM = scan-conf
+PROGRAM = storage-management
 
-SRCS = ReadScanner.cxx SerialPort/SerialPort.cxx
+SRCS = src/StorageManagement.cxx
 OBJS = $(SRCS:.cxx=.o)
 LIBS = -lpthread
 
 CCC    = g++
-CFLAGS = -g -I.
+CFLAGS = -g -I. -I
 
 .SUFFIXES: .cxx .o
 .cxx.o:
@@ -16,7 +16,3 @@ $(PROGRAM): $(OBJS)
 
 clean:
 	rm $(OBJS) $(PROGRAM)
-
-install: $(PROGRAM)
-	@echo "Installing $(PROGRAM)"
-	@( diff $(PROGRAM) $(MISC_ROOT)/bin/$(PROGRAM) > /dev/null 2>& 1 && echo no difference $(PROGRAM) ) || ( cp $(PROGRAM) $(MISC_ROOT)/bin && echo copied $(PROGRAM))
