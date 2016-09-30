@@ -1,5 +1,6 @@
 #include "StorageManagement.hxx"
 #include <iostream>
+#include <cstdio>
 
 using namespace std;
 using json = nlohmann::json;
@@ -8,8 +9,8 @@ int main() {
 
         StorageManagement* storage = new StorageManagement();
         storage->getJson();
-
-        return 0;
+		getchar();
+		return 0;
 }
 
 
