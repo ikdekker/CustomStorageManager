@@ -1,6 +1,6 @@
 PROGRAM = storage-management
 
-SRCS = StorageManagement.cxx ../include/*.hpp
+SRCS = StorageManagement.cxx ../include/json.hpp
 OBJS = $(SRCS:.cxx=.o)
 LIBS = -lpthread
 
