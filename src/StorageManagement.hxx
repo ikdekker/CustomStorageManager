@@ -1,10 +1,12 @@
 #include "../include/json.hpp"
+#include <list>
 
 class StorageManagement {
 	public:
 		StorageManagement();
-		void getJson();
+		void addModule();
+		ModuleEntity* getModule(int);
 	private:
-
+		list<ModuleEntity*> mylist;
 };
 
