@@ -1,6 +1,6 @@
 PROGRAM = storage-management
 
-SRCS = StorageManagement.cxx ../include/json.hpp
+SRCS = StorageManagement.cxx ConfigFactory.cxx ModuleEntity.cxx ../include/json.hpp
 OBJS = $(SRCS:.cxx=.o)
 LIBS = -lpthread
 
@@ -15,4 +15,4 @@ $(PROGRAM): $(OBJS)
 	$(CCC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
 
 clean:
-	rm $(OBJS) $(PROGRAM)
+	rm $(OBJS:.o) $(PROGRAM)

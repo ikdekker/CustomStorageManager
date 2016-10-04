@@ -1,6 +1,8 @@
 #include "StorageManagement.hxx"
+#include "ConfigFactory.hxx"
+#include "ModuleEntity.hxx"
+
 #include <iostream>
-#include <cstdio>
 
 using namespace std;
 using json = nlohmann::json;
@@ -8,8 +10,9 @@ using json = nlohmann::json;
 int main() {
 
         StorageManagement* storage = new StorageManagement();
-        storage->getJson();
-		getchar();
+        ConfigFactory* config = new ConfigFactory();
+        json conf = config->getModuleJson();
+		cout << conf;
 		return 0;
 }
 
