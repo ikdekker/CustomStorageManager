@@ -8,8 +8,8 @@ class StorageManagement {
 	public:
 		StorageManagement();
 		void addModule(ModuleEntity*);
-		ModuleEntity* getModule(int);
+		ModuleEntity* getModuleById(int);
 	private:
-		list<ModuleEntity*> mylist;
+		list<ModuleEntity*> modules;
 };
 

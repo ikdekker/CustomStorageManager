@@ -1,28 +1,26 @@
 [
   {
+	"id" : 0,
     "rows": 5,
     "columns": 11,
-    "disableRows": [
-      1,
-      2,
-      3
-    ]
+    "disableRows": "1,2,3"
   },
   {
-    "rows": 1,
+	"id" : 1,
+    "rows": 31,
     "columns": 1,
-    "disableRows": [
-        1
-    ]
+    "disableRows": "1"
   },
   {
+	"id" : 2,
     "rows": 8,
     "columns": 8,
-    "disableRows": []
+    "disableRows": ""
   },
   {
+	"id" : 3,
     "rows": 6,
     "columns": 10,
-    "disableRows": []
+    "disableRows": ""
   }
 ]

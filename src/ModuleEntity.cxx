@@ -1,6 +1,8 @@
 #include "ModuleEntity.hxx"
+#include <iostream>
 
-ModuleEntity::ModuleEntity(int x, int y, int* disabled) {
+ModuleEntity::ModuleEntity(int id, int x, int y, vector<int> disabled) {
+	ModuleEntity::id = id;
 	rows = y;
 	cols = x;
 	disabledRows = disabled;
@@ -13,6 +15,11 @@ int ModuleEntity::getRows() const{
 int ModuleEntity::getCols() const{
 	return cols;
 }
-int* ModuleEntity::getDisabledRows() const{
+
+int ModuleEntity::getId() const{
+	return id;
+}
+
+vector<int> ModuleEntity::getDisabledRows() const{
 	return disabledRows;
 }

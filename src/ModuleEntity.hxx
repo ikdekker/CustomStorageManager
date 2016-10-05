@@ -1,12 +1,16 @@
+#include <vector>
+using namespace std;
 
 class ModuleEntity {
 public:
-	ModuleEntity(int x, int y, int* disabled);
+	ModuleEntity(int id,int x, int y, vector<int> disabled);
+	int getId() const;
 	int getRows() const;
 	int getCols() const;
-	int* getDisabledRows() const;
+	vector<int> getDisabledRows() const;
 private:
+	int id;
 	int rows;
 	int cols;
-	int* disabledRows;
+	vector<int> disabledRows;
 };
