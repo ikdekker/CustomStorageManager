@@ -2,9 +2,10 @@
 #include <stdexcept>
 
 json ConfigFactory::getModuleJson() {
-	cout << "Reading config flie" << endl;
-	
+	cout << "Reading config file" << endl;
+
 	ifstream f("../config/modules.json");
+	json moduleJson;
 	try {
 		moduleJson << f;
 	}
@@ -14,10 +15,10 @@ json ConfigFactory::getModuleJson() {
 		// std::runtime_error which is handled explicitly
 		std::cerr << "Error occurred: " << ex.what() << std::endl;
 	}
-	
+
 	return moduleJson;
 }
 
-void ConfigFactory::parseJson() {
-	
+ModuleEntity* ConfigFactory::parseModuleJson(json j) {
+	cout << j << "d";
 }

@@ -1,15 +1,15 @@
 #include "../include/json.hpp"
+#include "ModuleEntity.hxx"
 #include <fstream>
 #include <cstdio>
+
 using namespace std;
 using json = nlohmann::json;
 
 class ConfigFactory {
 public:
 	json getModuleJson();
-	List getModules();
-	void parseJson();
+	ModuleEntity* parseModuleJson(json);
 private:
-	json moduleJson;
 	json configJson;
 };

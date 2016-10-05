@@ -1,6 +1,5 @@
 #include "StorageManagement.hxx"
 #include "ConfigFactory.hxx"
-#include "ModuleEntity.hxx"
 
 #include <iostream>
 
@@ -15,7 +14,8 @@ int main() {
 	json j = config->getModuleJson();
 
 	for (json::iterator it = j.begin(); it != j.end(); ++it) {
-  		storage->addModule(config->parseModule(*it));
+		cout << *it;
+  		storage->addModule(config->parseModuleJson(*it));
 	}
 
 	return 0;
@@ -26,3 +26,6 @@ StorageManagement::StorageManagement() {
 
 }
 
+void StorageManagement::addModule(ModuleEntity* module) {
+
+}
