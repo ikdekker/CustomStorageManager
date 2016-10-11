@@ -1,11 +1,11 @@
 PROGRAM = storage-management
 
-SRCS = StorageManagement.cxx ConfigFactory.cxx ModuleEntity.cxx ../include/json.hpp
+SRCS = StorageManagement.cxx ScannerReader.cxx ConfigFactory.cxx ModuleEntity.cxx ../include/json.hpp
 OBJS = $(SRCS:.cxx=.o)
-LIBS = -lpthread
+LIBS = -lpthread -lhidapi-hidraw
 
 CCC    = g++
-CFLAGS = -g -std=c++11 -I. -I ../include
+CFLAGS = -g -std=c++11 -I. -I../lib/hidapi/hidapi -I ../include
 
 .SUFFIXES: .cxx .o
 .cxx.o:

@@ -1,7 +1,8 @@
 #include "StorageManagement.hxx"
 #include "ConfigFactory.hxx"
-
+#include "ScannerReader.hxx"
 #include <iostream>
+#include <string>
 
 using namespace std;
 using json = nlohmann::json;
@@ -11,22 +12,35 @@ int main() {
 
         StorageManagement* storage = new StorageManagement();
         ConfigFactory* config = new ConfigFactory();
-
+	ScannerReader* scanReader = new ScannerReader();
 	json j = config->getModuleJson();
 
 	for (json::iterator it = j.begin(); it != j.end(); ++it) {
   		storage->addModule(config->parseModuleJson(*it));
 	}
 	ModuleEntity* mod = storage->getModuleById(1);
+
+
 	if (mod) {
-		cout << mod->getId();
+//		cout << mod->getId();
 	}
+	scanReader->start();
+	string lastCode;
+	while (1) {
+		if (scanReader->isRunning()) {
+			if (scanReader->hasRead()) {
+				lastCode = scanReader->getLastRead();
+				cout << lastCode << endl;
+			}
+		}
+	}
+
 	return 0;
 }
 
 
 StorageManagement::StorageManagement() {
-
+	cout << "I'm alive!";
 }
 
 void StorageManagement::addModule(ModuleEntity* module) {
