@@ -37,6 +37,7 @@ void ScannerReader::scanRead() {
                 for (i = 0; i < res; i++) {
                         if (buf[i] == 40) {
                                 lastRead = bar.str();
+				read = true;
 				bar.str("");
                                 continue;
                         }
