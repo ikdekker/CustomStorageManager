@@ -15,7 +15,7 @@ int main() {
 	ScannerReader* scanReader = new ScannerReader();
 	json j = config->getModuleJson();
 
-	for (json::iterator it = j.begin(); it != j.end(); ++it) {
+	for (auto it = j.begin(); it != j.end(); ++it) {
   		storage->addModule(config->parseModuleJson(*it));
 	}
 	ModuleEntity* mod = storage->getModuleById(1);
