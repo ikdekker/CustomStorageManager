@@ -1,7 +1,8 @@
+#pragma once
 #include "../include/json.hpp"
-#include "ModuleEntity.hxx"
 #include <fstream>
 #include <cstdio>
+#include "ModuleEntity.hxx"
 
 using namespace std;
 using json = nlohmann::json;

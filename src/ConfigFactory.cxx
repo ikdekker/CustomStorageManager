@@ -6,6 +6,7 @@
 json ConfigFactory::getModuleJson() {
 	cout << "Reading config file" << endl;
 
+	cout << "a";
 	ifstream f("../config/modules.json");
 	json moduleJson;
 	try {
@@ -16,7 +17,7 @@ json ConfigFactory::getModuleJson() {
 		// specific handling for all exceptions extending std::exception
 		std::cerr << "Error occurred: " << ex.what() << std::endl;
 	}
-
+	cout << "git";
 	return moduleJson;
 }
 
@@ -46,6 +47,6 @@ ModuleEntity* ConfigFactory::parseModuleJson(json j) {
         // std::cout << vect.at(i)<<std::endl;
 	
 	ModuleEntity* module = new ModuleEntity(id, cols, rows, vect);
-	
+	cout << "returning " << id;
 	return module;
 }
