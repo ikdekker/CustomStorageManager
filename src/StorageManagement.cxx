@@ -1,5 +1,5 @@
 #include "StorageManagement.hxx"
-
+#include <unistd.h>
 #include <iostream>
 
 using namespace std;
@@ -7,6 +7,8 @@ using json = nlohmann::json;
 
 int main() {
         StorageManagement* storage = new StorageManagement();
+cout << "starting watch";
+	storage->watch();
         return 0;
 }
 
@@ -21,27 +23,20 @@ StorageManagement::StorageManagement() {
         }
 //cout <<	modules->getModuleById(0)->getRows();
 
-
 }
 
-//void StorageManagement::addModule(ModuleEntity* module) {
-//      modules.push_back(module);
-        // vector<int> aids = module->getDisabledRows();
-        // for(int i = 0; i < aids.size(); i++ ){
-                // cout << aids.at(i) << endl;
-        // }
-//}
+void StorageManagement::watch() {
+cout <<32 ;
+int a = 0;
+	while (1) {
+//nanosleep((const struct timespec[]){{0, 500000000L}}, NULL);
+	if (a == 0) {
+		matrix->ledOn(a);
+	} else {
+		if (a == 500)
+		break;
+	}
+		a++;
 
-//ModuleEntity* StorageManagement::getModuleById(int id) {
-//      for (auto it = modules.begin(); it != modules.end(); it++) {
-//              if ((*it)->getId() == id) {
-//                      return *it;
-//              }
-//      }
-//      return nullptr;
-//}
-
-
-
-
-
+	}
+}
