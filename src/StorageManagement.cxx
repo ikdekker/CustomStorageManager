@@ -30,10 +30,11 @@ cout <<32 ;
 int a = 0;
 	while (1) {
 //nanosleep((const struct timespec[]){{0, 500000000L}}, NULL);
-	if (a == 0) {
+	if (a < 4) {
 		matrix->ledOn(a);
+	
 	} else {
-		if (a == 500)
+		if (a  == 500)
 		break;
 	}
 		a++;
