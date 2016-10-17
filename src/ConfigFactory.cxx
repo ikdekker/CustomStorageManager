@@ -21,7 +21,16 @@ json ConfigFactory::getModuleJson() {
 	return moduleJson;
 }
 
-ModuleEntity* ConfigFactory::parseModuleJson(json j) {
+ModuleEntity* ConfigFactory::getModule(json j) {
+	
+	moduleData modData = parseModuleJson(j);
+	
+	ModuleEntity* module = new ModuleEntity(modData.id, modData.cols, modData.rows, modData.disabled);
+	cout << "returning " << modData.id;
+	return module;
+}
+
+moduleData ConfigFactory::parseModuleJson(json j) {
 	stringstream ss;
 	ss << j["/disableRows"_json_pointer];
 	
@@ -46,7 +55,10 @@ ModuleEntity* ConfigFactory::parseModuleJson(json j) {
     // for (i=0; i< vect.size(); i++)
         // std::cout << vect.at(i)<<std::endl;
 	
-	ModuleEntity* module = new ModuleEntity(id, cols, rows, vect);
-	cout << "returning " << id;
-	return module;
+	moduleData modData;
+	modData.id = id;
+	modData.cols = cols;
+	modData.rows = rows;
+	modData.disabled = vect;
+	return modData;
 }
