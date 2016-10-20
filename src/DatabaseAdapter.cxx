@@ -1,13 +1,5 @@
-#include <string>
-#ifndef DATABASEADAPTER_H
-#define DATABASEADATER_H
+#include "DatabaseAdapter.h"
 
-class DatabaseAdapter {
-public:
-	DatabaseAdapter(string,string,string);
-	
-private:
-	MYSQL *connection, mysql;
-};
+DatabaseAdapter::DatabaseAdapter() {
 
-#endif
+}
