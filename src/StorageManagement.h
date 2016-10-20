@@ -1,6 +1,7 @@
 #include "../include/json.hpp"
 #include "ConfigFactory.h"
 #include "ModuleServer.h"
+#include "DatabaseAdapter.h"
 #include <list>
 
 using namespace std;
@@ -10,5 +11,6 @@ class StorageManagement {
 		StorageManagement();
 	private:
 		ModuleServer *modules;
+                DatabaseAdapter *dbAdapter;
 };
 

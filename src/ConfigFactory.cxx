@@ -6,16 +6,16 @@
 json ConfigFactory::getModuleJson() {
 	cout << "Reading config file" << endl;
 
-	cout << "a";
 	ifstream f("../config/modules.json");
+	cout << "Reading config file" << endl;
 	json moduleJson;
 	try {
 		moduleJson << f;
 	}
-	catch(const std::exception& ex)
+	catch(const exception& ex)
 	{
 		// specific handling for all exceptions extending std::exception
-		std::cerr << "Error occurred: " << ex.what() << std::endl;
+		cerr << "Error occurred: " << ex.what() << endl;
 	}
 	cout << "git";
 	return moduleJson;

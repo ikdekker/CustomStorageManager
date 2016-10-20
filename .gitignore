@@ -5,7 +5,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-nbproject/
+#nbproject/
 # C++ specific:
 # Compiled Object files
 *.slo
@@ -27,10 +27,11 @@ nbproject/
 *.smod
 
 # Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+#*.lai
+#*.la
+#*.a
+#*.lib
+
 
 # Executables
 *.exe

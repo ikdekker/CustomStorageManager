@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
+	${OBJECTDIR}/src/DatabaseAdapter.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
 	${OBJECTDIR}/src/ModuleServer.o \
 	${OBJECTDIR}/src/StorageManagement.o
@@ -75,6 +76,11 @@ ${OBJECTDIR}/src/ConfigFactory.o: src/ConfigFactory.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
+
+${OBJECTDIR}/src/DatabaseAdapter.o: src/DatabaseAdapter.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx
 
 ${OBJECTDIR}/src/ModuleEntity.o: src/ModuleEntity.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
