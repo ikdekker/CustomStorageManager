@@ -69,27 +69,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/bin/X11/g++ -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/src/ConfigFactory.o: src/ConfigFactory.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/bin/X11/g++ -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
 
 ${OBJECTDIR}/src/ModuleEntity.o: src/ModuleEntity.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleEntity.o src/ModuleEntity.cxx
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/bin/X11/g++ -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleEntity.o src/ModuleEntity.cxx
 
 ${OBJECTDIR}/src/ModuleServer.o: src/ModuleServer.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer.o src/ModuleServer.cxx
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/bin/X11/g++ -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer.o src/ModuleServer.cxx
 
 ${OBJECTDIR}/src/StorageManagement.o: src/StorageManagement.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StorageManagement.o src/StorageManagement.cxx
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/bin/X11/g++ -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StorageManagement.o src/StorageManagement.cxx
 
 # Subprojects
 .build-subprojects:

@@ -47,6 +47,7 @@
           <standard>8</standard>
           <incDir>
             <pElem>/usr/include/cppunit</pElem>
+            <pElem>/usr/bin/X11/g++</pElem>
           </incDir>
         </ccTool>
       </compileType>
