@@ -1,14 +1,9 @@
-#include "StorageManagement.hxx"
+#include "StorageManagement.h"
 
 #include <iostream>
 
 using namespace std;
 using json = nlohmann::json;
-
-int main() {
-        StorageManagement* storage = new StorageManagement();
-        return 0;
-}
 
 
 StorageManagement::StorageManagement() {

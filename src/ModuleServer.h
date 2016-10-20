@@ -1,5 +1,5 @@
 #include <list>
-#include "ModuleEntity.hxx"
+#include "ModuleEntity.h"
 
 #ifndef MODULESERVER_H
 

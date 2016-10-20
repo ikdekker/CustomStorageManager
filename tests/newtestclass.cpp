@@ -12,7 +12,7 @@
  */
 
 #include "newtestclass.h"
-#include "../StorageManagement.h"
+#include "../src/StorageManagement.h"
 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(newtestclass);
