@@ -47,8 +47,18 @@
           <standard>8</standard>
           <incDir>
             <pElem>/usr/include/cppunit</pElem>
+            <pElem>/usr/lib</pElem>
+            <pElem>lib/gtest</pElem>
+            <pElem>/usr/include/cppconn</pElem>
           </incDir>
+          <useLinkerLibraries>false</useLinkerLibraries>
         </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
+          </linkerAddLib>
+          <commandLine>-lmysqlcppconn</commandLine>
+        </linkerTool>
       </compileType>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

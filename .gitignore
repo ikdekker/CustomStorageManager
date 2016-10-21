@@ -5,6 +5,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+nbproject/
 
 # C++ specific:
 # Compiled Object files
