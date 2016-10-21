@@ -1,5 +1,5 @@
 #include <iostream>
-#include "hidapi.h"
+#include <hidapi/hidapi.h>
 #include <thread>
 #include <map>
 #include <string>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>src/ConfigFactory.h</itemPath>
+      <itemPath>src/ModuleEntity.h</itemPath>
+      <itemPath>src/ScannerReader.h</itemPath>
+      <itemPath>src/StorageManagement.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/ConfigFactory.cxx</itemPath>
+      <itemPath>src/ModuleEntity.cxx</itemPath>
+      <itemPath>src/ScannerReader.cxx</itemPath>
+      <itemPath>src/StorageManagement.cxx</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>/usr/include/cppunit</pElem>
+            <pElem>/usr/lib</pElem>
+            <pElem>lib/gtest</pElem>
+            <pElem>/usr/include/cppconn</pElem>
+            <pElem>/usr/local/lib</pElem>
+            <pElem>lib/hidapi</pElem>
+          </incDir>
+          <useLinkerLibraries>false</useLinkerLibraries>
+        </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
+          </linkerAddLib>
+          <commandLine>-lmysqlcppconn -lhidapi-hidraw -lpthread</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ConfigFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ModuleEntity.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ModuleEntity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ScannerReader.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ScannerReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/StorageManagement.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/StorageManagement.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ConfigFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ModuleEntity.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ModuleEntity.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ScannerReader.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ScannerReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/StorageManagement.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/StorageManagement.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

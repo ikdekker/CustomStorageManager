@@ -1,4 +1,4 @@
-#include "ScannerReader.hxx"
+#include "ScannerReader.h"
 
 ScannerReader::ScannerReader() {
 	scannerHandle = hid_open(0x4b4,0x100,NULL);
