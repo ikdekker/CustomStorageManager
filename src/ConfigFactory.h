@@ -21,6 +21,9 @@
 using namespace std;
 using json = nlohmann::json;
 
+#ifndef CONFIGFACTORY_H
+#define CONFIGFACTORY_H
+
 struct moduleData {
 	int id;
 	int rows;
@@ -36,3 +39,5 @@ public:
 private:
 	json configJson;
 };
+
+#endif
