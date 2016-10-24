@@ -14,8 +14,8 @@
 class ConfigParser : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(ConfigParser);
 
-    CPPUNIT_TEST(testMethod);
-//    CPPUNIT_TEST(testFailedMethod);
+    CPPUNIT_TEST(testParseModuleConfig);
+    CPPUNIT_TEST(testParseSettings);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -26,8 +26,8 @@ public:
     void tearDown();
 
 private:
-    void testMethod();
-    void testFailedMethod();
+    void testParseModuleConfig();
+    void testParseSettings();
     ConfigFactory *factory;
 };
 
