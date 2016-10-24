@@ -64,6 +64,6 @@ void ConfigParser::testParseSettings() {
     expectedSettings.username = "test_user";
     expectedSettings.password = "test_pass";
 
-    CPPUNIT_ASSERT(expectedSettings.username == resultSettings.username);
+    CPPUNIT_ASSERT(expectedSettings == resultSettings);
 }
 
