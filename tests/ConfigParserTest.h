@@ -16,6 +16,9 @@ class ConfigParser : public CPPUNIT_NS::TestFixture {
 
     CPPUNIT_TEST(testParseModuleConfig);
     CPPUNIT_TEST(testParseSettings);
+    CPPUNIT_TEST(testInvalidCols);
+    CPPUNIT_TEST(testInvalidRows);
+    CPPUNIT_TEST(testInvalidId);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -27,6 +30,11 @@ public:
 
 private:
     void testParseModuleConfig();
+    void testInvalidId();
+    void testInvalidRows();
+    void testInvalidCols();
+    void testInvalidDisabledNeg();
+    void testInvalidDisabledOutOfBounds();
     void testParseSettings();
     ConfigFactory *factory;
 };

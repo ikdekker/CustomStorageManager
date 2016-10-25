@@ -6,8 +6,7 @@
 json ConfigFactory::getModuleJson() {
 	cout << "Reading config file" << endl;
 
-	cout << "a";
-	ifstream f("../config/modules.json");
+	ifstream f("config/modules.json");
 	json moduleJson;
 	try {
 		moduleJson << f;
@@ -17,20 +16,20 @@ json ConfigFactory::getModuleJson() {
 		// specific handling for all exceptions extending std::exception
 		std::cerr << "Error occurred: " << ex.what() << std::endl;
 	}
-	cout << "git";
+        
 	return moduleJson;
 }
 
 ModuleEntity* ConfigFactory::getModule(json j) {
 	
-	moduleData modData = parseModuleJson(j);
+	moduleData *modData = parseModuleJson(j);
 	
-	ModuleEntity* module = new ModuleEntity(modData.id, modData.cols, modData.rows, modData.disabled);
-	cout << "returning " << modData.id;
+	ModuleEntity* module = new ModuleEntity(modData);
+	cout << "returning " << modData->id;
 	return module;
 }
 
-moduleData ConfigFactory::parseModuleJson(json j) {
+moduleData* ConfigFactory::parseModuleJson(json j) {
 	stringstream ss;
 	ss << j["/disableRows"_json_pointer];
 	
@@ -55,10 +54,12 @@ moduleData ConfigFactory::parseModuleJson(json j) {
     // for (i=0; i< vect.size(); i++)
         // std::cout << vect.at(i)<<std::endl;
 	
-	moduleData modData;
-	modData.id = id;
-	modData.cols = cols;
-	modData.rows = rows;
-	modData.disabled = vect;
+	moduleData *modData = new moduleData;
+	modData->id = id;
+	modData->cols = cols;
+	modData->rows = rows;
+	modData->disabled = vect;
+	cout << "returning " << modData->id;
+	
 	return modData;
 }

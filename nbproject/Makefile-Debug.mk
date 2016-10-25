@@ -46,12 +46,15 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f2
 
 # Test Object Files
 TESTOBJECTFILES= \
 	${TESTDIR}/tests/ConfigParserRunner.o \
-	${TESTDIR}/tests/ConfigParserTest.o
+	${TESTDIR}/tests/ConfigParserTest.o \
+	${TESTDIR}/tests/EntityTest.o \
+	${TESTDIR}/tests/EntityTestRunner.o
 
 # C Compiler Flags
 CFLAGS=
@@ -113,6 +116,10 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ConfigParserRunner.o ${TESTDIR}/tests/
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/EntityTest.o ${TESTDIR}/tests/EntityTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
 
 ${TESTDIR}/tests/ConfigParserRunner.o: tests/ConfigParserRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
@@ -124,6 +131,18 @@ ${TESTDIR}/tests/ConfigParserTest.o: tests/ConfigParserTest.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserTest.o tests/ConfigParserTest.cpp
+
+
+${TESTDIR}/tests/EntityTest.o: tests/EntityTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTest.o tests/EntityTest.cpp
+
+
+${TESTDIR}/tests/EntityTestRunner.o: tests/EntityTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTestRunner.o tests/EntityTestRunner.cpp
 
 
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
@@ -196,6 +215,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

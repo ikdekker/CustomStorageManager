@@ -35,7 +35,7 @@ class ConfigFactory {
 public:
 	json getModuleJson();
 	ModuleEntity* getModule(json);
-	moduleData parseModuleJson(json);
+	moduleData* parseModuleJson(json);
 private:
 	json configJson;
 };

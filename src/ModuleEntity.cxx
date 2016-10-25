@@ -1,5 +1,15 @@
 #include "ModuleEntity.h"
+#include "ConfigFactory.h"
 #include <iostream>
+
+ModuleEntity::ModuleEntity(moduleData *mData) {
+    id = mData->id;
+    rows = mData->rows;
+    cols = mData->cols;
+    disabledRows = mData->disabled;
+
+}
+
 
 ModuleEntity::ModuleEntity(int id, int x, int y, vector<int> disabled) {
 	ModuleEntity::id = id;
