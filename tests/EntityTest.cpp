@@ -48,3 +48,12 @@ void EntityTest::testEntityValidFromVars() {
     CPPUNIT_ASSERT_MESSAGE("The disabled rows were not as expected. (EnitityTest)", vect == testEntity.getDisabledRows());
     CPPUNIT_ASSERT_EQUAL_MESSAGE( "The expected amount of columns was not equal to the actual amount. (EnitityTest)" ,3,testEntity.getCols());
 }
+
+void EntityTest::testEntityInvalidData() {
+    vector<int> vect {4};
+    moduleData modData = TestResources::getModuleData(1,2,3, vect);
+    
+    CPPUNIT_ASSERT_THROW(ModuleEntity testEntity(1,3,3,vect), std::out_of_range);
+    CPPUNIT_ASSERT_THROW(ModuleEntity testEntity(&modData);, std::out_of_range);
+}
+

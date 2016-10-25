@@ -47,14 +47,17 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f2
+	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f3
 
 # Test Object Files
 TESTOBJECTFILES= \
 	${TESTDIR}/tests/ConfigParserRunner.o \
 	${TESTDIR}/tests/ConfigParserTest.o \
 	${TESTDIR}/tests/EntityTest.o \
-	${TESTDIR}/tests/EntityTestRunner.o
+	${TESTDIR}/tests/EntityTestRunner.o \
+	${TESTDIR}/tests/ModuleServerTest.o \
+	${TESTDIR}/tests/ModuleServerTestRunner.o
 
 # C Compiler Flags
 CFLAGS=
@@ -120,6 +123,10 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/EntityTest.o ${TESTDIR}/tests/EntityTe
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ModuleServerTest.o ${TESTDIR}/tests/ModuleServerTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
 
 ${TESTDIR}/tests/ConfigParserRunner.o: tests/ConfigParserRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
@@ -143,6 +150,18 @@ ${TESTDIR}/tests/EntityTestRunner.o: tests/EntityTestRunner.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTestRunner.o tests/EntityTestRunner.cpp
+
+
+${TESTDIR}/tests/ModuleServerTest.o: tests/ModuleServerTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTest.o tests/ModuleServerTest.cpp
+
+
+${TESTDIR}/tests/ModuleServerTestRunner.o: tests/ModuleServerTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
 
 
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
@@ -216,6 +235,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f3 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

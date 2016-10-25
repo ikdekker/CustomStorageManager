@@ -73,6 +73,25 @@ public:
             }
         )"_json;
     };
+    static const json invalidJsonDisabledNeg() {
+        return R"(
+            {
+                "id" : 3,
+                "rows": 4,
+                "columns": 11,
+                "disableRows": "-1"
+            }
+        )"_json;
+    };
+    static const json dbCredentials() {
+        return R"(
+            {
+                "database" : "test_db",
+                "username": "test_user",
+                "password": "test_pass"
+            }
+        )"_json;
+    }
 private:
 
     TestResources() {

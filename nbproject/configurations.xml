@@ -43,6 +43,14 @@
         <itemPath>tests/EntityTest.h</itemPath>
         <itemPath>tests/EntityTestRunner.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="Module server test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/ModuleServerTest.cpp</itemPath>
+        <itemPath>tests/ModuleServerTest.h</itemPath>
+        <itemPath>tests/ModuleServerTestRunner.cpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -105,6 +113,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
@@ -134,6 +156,12 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ModuleServerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ModuleServerTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ModuleServerTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/data/TestResources.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -187,6 +215,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
@@ -216,6 +258,12 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ModuleServerTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ModuleServerTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ModuleServerTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/data/TestResources.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -16,6 +16,7 @@ class EntityTest : public CPPUNIT_NS::TestFixture {
 
     CPPUNIT_TEST(testEntityValidFromVars);
     CPPUNIT_TEST(testEntityValidFromStruct);
+    CPPUNIT_TEST(testEntityInvalidData);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -28,6 +29,7 @@ public:
 private:
     void testEntityValidFromVars();
     void testEntityValidFromStruct();
+    void testEntityInvalidData();
 };
 
 #endif /* ENTITYTEST_H */

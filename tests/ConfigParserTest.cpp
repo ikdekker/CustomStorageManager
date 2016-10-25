@@ -57,11 +57,8 @@ void ConfigParser::testInvalidCols() {
 }
 
 void ConfigParser::testInvalidDisabledNeg() {
-
-}
-
-void ConfigParser::testInvalidDisabledOutOfBounds() {
-
+    const json invalidDisabledNeg = TestResources::invalidJsonDisabledNeg();
+    CPPUNIT_ASSERT_THROW(factory->parseModuleJson(invalidDisabledNeg), std::out_of_range);
 }
 
 void ConfigParser::testInvalidId() {
@@ -78,13 +75,7 @@ void ConfigParser::testInvalidRows() {
 
 //
 void ConfigParser::testParseSettings() {
-//    const json settingsJson = R"(
-//        {
-//            "database" : "test_db",
-//            "username": "test_user",
-//            "password": "test_pass"
-//        }
-//    )"_json;
+    const json settingsJson = TestResources::dbCredentials();
 //    settingsData resultSettings factory->parseSettingsJson(settingsJson);
 //    expectedSettings.database = "test_db";
 //    expectedSettings.username = "test_user";
