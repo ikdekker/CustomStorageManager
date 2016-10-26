@@ -43,6 +43,14 @@
         <itemPath>tests/EntityTest.h</itemPath>
         <itemPath>tests/EntityTestRunner.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f4"
+                     displayName="Matrix control test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/MatrixControlTest.cpp</itemPath>
+        <itemPath>tests/MatrixControlTest.h</itemPath>
+        <itemPath>tests/MatrixControlTestRunner.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Module server test"
                      projectFiles="true"
@@ -69,12 +77,14 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <stripSymbols>true</stripSymbols>
           <standard>8</standard>
           <incDir>
             <pElem>/usr/include/cppunit</pElem>
             <pElem>/usr/lib</pElem>
             <pElem>lib/gtest</pElem>
             <pElem>/usr/include/cppconn</pElem>
+            <pElem>../../../Downloads/cpputest-3.8/cpputest-3.8/include</pElem>
           </incDir>
           <useLinkerLibraries>false</useLinkerLibraries>
         </ccTool>
@@ -83,6 +93,7 @@
             <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
+          <commandLine>-std=c++11</commandLine>
         </linkerTool>
       </compileType>
       <folder path="TestFiles/f1">
@@ -127,6 +138,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
@@ -156,6 +181,12 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/MatrixControlTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/MatrixControlTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/MatrixControlTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/ModuleServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -229,6 +260,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
@@ -258,6 +303,12 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/MatrixControlTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/MatrixControlTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/MatrixControlTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/ModuleServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

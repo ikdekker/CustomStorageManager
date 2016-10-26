@@ -48,6 +48,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3
 
 # Test Object Files
@@ -56,6 +57,8 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/ConfigParserTest.o \
 	${TESTDIR}/tests/EntityTest.o \
 	${TESTDIR}/tests/EntityTestRunner.o \
+	${TESTDIR}/tests/MatrixControlTest.o \
+	${TESTDIR}/tests/MatrixControlTestRunner.o \
 	${TESTDIR}/tests/ModuleServerTest.o \
 	${TESTDIR}/tests/ModuleServerTestRunner.o
 
@@ -81,32 +84,32 @@ LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/stage.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/stage ${OBJECTFILES} ${LDLIBSOPTIONS} -s
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/stage ${OBJECTFILES} ${LDLIBSOPTIONS} -std=c++11 -s
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/src/ConfigFactory.o: src/ConfigFactory.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
 
 ${OBJECTDIR}/src/ModuleEntity.o: src/ModuleEntity.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleEntity.o src/ModuleEntity.cxx
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleEntity.o src/ModuleEntity.cxx
 
 ${OBJECTDIR}/src/ModuleServer.o: src/ModuleServer.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer.o src/ModuleServer.cxx
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer.o src/ModuleServer.cxx
 
 ${OBJECTDIR}/src/StorageManagement.o: src/StorageManagement.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StorageManagement.o src/StorageManagement.cxx
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StorageManagement.o src/StorageManagement.cxx
 
 # Subprojects
 .build-subprojects:
@@ -123,6 +126,10 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/EntityTest.o ${TESTDIR}/tests/EntityTe
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/MatrixControlTest.o ${TESTDIR}/tests/MatrixControlTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ModuleServerTest.o ${TESTDIR}/tests/ModuleServerTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
@@ -131,37 +138,49 @@ ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ModuleServerTest.o ${TESTDIR}/tests/Mo
 ${TESTDIR}/tests/ConfigParserRunner.o: tests/ConfigParserRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserRunner.o tests/ConfigParserRunner.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserRunner.o tests/ConfigParserRunner.cpp
 
 
 ${TESTDIR}/tests/ConfigParserTest.o: tests/ConfigParserTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserTest.o tests/ConfigParserTest.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserTest.o tests/ConfigParserTest.cpp
 
 
 ${TESTDIR}/tests/EntityTest.o: tests/EntityTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTest.o tests/EntityTest.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTest.o tests/EntityTest.cpp
 
 
 ${TESTDIR}/tests/EntityTestRunner.o: tests/EntityTestRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTestRunner.o tests/EntityTestRunner.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTestRunner.o tests/EntityTestRunner.cpp
+
+
+${TESTDIR}/tests/MatrixControlTest.o: tests/MatrixControlTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/MatrixControlTest.o tests/MatrixControlTest.cpp
+
+
+${TESTDIR}/tests/MatrixControlTestRunner.o: tests/MatrixControlTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/MatrixControlTestRunner.o tests/MatrixControlTestRunner.cpp
 
 
 ${TESTDIR}/tests/ModuleServerTest.o: tests/ModuleServerTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTest.o tests/ModuleServerTest.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTest.o tests/ModuleServerTest.cpp
 
 
 ${TESTDIR}/tests/ModuleServerTestRunner.o: tests/ModuleServerTestRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
 
 
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
@@ -172,7 +191,7 @@ ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main_nomain.o main.cpp;\
+	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main_nomain.o main.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
 	fi
@@ -185,7 +204,7 @@ ${OBJECTDIR}/src/ConfigFactory_nomain.o: ${OBJECTDIR}/src/ConfigFactory.o src/Co
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory_nomain.o src/ConfigFactory.cxx;\
+	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory_nomain.o src/ConfigFactory.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ConfigFactory.o ${OBJECTDIR}/src/ConfigFactory_nomain.o;\
 	fi
@@ -198,7 +217,7 @@ ${OBJECTDIR}/src/ModuleEntity_nomain.o: ${OBJECTDIR}/src/ModuleEntity.o src/Modu
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleEntity_nomain.o src/ModuleEntity.cxx;\
+	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleEntity_nomain.o src/ModuleEntity.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ModuleEntity.o ${OBJECTDIR}/src/ModuleEntity_nomain.o;\
 	fi
@@ -211,7 +230,7 @@ ${OBJECTDIR}/src/ModuleServer_nomain.o: ${OBJECTDIR}/src/ModuleServer.o src/Modu
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer_nomain.o src/ModuleServer.cxx;\
+	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer_nomain.o src/ModuleServer.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ModuleServer.o ${OBJECTDIR}/src/ModuleServer_nomain.o;\
 	fi
@@ -224,7 +243,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StorageManagement_nomain.o src/StorageManagement.cxx;\
+	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I../../../Downloads/cpputest-3.8/cpputest-3.8/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StorageManagement_nomain.o src/StorageManagement.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/StorageManagement.o ${OBJECTDIR}/src/StorageManagement_nomain.o;\
 	fi
@@ -235,6 +254,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	else  \
 	    ./${TEST} || true; \

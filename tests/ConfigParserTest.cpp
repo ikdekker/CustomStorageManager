@@ -6,10 +6,13 @@
  * Created on Oct 24, 2016, 2:26:27 PM
  */
 
-#include "ConfigParserTest.h"
-#include "data/TestResources.h"
+
 #include <vector>
 #include <string>
+#include "ConfigParserTest.h"
+#include "data/TestResources.h"
+#include "CppUTest/TestHarness.h"
+#include "CppUTestExt/MockSupport.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(ConfigParser);
 
@@ -35,6 +38,7 @@ void ConfigParser::testParseModuleConfig() {
             "disableRows": "1,2"
         }
     )"_json;
+//    mock().expectOneCall("parseModuleJson").onObject(factory);
     moduleData *resultModule = factory->parseModuleJson(moduleJson);
     vector<int> vect {1,2};
     moduleData expectedModule = TestResources::getModuleData(0,5,11, vect);
