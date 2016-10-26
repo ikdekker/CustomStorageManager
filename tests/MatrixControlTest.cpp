@@ -8,7 +8,11 @@
 
 #include "MatrixControlTest.h"
 #include "CppUTest/TestHarness.h"
+#include "CppUTest/SimpleString.h"
 #include "CppUTestExt/MockSupport.h"
+#include "../src/ConfigFactory.h"
+#include "data/TestResources.h"
+#include <string>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(MatrixControlTest);
 
@@ -26,6 +30,9 @@ void MatrixControlTest::tearDown() {
 
 void MatrixControlTest::testTurnOn() {
 //    matrixs
-//    mock().expectOneCall("a");    
-    CPPUNIT_ASSERT(true);
+    
+//    ConfigFactory *ab = new ConfigFactory();
+    mock().expectOneCall("getModule");    
+//    ab->getModule(TestResources::validJsonModule());
+    mock().checkExpectations();
 }

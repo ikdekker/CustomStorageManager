@@ -11,8 +11,6 @@
 #include <string>
 #include "ConfigParserTest.h"
 #include "data/TestResources.h"
-#include "CppUTest/TestHarness.h"
-#include "CppUTestExt/MockSupport.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(ConfigParser);
 

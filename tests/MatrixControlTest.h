@@ -8,6 +8,7 @@
 
 #ifndef MATRIXCONTROLTEST_H
 #define MATRIXCONTROLTEST_H
+#include <stdio.h>
 
 #include <cppunit/extensions/HelperMacros.h>
 

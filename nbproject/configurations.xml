@@ -84,16 +84,17 @@
             <pElem>/usr/lib</pElem>
             <pElem>lib/gtest</pElem>
             <pElem>/usr/include/cppconn</pElem>
-            <pElem>../../../Downloads/cpputest-3.8/cpputest-3.8/include</pElem>
+            <pElem>lib/cpputest-3.8</pElem>
+            <pElem>lib/cpputest-3.8/include</pElem>
           </incDir>
-          <useLinkerLibraries>false</useLinkerLibraries>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
+            <pElem>lib/cpputest-3.8/lib</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
-          <commandLine>-std=c++11</commandLine>
+          <commandLine>-lCppUtest -lCppUtestExt</commandLine>
         </linkerTool>
       </compileType>
       <folder path="TestFiles/f1">

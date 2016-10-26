@@ -83,6 +83,16 @@ public:
             }
         )"_json;
     };
+    static const json validJsonModule() {
+        return R"(
+            {
+                "id" : 3,
+                "rows": 4,
+                "columns": 11,
+                "disableRows": "1"
+            }
+        )"_json;
+    };
     static const json dbCredentials() {
         return R"(
             {
