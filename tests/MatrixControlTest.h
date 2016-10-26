@@ -15,7 +15,7 @@
 class MatrixControlTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(MatrixControlTest);
 
-    CPPUNIT_TEST(testTurnOn);
+    CPPUNIT_TEST(testCreationWithModuleServer);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -26,7 +26,7 @@ public:
     void tearDown();
 
 private:
-    void testTurnOn();
+    void testCreationWithModuleServer();
 };
 
 #endif /* MATRIXCONTROLTEST_H */
