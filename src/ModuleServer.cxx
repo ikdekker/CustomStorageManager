@@ -1,4 +1,4 @@
-#include "ModuleServer.hxx"
+#include "ModuleServer.h"
 
 void ModuleServer::addModule(ModuleEntity* module) {
         modules.push_back(module);

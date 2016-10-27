@@ -16,7 +16,7 @@
 #include "../include/json.hpp"
 #include <fstream>
 #include <cstdio>
-#include "ModuleEntity.hxx"
+#include "ModuleEntity.h"
 
 using namespace std;
 using json = nlohmann::json;

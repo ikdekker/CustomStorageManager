@@ -1,6 +1,6 @@
 #include "../include/json.hpp"
-#include "ConfigFactory.hxx"
-#include "ModuleServer.hxx"
+#include "ConfigFactory.h"
+#include "ModuleServer.h"
 #include <list>
 
 using namespace std;

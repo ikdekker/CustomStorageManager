@@ -1,4 +1,4 @@
-#include "ModuleEntity.hxx"
+#include "ModuleEntity.h"
 #include <iostream>
 
 ModuleEntity::ModuleEntity(int id, int x, int y, vector<int> disabled) {

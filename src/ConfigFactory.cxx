@@ -1,4 +1,4 @@
-#include "ConfigFactory.hxx"
+#include "ConfigFactory.h"
 #include <stdexcept>
 #include <sstream>
 #include <vector>
