@@ -7,21 +7,21 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=Cygwin-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug=stage
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/stage
-CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug=stage.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/stage.tar
+CND_PLATFORM_Debug=GNU-Linux
+CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
+CND_ARTIFACT_NAME_Debug=utest
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/utest
+CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
+CND_PACKAGE_NAME_Debug=utest.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/utest.tar
 # Release configuration
-CND_PLATFORM_Release=Cygwin-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
-CND_ARTIFACT_NAME_Release=stage
-CND_ARTIFACT_PATH_Release=dist/Release/Cygwin-Windows/stage
-CND_PACKAGE_DIR_Release=dist/Release/Cygwin-Windows/package
-CND_PACKAGE_NAME_Release=stage.tar
-CND_PACKAGE_PATH_Release=dist/Release/Cygwin-Windows/package/stage.tar
+CND_PLATFORM_Release=GNU-Linux
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
+CND_ARTIFACT_NAME_Release=utest
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/utest
+CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
+CND_PACKAGE_NAME_Release=utest.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/utest.tar
 #
 # include compiler specific variables
 #

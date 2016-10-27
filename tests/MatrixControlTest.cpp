@@ -6,11 +6,14 @@
  * Created on Oct 26, 2016, 11:34:39 AM
  */
 
+#include "CppUTest/SimpleString.h"
 #include "MatrixControlTest.h"
 #include "CppUTest/TestHarness.h"
 #include "CppUTest/SimpleString.h"
 #include "CppUTestExt/MockSupport.h"
 #include "../src/ConfigFactory.h"
+#include "../src/MatrixControl.h"
+#include "../src/ModuleEntity.h"
 #include "data/TestResources.h"
 #include <string>
 
@@ -30,14 +33,16 @@ void MatrixControlTest::tearDown() {
 
 void MatrixControlTest::testCreationWithModuleServer() {
 //    matrixs
-    ModuleServer *m = new ModuleServer();
-    ModuleEntity *e = new ModuleEntity(TestResources::validJsonModule());
-    m->addModule(e);
-    MatrixControl mControl(m);
+    ModuleServer m;
+    ConfigFactory cf;
+    ModuleEntity e(cf.parseModuleJson(TestResources::validJsonModule()));
+    m.addModule(&e);
     
-    ModuleEntity *b = MatrixControl->getServer()->getModuleById(3);
+    MatrixControl *mControl = new MatrixControl(&m);
+    mock().expectOneCall("getServer");
     
-    CPPUNIT_ASSERT_EQUAL(3, b->getId());
-    
-    delete e, m, b;
+    ModuleEntity *b = mControl->getServer()->getModuleById(3);
+    mock().checkExpectations();
+//    CPPUNIT_ASSERT_EQUAL(3, b->getId());
+    delete mControl;
 }
