@@ -1,15 +1,18 @@
 #include "../include/json.hpp"
+#include "ConfigFactory.h"
+#include "ModuleServer.h"
+#include "ScannerReader.h"
 #include <list>
 
-class ModuleEntity;
 using namespace std;
 
 class StorageManagement {
-	public:
-		StorageManagement();
-		void addModule(ModuleEntity*);
-		ModuleEntity* getModuleById(int);
-	private:
-		list<ModuleEntity*> modules;
+public:
+    StorageManagement();
+    void setScanner(ScannerReader*);
+    void watchScanner();
+private:
+    ScannerReader *scanner;
+    ModuleServer *modules;
 };
 

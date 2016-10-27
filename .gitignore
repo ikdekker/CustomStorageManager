@@ -1,4 +1,3 @@
-#nb V
 # Netbeans specific:
 nbproject/private/
 build/
@@ -6,9 +5,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+nbproject/
 
-#cpp V
-
+# C++ specific:
 # Compiled Object files
 *.slo
 *.lo

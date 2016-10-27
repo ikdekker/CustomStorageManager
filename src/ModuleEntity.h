@@ -1,6 +1,8 @@
 #include <vector>
 using namespace std;
+#ifndef MODULEENTITY_H
 
+#define MODULEENTITY_H
 class ModuleEntity {
 public:
 	ModuleEntity(int id,int x, int y, vector<int> disabled);
@@ -14,3 +16,4 @@ private:
 	int cols;
 	vector<int> disabledRows;
 };
+#endif

@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
+	${OBJECTDIR}/src/ModuleServer.o \
 	${OBJECTDIR}/src/ScannerReader.o \
 	${OBJECTDIR}/src/StorageManagement.o
 
@@ -80,6 +81,11 @@ ${OBJECTDIR}/src/ModuleEntity.o: src/ModuleEntity.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I/usr/local/lib -Ilib/hidapi -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleEntity.o src/ModuleEntity.cxx
+
+${OBJECTDIR}/src/ModuleServer.o: src/ModuleServer.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -I/usr/local/lib -Ilib/hidapi -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer.o src/ModuleServer.cxx
 
 ${OBJECTDIR}/src/ScannerReader.o: src/ScannerReader.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src

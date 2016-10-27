@@ -7,6 +7,9 @@
 
 using namespace std;
 
+#ifndef SCANNERREADER_H
+#define SCANNERREADER_H
+
 class ScannerReader {
 public:
 	ScannerReader();
@@ -23,3 +26,5 @@ private:
 	string lastRead;
 	hid_device *scannerHandle;
 };
+
+#endif
