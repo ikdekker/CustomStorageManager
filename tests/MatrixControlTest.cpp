@@ -32,17 +32,20 @@ void MatrixControlTest::tearDown() {
 }
 
 void MatrixControlTest::testCreationWithModuleServer() {
-//    matrixs
     ModuleServer m;
-    ConfigFactory cf;
-    ModuleEntity e(cf.parseModuleJson(TestResources::validJsonModule()));
+    
+    vector<int> vc {2};
+    ModuleEntity e(3,3,3,vc);
     m.addModule(&e);
     
     MatrixControl *mControl = new MatrixControl(&m);
-    mock().expectOneCall("getServer");
     
-    ModuleEntity *b = mControl->getServer()->getModuleById(3);
-    mock().checkExpectations();
-//    CPPUNIT_ASSERT_EQUAL(3, b->getId());
+    Point actualPoint = mControl->indexToLocation(4,1);
+    Point expectedPoint;
+    expectedPoint.x = 1;
+    expectedPoint.y = 2;
+    //@todo:overload struct comparator 
+    CPPUNIT_ASSERT_EQUAL(expectedPoint.x == actualPoint.x);
+    CPPUNIT_ASSERT_EQUAL(expectedPoint.y == actualPoint.y);
     delete mControl;
 }
