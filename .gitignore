@@ -7,6 +7,10 @@ nbdist/
 .nb-gradle/
 nbproject/
 
+#me specific
+lib/
+
+
 # C++ specific:
 # Compiled Object files
 *.slo

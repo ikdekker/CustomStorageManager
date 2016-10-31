@@ -43,6 +43,13 @@
         <itemPath>tests/EntityTest.h</itemPath>
         <itemPath>tests/EntityTestRunner.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f4"
+                     displayName="Index allocation test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/IndexAllocRunner.cpp</itemPath>
+        <itemPath>tests/IndexAllocationTest.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Module server test"
                      projectFiles="true"
@@ -68,6 +75,11 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
           <standard>8</standard>
           <incDir>
@@ -75,14 +87,25 @@
             <pElem>/usr/lib</pElem>
             <pElem>lib/gtest</pElem>
             <pElem>/usr/include/cppconn</pElem>
+            <pElem>lib/cpputest-3.8</pElem>
+            <pElem>lib/cpputest-3.8/include</pElem>
+            <pElem>.</pElem>
           </incDir>
           <useLinkerLibraries>false</useLinkerLibraries>
         </ccTool>
         <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
           <linkerAddLib>
             <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
+            <pElem>lib/cpputest-3.8/lib</pElem>
+            <pElem>lib/cpputest-3.8/src</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
+          <linkerLibItems>
+            <linkerLibFileItem>lib/cpputest-3.8/lib/libCppUTestExt.a</linkerLibFileItem>
+            <linkerLibFileItem>lib/cpputest-3.8/lib/libCppUTest.a</linkerLibFileItem>
+          </linkerLibItems>
+          <commandLine>-lcppUTestExt -lcppUTest</commandLine>
         </linkerTool>
       </compileType>
       <folder path="TestFiles/f1">
@@ -127,6 +150,21 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
@@ -156,6 +194,10 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocationTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/ModuleServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -175,10 +217,16 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -186,6 +234,9 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
       </compileType>
       <folder path="TestFiles/f1">
         <cTool>
@@ -229,6 +280,21 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
@@ -258,6 +324,10 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocationTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/ModuleServerTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

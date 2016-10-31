@@ -8,6 +8,8 @@ using namespace std;
 class StorageManagement {
 	public:
 		StorageManagement();
+		findFreeSpot();
+		checkDisabled();
 	private:
 		ModuleServer *modules;
 };
