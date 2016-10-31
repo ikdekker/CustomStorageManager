@@ -12,6 +12,7 @@
  */
 
 #include "CppUTest/CommandLineTestRunner.h"
+#include <vector>
 using namespace std;
 
 /*
@@ -19,6 +20,9 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-   return CommandLineTestRunner::RunAllTests(argc, argv);
+    std::vector<const char*> args(argv, argv + argc); // Insert all arguments
+    args.push_back("-v"); // Set verbose mode
+    args.push_back("-c"); // Set color output (OPTIONAL)
+   return RUN_ALL_TESTS(argc, &args[0]);
 }
 

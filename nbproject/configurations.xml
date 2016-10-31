@@ -97,9 +97,12 @@
         <linkerTool>
           <linkerAddLib>
             <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
+            <pElem>lib/cpputest-3.8/lib</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
           <linkerLibItems>
+            <linkerLibLibItem>CppUTest</linkerLibLibItem>
+            <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
             <linkerLibLibItem>CppUTest</linkerLibLibItem>
             <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
           </linkerLibItems>
