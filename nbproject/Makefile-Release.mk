@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
+	${OBJECTDIR}/src/DatabaseAdapter.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
 	${OBJECTDIR}/src/ModuleServer.o \
 	${OBJECTDIR}/src/StorageManagement.o
@@ -95,6 +96,11 @@ ${OBJECTDIR}/src/ConfigFactory.o: src/ConfigFactory.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
+
+${OBJECTDIR}/src/DatabaseAdapter.o: src/DatabaseAdapter.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx
 
 ${OBJECTDIR}/src/ModuleEntity.o: src/ModuleEntity.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -207,6 +213,19 @@ ${OBJECTDIR}/src/ConfigFactory_nomain.o: ${OBJECTDIR}/src/ConfigFactory.o src/Co
 	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory_nomain.o src/ConfigFactory.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ConfigFactory.o ${OBJECTDIR}/src/ConfigFactory_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/DatabaseAdapter_nomain.o: ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/DatabaseAdapter.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter_nomain.o src/DatabaseAdapter.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/DatabaseAdapter.o ${OBJECTDIR}/src/DatabaseAdapter_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/ModuleEntity_nomain.o: ${OBJECTDIR}/src/ModuleEntity.o src/ModuleEntity.cxx 

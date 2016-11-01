@@ -11,10 +11,10 @@ json ConfigFactory::getModuleJson() {
 	try {
 		moduleJson << f;
 	}
-	catch(const std::exception& ex)
+	catch(const exception& ex)
 	{
 		// specific handling for all exceptions extending std::exception
-		std::cerr << "Error occurred: " << ex.what() << std::endl;
+		cerr << "Error occurred: " << ex.what() << endl;
 	}
         
 	return moduleJson;

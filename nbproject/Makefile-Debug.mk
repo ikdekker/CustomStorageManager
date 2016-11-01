@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
+	${OBJECTDIR}/src/DatabaseAdapter.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
 	${OBJECTDIR}/src/ModuleServer.o \
 	${OBJECTDIR}/src/StorageManagement.o
@@ -76,7 +77,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -Llib/cpputest-3.8/src lib/cpputest-3.8/lib/libCppUTestExt.a lib/cpputest-3.8/lib/libCppUTest.a
+LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib lib/cpputest-3.8/lib/libCppUTestExt.a lib/cpputest-3.8/lib/libCppUTest.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -88,7 +89,7 @@ ${TESTDIR}/TestFiles/f6.exe: lib/cpputest-3.8/lib/libCppUTest.a
 
 ${TESTDIR}/TestFiles/f6.exe: ${OBJECTFILES}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS} -lcppUTestExt -lcppUTest -s
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTestExt -lCppUTest -s
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -99,6 +100,11 @@ ${OBJECTDIR}/src/ConfigFactory.o: src/ConfigFactory.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
+
+${OBJECTDIR}/src/DatabaseAdapter.o: src/DatabaseAdapter.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx
 
 ${OBJECTDIR}/src/ModuleEntity.o: src/ModuleEntity.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -211,6 +217,19 @@ ${OBJECTDIR}/src/ConfigFactory_nomain.o: ${OBJECTDIR}/src/ConfigFactory.o src/Co
 	    $(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory_nomain.o src/ConfigFactory.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ConfigFactory.o ${OBJECTDIR}/src/ConfigFactory_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/DatabaseAdapter_nomain.o: ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/DatabaseAdapter.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter_nomain.o src/DatabaseAdapter.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/DatabaseAdapter.o ${OBJECTDIR}/src/DatabaseAdapter_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/ModuleEntity_nomain.o: ${OBJECTDIR}/src/ModuleEntity.o src/ModuleEntity.cxx 

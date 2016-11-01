@@ -5,12 +5,16 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+<<<<<<< HEAD
 nbproject/
 
 #me specific
 lib/
 
 
+=======
+#nbproject/
+>>>>>>> db-nb
 # C++ specific:
 # Compiled Object files
 *.slo
@@ -32,10 +36,11 @@ lib/
 *.smod
 
 # Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+#*.lai
+#*.la
+#*.a
+#*.lib
+
 
 # Executables
 *.exe
