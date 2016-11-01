@@ -9,35 +9,30 @@
 #include "src/MatrixControl.h"
 #include <vector>
 #include <iostream>
-class Mocked : public MatrixControl {
-public:
-    Mocked(ModuleServer *mServer) : MatrixControl(mServer){}
-    virtual ModuleServer* getServer() override {
-        mock().actualCall("getServer").onObject(this);
+//class Mocked : public MatrixControl {
+//public:
+//    Mocked(ModuleServer *mServer) : MatrixControl(mServer){}
+//    virtual ModuleServer* getServer() override {
+//        mock().actualCall("getServer").onObject(this);
+//    }
+//};
+
+TEST_GROUP(MatrixTests) {
+    void teardown () {
+        mock().clear();
     }
 };
 
-TEST_GROUP(MatrixTests) {
-};
-
-TEST(MatrixTests, AddTest) {
-    MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
+TEST(MatrixTests, IndexToRowNormal) {
     ModuleServer m;
     
-    MatrixControl *mControl = new Mocked(&m);
+    MatrixControl *mControl = new MatrixControl(&m);
     vector<int> vc {2};
     ModuleEntity e(3,3,3,vc);
     m.addModule(&e);
 
-    mock().expectOneCall("getServer").onObject(mControl);
+//    mControl->indexToLocation(4,1);
     
-    ModuleServer *b = mControl->getServer();
-
-    mock().checkExpectations();
+//    CHECK(1,1);
     delete mControl;
-    MemoryLeakWarningPlugin::turnOnNewDeleteOverloads();
-}
-
-void teardown() {
-    mock().clear();
 }

@@ -17,6 +17,10 @@
 #include "ModuleServer.h"
 #include "CppUTest/CommandLineTestRunner.h"
 
+struct Point {
+    int x, y;
+};
+
 class MatrixControl {
 public:
     MatrixControl(ModuleServer *mServer);

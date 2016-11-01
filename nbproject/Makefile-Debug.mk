@@ -80,7 +80,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib -lCppUTest -lCppUTestExt
+LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -lCppUTest -lCppUTestExt -lCppUTest -lCppUTestExt
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

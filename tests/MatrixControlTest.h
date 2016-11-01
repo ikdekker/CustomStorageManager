@@ -16,6 +16,8 @@ class MatrixControlTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(MatrixControlTest);
 
     CPPUNIT_TEST(testCreationWithModuleServer);
+    CPPUNIT_TEST(testGetLocationSucces);
+    CPPUNIT_TEST(testGetLocationFail);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -27,6 +29,8 @@ public:
 
 private:
     void testCreationWithModuleServer();
+    void testGetLocationFail();
+    void testGetLocationSucces();
 };
 
 #endif /* MATRIXCONTROLTEST_H */
