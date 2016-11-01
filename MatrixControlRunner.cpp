@@ -19,6 +19,6 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-   return CommandLineTestRunner::RunAllTests(argc, argv);
+   return RUN_ALL_TESTS(argc, argv);
 }
 

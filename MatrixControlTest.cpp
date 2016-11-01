@@ -21,7 +21,7 @@ TEST_GROUP(MatrixTests) {
 };
 
 TEST(MatrixTests, AddTest) {
-    EXPECT_N_LEAKS(5);
+    MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
     ModuleServer m;
     
     MatrixControl *mControl = new Mocked(&m);
@@ -35,4 +35,9 @@ TEST(MatrixTests, AddTest) {
 
     mock().checkExpectations();
     delete mControl;
+    MemoryLeakWarningPlugin::turnOnNewDeleteOverloads();
+}
+
+void teardown() {
+    mock().clear();
 }
