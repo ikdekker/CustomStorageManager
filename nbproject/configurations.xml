@@ -8,6 +8,7 @@
       <itemPath>src/MatrixControl.h</itemPath>
       <itemPath>src/ModuleEntity.h</itemPath>
       <itemPath>src/ModuleServer.h</itemPath>
+      <itemPath>SerialDriver.h</itemPath>
       <itemPath>src/StorageManagement.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -22,6 +23,7 @@
       <itemPath>src/MatrixControl.cpp</itemPath>
       <itemPath>src/ModuleEntity.cxx</itemPath>
       <itemPath>src/ModuleServer.cxx</itemPath>
+      <itemPath>SerialDriver.cpp</itemPath>
       <itemPath>src/StorageManagement.cxx</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -36,10 +38,6 @@
         <itemPath>tests/ConfigParserRunner.cpp</itemPath>
         <itemPath>tests/ConfigParserTest.cpp</itemPath>
         <itemPath>tests/ConfigParserTest.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f5" displayName="CppUTest" projectFiles="true" kind="TEST">
-        <itemPath>MatrixControlRunner.cpp</itemPath>
-        <itemPath>MatrixControlTest.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2"
                      displayName="Entity creation test"
@@ -82,6 +80,11 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
           <stripSymbols>true</stripSymbols>
           <standard>8</standard>
@@ -92,9 +95,11 @@
             <pElem>/usr/include/cppconn</pElem>
             <pElem>lib/cpputest-3.8</pElem>
             <pElem>lib/cpputest-3.8/include</pElem>
+            <pElem>.</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
           <linkerAddLib>
             <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
             <pElem>lib/cpputest-3.8/lib</pElem>
@@ -106,12 +111,12 @@
             <linkerLibLibItem>CppUTest</linkerLibLibItem>
             <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
           </linkerLibItems>
-          <commandLine>-lCppUTest -lCppUTestExt</commandLine>
+          <commandLine>-lCppUTest -lCppUTestExt -lwiringPi -lpthread</commandLine>
         </linkerTool>
       </compileType>
-      <item path="MatrixControlRunner.cpp" ex="false" tool="1" flavor2="0">
+      <item path="SerialDriver.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="MatrixControlTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="SerialDriver.h" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles/f1">
         <cTool>
@@ -167,32 +172,6 @@
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>src</pElem>
-          </incDir>
-          <commandLine>-std=gnu11 -r</commandLine>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-          <linkerAddLib>
-            <pElem>lib/cpputest-3.8/include</pElem>
-            <pElem>lib/cpputest-3.8/lib</pElem>
-          </linkerAddLib>
-          <linkerLibItems>
-            <linkerLibLibItem>CppUTest</linkerLibLibItem>
-            <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
-          </linkerLibItems>
-          <commandLine>-lCppUTest -lCppUTestExt -std=gnu11</commandLine>
         </linkerTool>
       </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -253,10 +232,16 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
           <standard>8</standard>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -264,10 +249,13 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
       </compileType>
-      <item path="MatrixControlRunner.cpp" ex="false" tool="1" flavor2="0">
+      <item path="SerialDriver.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="MatrixControlTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="SerialDriver.h" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles/f1">
         <cTool>
@@ -323,21 +311,6 @@
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">

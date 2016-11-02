@@ -35,8 +35,8 @@ void MatrixControlTest::testCreationWithModuleServer() {
     ModuleServer m;
     
     vector<int> vc {};
-    ModuleEntity e(3,3,3,vc);
-    m.addModule(&e);
+    ModuleEntity *e = new ModuleEntity(3,3,3,vc);
+    m.addModule(e);
     
     MatrixControl *mControl = new MatrixControl(&m);
     
@@ -49,15 +49,15 @@ void MatrixControlTest::testGetLocationSucces() {
     ModuleServer m;
     
     vector<int> vc {};
-    ModuleEntity e(3,3,3,vc);
-    m.addModule(&e);
+    ModuleEntity *e = new ModuleEntity(3,3,3,vc);
+    m.addModule(e);
     
     MatrixControl *mControl = new MatrixControl(&m);
     
-    Point actualPoint = mControl->indexToLocation(4,1);
+    Point actualPoint = mControl->indexToLocation(4,3);
     Point expectedPoint;
     expectedPoint.x = 1;
-    expectedPoint.y = 2;
+    expectedPoint.y = 1;
     //@todo:overload struct comparator 
     CPPUNIT_ASSERT_EQUAL(expectedPoint.x, actualPoint.x);
     CPPUNIT_ASSERT_EQUAL(expectedPoint.y, actualPoint.y);
@@ -68,12 +68,13 @@ void MatrixControlTest::testGetLocationFail() {
     ModuleServer m;
     
     vector<int> vc {2};
-    ModuleEntity e(3,3,3,vc);
-    m.addModule(&e);
+    ModuleEntity *e = new ModuleEntity(3,3,3,vc);
+    m.addModule(e);
     
     MatrixControl *mControl = new MatrixControl(&m);
-    
+    Point pt = mControl->indexToLocation(4,3);
     //@todo:overload struct comparator 
-    CPPUNIT_ASSERT_THROW(mControl->indexToLocation(4,1), std::logic_error);
+    CPPUNIT_ASSERT_EQUAL(pt.x, -1);
+    CPPUNIT_ASSERT_EQUAL(pt.y, -1);
     delete mControl;
 }

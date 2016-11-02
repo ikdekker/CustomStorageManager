@@ -1,26 +1,14 @@
 [
   {
-	"id" : 0,
-    "rows": 5,
-    "columns": 11,
-    "disableRows": "1,2,3"
-  },
-  {
-	"id" : 1,
-    "rows": 31,
-    "columns": 1,
-    "disableRows": "1"
-  },
-  {
-	"id" : 2,
+    "id" : 0,
     "rows": 8,
     "columns": 8,
     "disableRows": ""
   },
   {
-	"id" : 3,
-    "rows": 6,
-    "columns": 10,
+    "id" : 1,
+    "rows": 8,
+    "columns": 8,
     "disableRows": ""
   }
 ]
