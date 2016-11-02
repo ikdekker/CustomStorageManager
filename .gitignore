@@ -1,6 +1,5 @@
 # Netbeans specific:
 nbproject/private/
-build/
 nbbuild/
 nbdist/
 .nb-gradle/
