@@ -23,6 +23,10 @@ public:
         mData.disabled = tDis;
         return mData;
     };
+    static ModuleEntity* getModule(int tId, int tRows, int tCols, std::vector<int> tDis) {
+        ModuleEntity* mEnt = new ModuleEntity(tId, tRows, tCols, tDis);
+        return mEnt;
+    };
     static const json invalidJsonColsNeg() {
         return R"(
             {

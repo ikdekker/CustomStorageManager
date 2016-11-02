@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
-CND_DLIB_EXT=dll
+CND_PLATFORM=GNU-Linux
+CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -77,17 +77,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib lib/cpputest-3.8/lib/libCppUTestExt.a lib/cpputest-3.8/lib/libCppUTest.a
+LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -lCppUTest -lCppUTestExt
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${TESTDIR}/TestFiles/f6.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${TESTDIR}/TestFiles/f6
 
-${TESTDIR}/TestFiles/f6.exe: lib/cpputest-3.8/lib/libCppUTestExt.a
-
-${TESTDIR}/TestFiles/f6.exe: lib/cpputest-3.8/lib/libCppUTest.a
-
-${TESTDIR}/TestFiles/f6.exe: ${OBJECTFILES}
+${TESTDIR}/TestFiles/f6: ${OBJECTFILES}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTestExt -lCppUTest -s
 
@@ -286,7 +282,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${TESTDIR}/TestFiles/f6.exe
+	${RM} ${TESTDIR}/TestFiles/f6
 
 # Subprojects
 .clean-subprojects:

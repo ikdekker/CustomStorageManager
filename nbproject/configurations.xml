@@ -99,11 +99,12 @@
           <output>${TESTDIR}/TestFiles/f6</output>
           <linkerAddLib>
             <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
+            <pElem>lib/cpputest-3.8/lib</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
           <linkerLibItems>
-            <linkerLibFileItem>lib/cpputest-3.8/lib/libCppUTestExt.a</linkerLibFileItem>
-            <linkerLibFileItem>lib/cpputest-3.8/lib/libCppUTest.a</linkerLibFileItem>
+            <linkerLibLibItem>CppUTest</linkerLibLibItem>
+            <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
           </linkerLibItems>
           <commandLine>-lCppUTestExt -lCppUTest</commandLine>
         </linkerTool>

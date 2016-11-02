@@ -11,6 +11,7 @@ public:
 	void addModule(ModuleEntity*);
 	bool removeModuleById(int);
 	ModuleEntity* getModuleById(int);
+        virtual ~ModuleServer();
 private:
 	void removeModule();
 	std::list<ModuleEntity*> modules;

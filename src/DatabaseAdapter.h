@@ -15,7 +15,7 @@ using namespace std;
 class DatabaseAdapter {
 public:
 	DatabaseAdapter(string db, string user, string pass);
-        vector<int> getEntriesByModule(int){};
+        virtual vector<int>* getEntriesByModule(int moduleId){};
 	void addEntry(int index, int moduleId, string license, string products);
 private:
 //	sql::Connection *connection;

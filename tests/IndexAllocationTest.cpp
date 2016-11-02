@@ -5,80 +5,95 @@
  * Created on Oct 31, 2016, 3:10:58 PM
  */
 
+#include <src/DatabaseAdapter.h>
+#include "src/StorageManagement.h"
 #include <CppUTest/TestHarness.h>
 #include <CppUTestExt/MockSupport.h>
+#include <tests/data/TestResources.h>
 #include <vector>
-#include <src/DatabaseAdapter.h>
 #include <string>
-#include "src/StorageManagement.h"
+
 using namespace std;
+
 class DatabaseMock : public DatabaseAdapter {
 public:
-    DatabaseMock(string db, string user, string pass) : DatabaseAdapter(db,user,pass){};
-    virtual void getEntriesByModule()
-    {
-        vector<int> nextEmpty = {0,1,2,3,4};
-        vector<int> gapEmpty ={0,1,2,3,5};
-        vector<int> disabledNextEmpty ={0,1,2,3,6};
-        vector<int> fullIndex ={0,1,2,3,4,5,6};
-        mock().actualCall("getEntriesByModule").onObject(this).withIntParameter("moduleId",1).returnPointerValueOrDefault(&nextEmpty);
-        mock().actualCall("getEntriesByModule").onObject(this).withIntParameter("moduleId",2).returnPointerValueOrDefault(&gapEmpty);
-        mock().actualCall("getEntriesByModule").onObject(this).withIntParameter("moduleId",3).returnPointerValueOrDefault(&disabledNextEmpty);
-        mock().actualCall("getEntriesByModule").onObject(this).withIntParameter("moduleId",4).returnPointerValueOrDefault(&fullIndex);
+
+    DatabaseMock(string db, string user, string pass) : DatabaseAdapter(db, user, pass) {
+    };
+
+    virtual vector<int>* getEntriesByModule(int moduleId) {
+        //        vector<int> disabledNextEmpty =;
+        //        vector<int> fullIndex ={0,1,2,3,4,5,6};
+        mock().actualCall("getEntriesByModule").onObject(this).withIntParameter("moduleId", 1).returnValue().getPointerValue();
+        return (vector<int>*) mock().returnPointerValueOrDefault(nullptr);
     }
 };
 
 TEST_GROUP(TestSuite) {
+    DatabaseAdapter *dbMock = new DatabaseMock("a", "b", "c");
+    StorageManagement *storage;
+
+    void setup() {
+        storage = new StorageManagement();
+        storage->setDbAdapter(dbMock);
+    }
+    void teardown() {
+        mock().clear();
+        delete dbMock;
+    }
 };
 
 TEST(TestSuite, IndexAllocationFindNext) {
-    DatabaseAdapter* dbMock = new DatabaseMock("a","b","c");
-    dbMock->getEntriesByModule(1);
-    
-    StorageManagement s;
-    s.setDbAdapter(dbMock);
-    int freeIndex = s.findFreeSpot();
-    
-    CHECK_EQUAL(5, freeIndex);
+    vector<int> disabled {};
+    ModuleServer *server = new ModuleServer();
+    ModuleEntity *entity = TestResources::getModule(1, 3, 3, disabled);
+    server->addModule(entity);
+    storage->setModuleServer(server);
+    vector<int> *nextEmpty = new vector<int>{0, 1, 2, 3, 4};
+
+    mock().expectOneCall("getEntriesByModule").onObject(dbMock).withIntParameter("moduleId", 1).andReturnValue(nextEmpty);
+    int freeSpot = storage->findFreeSpot(1);
+    CHECK_EQUAL(5, freeSpot);
 }
 
-TEST(TestSuite, IndexAllocationFindNeithGap) {
-    DatabaseAdapter* dbMock = new DatabaseMock("a","b","c");
-    dbMock->getEntriesByModule(2);
-    
-    StorageManagement s;
-    s.setDbAdapter(dbMock);
-    int freeIndex = s.findFreeSpot();
-    
-    CHECK_EQUAL(4, freeIndex);
+TEST(TestSuite, IndexAllocationFindNextGap) {
+    vector<int> disabled {};
+    ModuleServer *server = new ModuleServer();
+    server->addModule(TestResources::getModule(1, 3, 3, disabled));
+    storage->setModuleServer(server);
+    vector<int> *nextEmpty = new vector<int>{0, 1, 2, 3, 5};
+
+    mock().expectOneCall("getEntriesByModule").onObject(dbMock).withIntParameter("moduleId", 1).andReturnValue(nextEmpty);
+    int freeSpot = storage->findFreeSpot(1);
+
+    delete server, nextEmpty,storage;
+    CHECK_EQUAL(4, freeSpot);
 }
 
+TEST(TestSuite, IndexAllocationFindDisabledNextEmpty) {
+    vector<int> disabled {2};
+    ModuleServer *server = new ModuleServer();
+    server->addModule(TestResources::getModule(1, 3, 3, disabled));
+    storage->setModuleServer(server);
+    vector<int> *nextEmpty = new vector<int>{0,1,2,6};
 
-TEST(TestSuite, IndexAllocationFindNWithGap) {
-    DatabaseAdapter* dbMock = new DatabaseMock("a","b","c");
-    dbMock->getEntriesByModule(3);
-    
-    StorageManagement s;
-    s.setDbAdapter(dbMock);
-    int freeIndex = s.findFreeSpot();
-    
-    CHECK_EQUAL(7, freeIndex);
+    mock().expectOneCall("getEntriesByModule").onObject(dbMock).withIntParameter("moduleId", 1).andReturnValue(nextEmpty);
+    int freeSpot = storage->findFreeSpot(1);
+
+    delete server, nextEmpty,storage;
+    CHECK_EQUAL(7, freeSpot);
 }
 
 TEST(TestSuite, IndexAllocationFindNexWithGap) {
-    DatabaseAdapter* dbMock = new DatabaseMock("a","b","c");
-    dbMock->getEntriesByModule(4);
-    
-    StorageManagement s;
-    s.setDbAdapter(dbMock);
-    int freeIndex = s.findFreeSpot();
-    
-    CHECK_EQUAL(-1, freeIndex);
-}
+    vector<int> disabled {};
+    ModuleServer *server = new ModuleServer();
+    server->addModule(TestResources::getModule(1, 3, 3, disabled));
+    storage->setModuleServer(server);
+    vector<int> *nextEmpty = new vector<int>{0,1,2,3,4,5,6,7,8};
 
-void setup() {
-}
+    mock().expectOneCall("getEntriesByModule").onObject(dbMock).withIntParameter("moduleId", 1).andReturnValue(nextEmpty);
+    int freeSpot = storage->findFreeSpot(1);
 
-void teardown() {
-    mock().clear();
+    delete server, nextEmpty,storage;
+    CHECK_EQUAL(-1, freeSpot);
 }
