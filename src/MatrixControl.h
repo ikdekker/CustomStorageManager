@@ -40,7 +40,7 @@ private:
     unsigned char getFirstByte(int,int);
     unsigned char getSecondByte(int,int);
     void setByte(int, shiftData*);
-    map<int,int> pinMapping {{8,1},{3,2},{16,3},{5,4},{9,5},{15,6},{10,7},{13,8},{4,9},{11,10},{12,11},{7,12},{14,13},{6,14},{2,15},{1,16}};
+    map<int,int> pinMapping {{7,0},{2,1},{15,2},{4,3},{8,4},{14,5},{9,6},{12,7},{3,8},{10,9},{11,10},{6,11},{13,12},{5,13},{1,14},{0,15}};
 };
 
 #endif /* MATRIXCONTROL_H */

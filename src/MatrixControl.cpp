@@ -66,7 +66,7 @@ void MatrixControl::ledOn(int index, int modId) {
         return;
     }
     setByte(pt.x, s);
-    setByte(pt.y + 10, s);
+    setByte(pt.y + 11, s);
 }
 
 void MatrixControl::reset() {
@@ -93,15 +93,18 @@ void MatrixControl::update() {
                             printf("noflip %02x\n",firstByte);
                             printf("noflip %02x\n",secondByte);
             if (mapPin <= 8) {
-                unsigned char flipByte = pow(2, mapPin - 1);
+                unsigned char flipByte = pow(2, mapPin);
                 firstByte ^= flipByte;
             } else {
-                unsigned char flipByte = pow(2, mapPin - 9);
+                unsigned char flipByte = pow(2, mapPin - 8);
                 secondByte ^= flipByte;
             }
                             printf("flip %02x\n",firstByte);
                             printf("flip %02x\n",secondByte);
         }
+        
+                            printf("flip %02x\n",firstByte);
+                            printf("flip %02x\n",secondByte);
         sd.sendShiftData(firstByte);
         sd.sendShiftData(secondByte);
     }
@@ -111,13 +114,13 @@ void MatrixControl::update() {
 void MatrixControl::setByte(int pin, shiftData *sData) {
     auto finder = pinMapping.find(pin);
     int actualPin = finder->second;
-    int shift = 1;
-    if (actualPin > 8) {
-        shift = 9;
+    int shift = 0;
+    if (actualPin > 7) {
+        shift = 8;
     }
     unsigned char pinVal = (unsigned char) pow(2, actualPin - shift);
 
-    if (actualPin < 8) {
+    if (actualPin <= 7) {
         sData->reg1 |= pinVal;
     } else {
         sData->reg2 |= pinVal;
