@@ -25,7 +25,7 @@ MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
     for (auto it = mods.begin(); it != mods.end(); it++) {
         shiftData *s = new shiftData();
         s->id = (*it)->getId();
-//        cout << s->id << "id";
+        //        cout << s->id << "id";
         s->reg1 = 0;
         s->reg2 = 0;
         moduleData.push_back(s);
@@ -54,21 +54,19 @@ void MatrixControl::ledOn(int index, int modId) {
     //update the shiftData registers
     Point pt = {1, 1}; //indexToLocation(index, modId);
     list<ModuleEntity*> mods = server->getModules();
-    for (auto it = mods.begin(); it != mods.end(); it++) {
-        shiftData *s;
-        for (auto moduleIterator = moduleData.begin(); moduleIterator != moduleData.end(); moduleIterator++) {
-            if ((*moduleIterator)->id == modId) {
-                s = (*moduleIterator);
-            }
+
+    shiftData *s;
+    for (auto moduleIterator = moduleData.begin(); moduleIterator != moduleData.end(); moduleIterator++) {
+        if ((*moduleIterator)->id == modId) {
+            s = (*moduleIterator);
         }
-        if (s == nullptr) {
-            printf("module doesnt exist");
-            return;
-        }
-        s->id = (*it)->getId();
-        setByte(pt.x, s);
-        setByte(pt.y + 10, s);
     }
+    if (s == nullptr) {
+        printf("module doesnt exist");
+        return;
+    }
+    setByte(pt.x, s);
+    setByte(pt.y + 10, s);
 }
 
 void MatrixControl::reset() {
@@ -87,16 +85,22 @@ void MatrixControl::update() {
     for (auto it = moduleData.begin(); it != moduleData.end(); it++) {
         unsigned char firstByte = (*it)->reg1;
         unsigned char secondByte = (*it)->reg2;
-        for (int flipBit = 11; flipBit < 16; flipBit++) {
+        for (int flipBit = 11; flipBit <= 16; flipBit++) {
             auto findMappedPin = pinMapping.find(flipBit);
             int mapPin = findMappedPin->second;
             //flip pin to be Y
-            unsigned char flipByte = pow(2, mapPin - 1);
+            //                printf("%d\n",mapPin);
+            //                printf("noflip %02x\n",firstByte);
+            //                printf("noflip %02x\n",secondByte);
             if (mapPin < 8) {
+                unsigned char flipByte = pow(2, mapPin - 1);
                 firstByte ^= flipByte;
             } else {
+                unsigned char flipByte = pow(2, mapPin - 9);
                 secondByte ^= flipByte;
             }
+            //                printf("flip %02x\n",firstByte);
+            //                printf("flip %02x\n",secondByte);
         }
         sd.sendShiftData(firstByte);
         sd.sendShiftData(secondByte);
@@ -108,7 +112,7 @@ void MatrixControl::setByte(int pin, shiftData *sData) {
     auto finder = pinMapping.find(pin);
     int actualPin = finder->second;
     int shift = 1;
-    if (pin > 8) {
+    if (actualPin > 8) {
         shift = 9;
     }
     unsigned char pinVal = (unsigned char) pow(2, actualPin - shift);
@@ -117,39 +121,7 @@ void MatrixControl::setByte(int pin, shiftData *sData) {
         sData->reg1 |= pinVal;
     } else {
         sData->reg2 |= pinVal;
+        //        printf("\n%02x 128 act%dpin shift = %d \n", pinVal, actualPin, shift);
     }
-    //    else {
-    //        auto finder = pinMapping.find(yPin);
-    //        int actualPin = finder->second;
-    //        if (actualPin < 8) {
-    //        pinVal = pow(2, actualPin);
-    //            sData->reg1 |= pinVal;
-    //        } else {
-    //        pinVal = pow(2, actualPin - 8);
-    //            sData->reg2 |= flipByte;
-    //        }
-    //    }
 }
 
-unsigned char MatrixControl::getSecondByte(int xPin, int yPin) {
-    unsigned char pinVal = 0;
-    if (xPin > 8) {
-        auto finder = pinMapping.find(xPin);
-        int actualPin = finder->second;
-        pinVal = (unsigned char) pow(2, actualPin - 8);
-    }
-    if (yPin > 8) {
-        auto finder = pinMapping.find(yPin);
-        int actualPin = finder->second;
-        int byteVal = pow(2, actualPin - 8);
-        pinVal |= (unsigned char) byteVal;
-    }
-    // flip bits 9 & 10 to be
-    unsigned char flipByte = 0b11000000;
-    printf("test\r\n%02X\r\n", pinVal);
-    //11011100
-    pinVal ^= flipByte;
-    //01011100
-    printf("test\r\n%02X\r\n", pinVal);
-    return pinVal;
-}
