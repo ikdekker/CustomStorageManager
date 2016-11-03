@@ -89,18 +89,18 @@ void MatrixControl::update() {
             auto findMappedPin = pinMapping.find(flipBit);
             int mapPin = findMappedPin->second;
             //flip pin to be Y
-            //                printf("%d\n",mapPin);
-            //                printf("noflip %02x\n",firstByte);
-            //                printf("noflip %02x\n",secondByte);
-            if (mapPin < 8) {
+                            printf("%d\n",mapPin);
+                            printf("noflip %02x\n",firstByte);
+                            printf("noflip %02x\n",secondByte);
+            if (mapPin <= 8) {
                 unsigned char flipByte = pow(2, mapPin - 1);
                 firstByte ^= flipByte;
             } else {
                 unsigned char flipByte = pow(2, mapPin - 9);
                 secondByte ^= flipByte;
             }
-            //                printf("flip %02x\n",firstByte);
-            //                printf("flip %02x\n",secondByte);
+                            printf("flip %02x\n",firstByte);
+                            printf("flip %02x\n",secondByte);
         }
         sd.sendShiftData(firstByte);
         sd.sendShiftData(secondByte);
