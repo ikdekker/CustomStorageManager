@@ -25,7 +25,7 @@ MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
     for (auto it = mods.begin(); it != mods.end(); it++) {
         shiftData *s = new shiftData();
         s->id = (*it)->getId();
-        cout << s->id << "id";
+//        cout << s->id << "id";
         s->reg1 = 0;
         s->reg2 = 0;
         moduleData.push_back(s);
@@ -42,7 +42,6 @@ Point MatrixControl::indexToLocation(int index, int modId) {
     }
     int cols = ent->getCols();
     int rows = ent->getRows();
-    cout << "r" << rows;
     pt.y = floor(index / cols);
     pt.x = index - (pt.y * rows);
     //    cout << pt.x;
@@ -51,7 +50,6 @@ Point MatrixControl::indexToLocation(int index, int modId) {
 }
 
 void MatrixControl::ledOn(int index, int modId) {
-    cout << modId;
     // call indextolocation
     //update the shiftData registers
     Point pt = {1, 1}; //indexToLocation(index, modId);
@@ -68,13 +66,9 @@ void MatrixControl::ledOn(int index, int modId) {
             return;
         }
         s->id = (*it)->getId();
-        cout << endl;
-        cout << pt.x << endl;
-        cout << pt.y << endl;
         setByte(pt.x, s);
         setByte(pt.y + 10, s);
     }
-    cout << "doneth" << endl;
 }
 
 void MatrixControl::reset() {
@@ -92,7 +86,6 @@ void MatrixControl::update() {
     sd.setLatch(false);
     for (auto it = moduleData.begin(); it != moduleData.end(); it++) {
         unsigned char firstByte = (*it)->reg1;
-        cout << firstByte << "f1" << endl;
         for (int flipBit = 10; flipBit < 15; flipBit++) {
             auto findMappedPin = pinMapping.find(flipBit);
             int mapPin = findMappedPin->second;
@@ -100,11 +93,9 @@ void MatrixControl::update() {
             unsigned char flipByte = pow(2, mapPin - 1);
             if (mapPin < 8) {
                 firstByte ^= flipByte;
-                cout << firstByte << "f33" << endl;
             } else {
                 firstByte ^= flipByte;
             }
-            cout << firstByte << "f2" << endl;
         }
         unsigned char secondByte = (*it)->reg2;
         for (int flipBit = 10; flipBit < 15; flipBit++) {
@@ -118,9 +109,7 @@ void MatrixControl::update() {
                 secondByte ^= flipByte;
             }
         }
-        cout << firstByte << "fb2" << endl;
         sd.sendShiftData(firstByte);
-        cout << firstByte << "fb3" << endl;
         sd.sendShiftData(secondByte);
     }
     sd.setLatch(true);
@@ -129,7 +118,6 @@ void MatrixControl::update() {
 void MatrixControl::setByte(int pin, shiftData *sData) {
     auto finder = pinMapping.find(pin);
     int actualPin = finder->second;
-    cout << "act" << actualPin << endl;
     int shift = 1;
     if (pin > 8) {
         shift = 9;
