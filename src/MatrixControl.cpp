@@ -20,7 +20,7 @@ MatrixControl::~MatrixControl() {
 MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
     //create Control with server holding modules
 
-    wiringPiSetup();
+//    wiringPiSetup();
     list<ModuleEntity*> mods = server->getModules();
     for (auto it = mods.begin(); it != mods.end(); it++) {
         shiftData *s = new shiftData();
@@ -28,7 +28,7 @@ MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
         //        cout << s->id << "id";
         s->reg1 = 0;
         s->reg2 = 0;
-        moduleData.push_back(s);
+        moduleData.insert(moduleData.begin(), s);
     }
 }
 
@@ -43,8 +43,9 @@ Point MatrixControl::indexToLocation(int index, int modId) {
     int cols = ent->getCols();
     int rows = ent->getRows();
     pt.y = floor(index / cols);
-    pt.x = index - (pt.y * rows);
-    //    cout << pt.x;
+    cout << "y"<< pt.y << endl;;
+    pt.x = index - (pt.y * cols) - 1;
+    cout << "x"<< pt.x << endl;;
 
     return pt;
 }
@@ -52,7 +53,9 @@ Point MatrixControl::indexToLocation(int index, int modId) {
 void MatrixControl::ledOn(int index, int modId) {
     // call indextolocation
     //update the shiftData registers
-    Point pt = {1, 1}; //indexToLocation(index, modId);
+    Point pt = indexToLocation(index, modId);
+    cout << pt.x << endl;
+    cout << pt.y << endl;
     list<ModuleEntity*> mods = server->getModules();
 
     shiftData *s;
@@ -66,7 +69,7 @@ void MatrixControl::ledOn(int index, int modId) {
         return;
     }
     setByte(pt.x, s);
-    setByte(pt.y + 11, s);
+    setByte(pt.y + 10, s);
 }
 
 void MatrixControl::reset() {
@@ -85,26 +88,24 @@ void MatrixControl::update() {
     for (auto it = moduleData.begin(); it != moduleData.end(); it++) {
         unsigned char firstByte = (*it)->reg1;
         unsigned char secondByte = (*it)->reg2;
-        for (int flipBit = 11; flipBit <= 16; flipBit++) {
+        for (int flipBit = 10; flipBit <= 15; flipBit++) {
             auto findMappedPin = pinMapping.find(flipBit);
             int mapPin = findMappedPin->second;
             //flip pin to be Y
-                            printf("%d\n",mapPin);
-                            printf("noflip %02x\n",firstByte);
-                            printf("noflip %02x\n",secondByte);
-            if (mapPin <= 8) {
+//                            printf("%d\n",mapPin);
+//                            printf("noflip %02x\n",firstByte);
+//                            printf("noflip %02x\n",secondByte);
+            if (mapPin < 8) {
                 unsigned char flipByte = pow(2, mapPin);
                 firstByte ^= flipByte;
             } else {
                 unsigned char flipByte = pow(2, mapPin - 8);
                 secondByte ^= flipByte;
             }
-                            printf("flip %02x\n",firstByte);
-                            printf("flip %02x\n",secondByte);
+//                            printf("flip %02x\n",firstByte);
+//                            printf("flip %02x\n",secondByte);
         }
         
-                            printf("flip %02x\n",firstByte);
-                            printf("flip %02x\n",secondByte);
         sd.sendShiftData(firstByte);
         sd.sendShiftData(secondByte);
     }
@@ -118,13 +119,13 @@ void MatrixControl::setByte(int pin, shiftData *sData) {
     if (actualPin > 7) {
         shift = 8;
     }
-    unsigned char pinVal = (unsigned char) pow(2, actualPin - shift);
+    unsigned char pinVal = (unsigned char) pow(2, (actualPin - shift));
 
-    if (actualPin <= 7) {
+    if (actualPin < 8) {
         sData->reg1 |= pinVal;
     } else {
         sData->reg2 |= pinVal;
-        //        printf("\n%02x 128 act%dpin shift = %d \n", pinVal, actualPin, shift);
+//                printf("\n%02x 128 act%dpin shift = %d \n", pinVal, actualPin, shift);
     }
 }
 

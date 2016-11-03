@@ -16,7 +16,6 @@ StorageManagement::StorageManagement() {
     for (auto it = j.begin(); it != j.end(); ++it) {
         ModuleEntity *mod = config.getModule(*it);
         modules->addModule(mod);
-        delete mod;
     }
     //cout <<	modules->getModuleById(0)->getRows();
 
