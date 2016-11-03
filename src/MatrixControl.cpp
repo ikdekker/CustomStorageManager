@@ -87,18 +87,7 @@ void MatrixControl::update() {
     for (auto it = moduleData.begin(); it != moduleData.end(); it++) {
         unsigned char firstByte = (*it)->reg1;
         unsigned char secondByte = (*it)->reg2;
-        for (int flipBit = 10; flipBit < 15; flipBit++) {
-            auto findMappedPin = pinMapping.find(flipBit);
-            int mapPin = findMappedPin->second;
-            //flip pin to be Y
-            unsigned char flipByte = pow(2, mapPin - 1);
-            if (mapPin < 8) {
-                firstByte ^= flipByte;
-            } else {
-                secondByte ^= flipByte;
-            }
-        }
-        for (int flipBit = 10; flipBit < 15; flipBit++) {
+        for (int flipBit = 11; flipBit < 16; flipBit++) {
             auto findMappedPin = pinMapping.find(flipBit);
             int mapPin = findMappedPin->second;
             //flip pin to be Y
