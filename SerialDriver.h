@@ -23,7 +23,7 @@ class SerialDriver {
 public:
     SerialDriver();
     virtual ~SerialDriver();
-    void sendShiftData(shiftData);
+    void sendShiftData(unsigned char);
     void setLatch(bool state);
 private:
     int latchPin = 2;

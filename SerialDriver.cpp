@@ -13,8 +13,8 @@
 
 #include "SerialDriver.h"
 #include <iostream>
+
 SerialDriver::SerialDriver() {
-    wiringPiSetup();
     pinMode(clockPin, OUTPUT);
     pinMode(dataPin, OUTPUT);
     pinMode(latchPin, OUTPUT);
@@ -23,11 +23,9 @@ SerialDriver::SerialDriver() {
 SerialDriver::~SerialDriver() {
 }
 
-void SerialDriver::sendShiftData(shiftData shift) {
-    std::cout << shift.reg2 << endl;
-    std::cout << shift.reg1 <<endl;
-    shiftOut(dataPin, clockPin, MSBFIRST, shift.reg2);
-    shiftOut(dataPin, clockPin, MSBFIRST, shift.reg1);
+void SerialDriver::sendShiftData(unsigned char data) {
+        shiftOut(dataPin, clockPin, MSBFIRST, data);
+//        printf("test\r\n%02X\r\n", data);
 }
 
 void SerialDriver::setLatch(bool state) {

@@ -24,7 +24,7 @@ using namespace std;
 int main(int argc, char** argv) {
     StorageManagement *s = new StorageManagement();
     MatrixControl *a = new MatrixControl(s->getServer());
-    a->ledOn(5, 1);
+    a->ledOn(5, 0);
     a->update();
     return 0;
 }

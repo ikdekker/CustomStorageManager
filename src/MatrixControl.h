@@ -39,6 +39,7 @@ private:
     vector<shiftData*> moduleData;
     unsigned char getFirstByte(int,int);
     unsigned char getSecondByte(int,int);
+    void setByte(int, shiftData*);
     map<int,int> pinMapping {{8,1},{3,2},{16,3},{5,4},{9,5},{15,6},{10,7},{13,8},{4,9},{11,10},{12,11},{7,12},{14,13},{6,14},{2,15},{1,16}};
 };
 
