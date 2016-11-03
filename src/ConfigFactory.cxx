@@ -14,6 +14,7 @@ json ConfigFactory::getModuleJson() {
         // specific handling for all exceptions extending std::exception
         cerr << "Error occurred: " << ex.what() << endl;
     }
+    cout << moduleJson;
 
     return moduleJson;
 }

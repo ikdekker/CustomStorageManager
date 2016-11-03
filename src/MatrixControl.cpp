@@ -25,6 +25,7 @@ MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
     for (auto it = mods.begin(); it != mods.end(); it++) {
         shiftData *s = new shiftData();
         s->id = (*it)->getId();
+        cout << s->id << "id";
         s->reg1 = 0;
         s->reg2 = 0;
         moduleData.push_back(s);
@@ -50,6 +51,7 @@ Point MatrixControl::indexToLocation(int index, int modId) {
 }
 
 void MatrixControl::ledOn(int index, int modId) {
+    cout << modId;
     // call indextolocation
     //update the shiftData registers
     Point pt = {1, 1}; //indexToLocation(index, modId);
@@ -57,10 +59,12 @@ void MatrixControl::ledOn(int index, int modId) {
     for (auto it = mods.begin(); it != mods.end(); it++) {
         shiftData *s;
         for (auto moduleIterator = moduleData.begin(); moduleIterator != moduleData.end(); moduleIterator++) {
-            if ((*moduleIterator)->id == modId)
+            if ((*moduleIterator)->id == modId) {
                 s = (*moduleIterator);
+            }
         }
-        if (!s) {
+        if (s == nullptr) {
+            printf("module doesent exist");
             return;
         }
         s->id = (*it)->getId();
@@ -69,8 +73,8 @@ void MatrixControl::ledOn(int index, int modId) {
         cout << pt.y << endl;
         setByte(pt.x, s);
         setByte(pt.y + 10, s);
-        moduleData.push_back(s);
     }
+        cout <<"doneth"<< endl;
 }
 
 void MatrixControl::reset() {

@@ -24,8 +24,13 @@ using namespace std;
 int main(int argc, char** argv) {
     StorageManagement *s = new StorageManagement();
     MatrixControl *a = new MatrixControl(s->getServer());
+    while(1){
+            printf("1t");
     a->ledOn(5, 0);
+            printf("2t");
     a->update();
+            printf("3t");
+    }
     return 0;
 }
 
