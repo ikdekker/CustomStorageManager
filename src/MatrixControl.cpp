@@ -20,7 +20,7 @@ MatrixControl::~MatrixControl() {
 MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
     //create Control with server holding modules
 
-//    wiringPiSetup();
+    wiringPiSetup();
     list<ModuleEntity*> mods = server->getModules();
     for (auto it = mods.begin(); it != mods.end(); it++) {
         shiftData *s = new shiftData();
@@ -106,8 +106,8 @@ void MatrixControl::update() {
 //                            printf("flip %02x\n",secondByte);
         }
         
-        sd.sendShiftData(firstByte);
         sd.sendShiftData(secondByte);
+        sd.sendShiftData(firstByte);
     }
     sd.setLatch(true);
 }

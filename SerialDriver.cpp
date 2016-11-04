@@ -24,6 +24,7 @@ SerialDriver::~SerialDriver() {
 }
 
 void SerialDriver::sendShiftData(unsigned char data) {
+	cout << (int) data;
         shiftOut(dataPin, clockPin, MSBFIRST, data);
 //        printf("test\r\n%02X\r\n", data);
 }
