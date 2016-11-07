@@ -4,8 +4,6 @@
 #include <vector>
 
 json ConfigFactory::getModuleJson() {
-    cout << "Reading config file" << endl;
-
     ifstream f("config/modules.json");
     json moduleJson;
     try {
@@ -14,7 +12,7 @@ json ConfigFactory::getModuleJson() {
         // specific handling for all exceptions extending std::exception
         cerr << "Error occurred: " << ex.what() << endl;
     }
-    cout << moduleJson;
+//    cout << moduleJson;
 
     return moduleJson;
 }

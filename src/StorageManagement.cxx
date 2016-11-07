@@ -1,4 +1,5 @@
 #include "StorageManagement.h"
+#include "src/DatabaseAdapter.h"
 #include <math.h>
 #include <iostream>
 #include <algorithm>
@@ -25,9 +26,7 @@ void StorageManagement::setDbAdapter(DatabaseAdapter* db) {
     dbAdapter = db;
 }
 
-
 int StorageManagement::findFreeSpot(int modId) {
-    cout << modId;
     vector<int> *res = dbAdapter->getEntriesByModule(modId);
     ModuleEntity *mod = modules->getModuleById(modId);
 
@@ -41,14 +40,12 @@ int StorageManagement::findFreeSpot(int modId) {
 
         //check if row is disabled, if not, return the open spot
         if (mod->checkDisabled(nextSpot) == false) {
-            delete res;
             return nextSpot;
         }
 
     }
-
     delete res;
-    return -1;
+    return 1;
 }
 
 void StorageManagement::setModuleServer(ModuleServer* mServer) {
@@ -62,4 +59,27 @@ StorageManagement::~StorageManagement() {
 
 ModuleServer* StorageManagement::getServer() {
     return modules;
+}
+
+int StorageManagement::addLicenseEmpty(bool print, int modId) {
+    string license;
+    cin >> license;
+    productData p;
+    int free = findFreeSpot(modId);
+    int realIndex = dbAdapter->addProduct(free, license, p, modId);
+    if (print) {
+        printLicenseLocation(realIndex, license, modId);
+    } 
+    return 1;
+}
+
+void StorageManagement::printLicenseLocation(int index, string license, int modId) {
+    productData p;
+    Point loc = matrix->indexToLocation(index, modId);
+    cout << "De locatie voor onderdelen voor de auto met kenteken " << license;
+        printf(" is: rij %d kolom %d\n", loc.y + 1, loc.x + 1);
+}
+
+void StorageManagement::setMatrix(MatrixControl* mControl) {
+    matrix = mControl;
 }
