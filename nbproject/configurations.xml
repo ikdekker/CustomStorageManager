@@ -5,10 +5,11 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>src/ConfigFactory.h</itemPath>
+      <itemPath>src/DatabaseAdapter.h</itemPath>
       <itemPath>src/MatrixControl.h</itemPath>
       <itemPath>src/ModuleEntity.h</itemPath>
       <itemPath>src/ModuleServer.h</itemPath>
-      <itemPath>SerialDriver.h</itemPath>
+      <itemPath>src/SerialDriver.h</itemPath>
       <itemPath>src/StorageManagement.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -20,10 +21,11 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/ConfigFactory.cxx</itemPath>
+      <itemPath>src/DatabaseAdapter.cxx</itemPath>
       <itemPath>src/MatrixControl.cpp</itemPath>
       <itemPath>src/ModuleEntity.cxx</itemPath>
       <itemPath>src/ModuleServer.cxx</itemPath>
-      <itemPath>SerialDriver.cpp</itemPath>
+      <itemPath>src/SerialDriver.cpp</itemPath>
       <itemPath>src/StorageManagement.cxx</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -46,6 +48,13 @@
         <itemPath>tests/EntityTest.cpp</itemPath>
         <itemPath>tests/EntityTest.h</itemPath>
         <itemPath>tests/EntityTestRunner.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5"
+                     displayName="Index alloc test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/IndexAllocRunner.cpp</itemPath>
+        <itemPath>tests/IndexAllocationTest.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f4"
                      displayName="Matrix control test"
@@ -103,21 +112,18 @@
           <linkerAddLib>
             <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
             <pElem>lib/cpputest-3.8/lib</pElem>
+            <pElem>/usr/lib/mysql</pElem>
+            <pElem>/usr/lib/x86_64-linux-gnu</pElem>
+            <pElem>/usr/include/cppconn</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
           <linkerLibItems>
             <linkerLibLibItem>CppUTest</linkerLibLibItem>
             <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
-            <linkerLibLibItem>CppUTest</linkerLibLibItem>
-            <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
           </linkerLibItems>
-          <commandLine>-lCppUTest -lCppUTestExt -lwiringPi -lpthread</commandLine>
+          <commandLine>-lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn</commandLine>
         </linkerTool>
       </compileType>
-      <item path="SerialDriver.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="SerialDriver.h" ex="false" tool="3" flavor2="0">
-      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -174,11 +180,44 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/cppunit</pElem>
+            <pElem>/usr/lib</pElem>
+            <pElem>lib/gtest</pElem>
+            <pElem>/usr/include/cppconn</pElem>
+            <pElem>lib/cpputest-3.8</pElem>
+            <pElem>lib/cpputest-3.8/include</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+          <linkerAddLib>
+            <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
+            <pElem>lib/cpputest-3.8/lib</pElem>
+            <pElem>/usr/lib/mysql</pElem>
+            <pElem>/usr/lib/x86_64-linux-gnu</pElem>
+            <pElem>/usr/include/cppconn</pElem>
+          </linkerAddLib>
+          <commandLine>-lmysqlclient -lmysqlcppconn</commandLine>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/DatabaseAdapter.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/DatabaseAdapter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/MatrixControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -191,6 +230,10 @@
       <item path="src/ModuleServer.cxx" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ModuleServer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SerialDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SerialDriver.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/StorageManagement.cxx" ex="false" tool="1" flavor2="0">
       </item>
@@ -207,6 +250,10 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocationTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/MatrixControlTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -253,10 +300,6 @@
           <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </compileType>
-      <item path="SerialDriver.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="SerialDriver.h" ex="false" tool="3" flavor2="0">
-      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -313,11 +356,30 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/DatabaseAdapter.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/DatabaseAdapter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/MatrixControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -330,6 +392,10 @@
       <item path="src/ModuleServer.cxx" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ModuleServer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/SerialDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/SerialDriver.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/StorageManagement.cxx" ex="false" tool="1" flavor2="0">
       </item>
@@ -346,6 +412,10 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/IndexAllocationTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/MatrixControlTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

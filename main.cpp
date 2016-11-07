@@ -15,7 +15,7 @@
 
 #include "src/StorageManagement.h"
 #include "src/MatrixControl.h"
-
+#include "src/DatabaseAdapter.h"
 using namespace std;
 
 /*
@@ -24,8 +24,14 @@ using namespace std;
 int main(int argc, char** argv) {
     StorageManagement *s = new StorageManagement();
     MatrixControl *a = new MatrixControl(s->getServer());
-    a->ledOn(10, 0);
-    a->update();
+//    a->ledOn(10, 0);
+//    a->update();
+    DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
+    s->setMatrix(a);
+    s->setDbAdapter(db);
+    while(1) {
+    s->addLicenseEmpty(1,0);
+    }
     return 0;
 }
 

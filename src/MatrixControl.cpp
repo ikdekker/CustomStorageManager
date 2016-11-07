@@ -43,9 +43,7 @@ Point MatrixControl::indexToLocation(int index, int modId) {
     int cols = ent->getCols();
     int rows = ent->getRows();
     pt.y = floor(index / cols);
-    cout << "y"<< pt.y << endl;;
-    pt.x = index - (pt.y * cols) - 1;
-    cout << "x"<< pt.x << endl;;
+    pt.x = index - (pt.y * cols);
 
     return pt;
 }

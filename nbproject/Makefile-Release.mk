@@ -35,12 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/SerialDriver.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
+	${OBJECTDIR}/src/DatabaseAdapter.o \
 	${OBJECTDIR}/src/MatrixControl.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
 	${OBJECTDIR}/src/ModuleServer.o \
+	${OBJECTDIR}/src/SerialDriver.o \
 	${OBJECTDIR}/src/StorageManagement.o
 
 # Test Directory
@@ -50,6 +51,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3
 
@@ -59,6 +61,8 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/ConfigParserTest.o \
 	${TESTDIR}/tests/EntityTest.o \
 	${TESTDIR}/tests/EntityTestRunner.o \
+	${TESTDIR}/tests/IndexAllocRunner.o \
+	${TESTDIR}/tests/IndexAllocationTest.o \
 	${TESTDIR}/tests/MatrixControlTest.o \
 	${TESTDIR}/tests/MatrixControlTestRunner.o \
 	${TESTDIR}/tests/ModuleServerTest.o \
@@ -88,11 +92,6 @@ ${TESTDIR}/TestFiles/f6: ${OBJECTFILES}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/SerialDriver.o: SerialDriver.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SerialDriver.o SerialDriver.cpp
-
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -102,6 +101,11 @@ ${OBJECTDIR}/src/ConfigFactory.o: src/ConfigFactory.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory.o src/ConfigFactory.cxx
+
+${OBJECTDIR}/src/DatabaseAdapter.o: src/DatabaseAdapter.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx
 
 ${OBJECTDIR}/src/MatrixControl.o: src/MatrixControl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -117,6 +121,11 @@ ${OBJECTDIR}/src/ModuleServer.o: src/ModuleServer.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer.o src/ModuleServer.cxx
+
+${OBJECTDIR}/src/SerialDriver.o: src/SerialDriver.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SerialDriver.o src/SerialDriver.cpp
 
 ${OBJECTDIR}/src/StorageManagement.o: src/StorageManagement.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -137,6 +146,10 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ConfigParserRunner.o ${TESTDIR}/tests/
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/EntityTest.o ${TESTDIR}/tests/EntityTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/IndexAllocRunner.o ${TESTDIR}/tests/IndexAllocationTest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} 
 
 ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/MatrixControlTest.o ${TESTDIR}/tests/MatrixControlTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
@@ -171,6 +184,18 @@ ${TESTDIR}/tests/EntityTestRunner.o: tests/EntityTestRunner.cpp
 	$(COMPILE.cc) -O2 -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTestRunner.o tests/EntityTestRunner.cpp
 
 
+${TESTDIR}/tests/IndexAllocRunner.o: tests/IndexAllocRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/IndexAllocRunner.o tests/IndexAllocRunner.cpp
+
+
+${TESTDIR}/tests/IndexAllocationTest.o: tests/IndexAllocationTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/IndexAllocationTest.o tests/IndexAllocationTest.cpp
+
+
 ${TESTDIR}/tests/MatrixControlTest.o: tests/MatrixControlTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
@@ -194,19 +219,6 @@ ${TESTDIR}/tests/ModuleServerTestRunner.o: tests/ModuleServerTestRunner.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
 
-
-${OBJECTDIR}/SerialDriver_nomain.o: ${OBJECTDIR}/SerialDriver.o SerialDriver.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/SerialDriver.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SerialDriver_nomain.o SerialDriver.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/SerialDriver.o ${OBJECTDIR}/SerialDriver_nomain.o;\
-	fi
 
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -232,6 +244,19 @@ ${OBJECTDIR}/src/ConfigFactory_nomain.o: ${OBJECTDIR}/src/ConfigFactory.o src/Co
 	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigFactory_nomain.o src/ConfigFactory.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ConfigFactory.o ${OBJECTDIR}/src/ConfigFactory_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/DatabaseAdapter_nomain.o: ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/DatabaseAdapter.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter_nomain.o src/DatabaseAdapter.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/DatabaseAdapter.o ${OBJECTDIR}/src/DatabaseAdapter_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/MatrixControl_nomain.o: ${OBJECTDIR}/src/MatrixControl.o src/MatrixControl.cpp 
@@ -273,6 +298,19 @@ ${OBJECTDIR}/src/ModuleServer_nomain.o: ${OBJECTDIR}/src/ModuleServer.o src/Modu
 	    ${CP} ${OBJECTDIR}/src/ModuleServer.o ${OBJECTDIR}/src/ModuleServer_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/SerialDriver_nomain.o: ${OBJECTDIR}/src/SerialDriver.o src/SerialDriver.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/SerialDriver.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SerialDriver_nomain.o src/SerialDriver.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/SerialDriver.o ${OBJECTDIR}/src/SerialDriver_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.o src/StorageManagement.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/StorageManagement.o`; \
@@ -292,6 +330,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	else  \
