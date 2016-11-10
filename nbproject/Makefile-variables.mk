@@ -8,9 +8,9 @@ CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
-CND_ARTIFACT_DIR_Debug=build/Debug/GNU-Linux/tests/TestFiles
-CND_ARTIFACT_NAME_Debug=f6
-CND_ARTIFACT_PATH_Debug=build/Debug/GNU-Linux/tests/TestFiles/f6
+CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
+CND_ARTIFACT_NAME_Debug=utest
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/utest
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
 CND_PACKAGE_NAME_Debug=utest.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/utest.tar

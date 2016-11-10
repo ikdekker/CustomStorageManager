@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/ExternalConnector.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
 	${OBJECTDIR}/src/DatabaseAdapter.o \
@@ -51,6 +52,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f6 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3
@@ -61,6 +63,8 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/ConfigParserTest.o \
 	${TESTDIR}/tests/EntityTest.o \
 	${TESTDIR}/tests/EntityTestRunner.o \
+	${TESTDIR}/tests/ExternalConnectorTest.o \
+	${TESTDIR}/tests/ExternalTestRunner.o \
 	${TESTDIR}/tests/IndexAllocRunner.o \
 	${TESTDIR}/tests/IndexAllocationTest.o \
 	${TESTDIR}/tests/MatrixControlTest.o \
@@ -82,15 +86,20 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gnu -L/usr/include/cppconn -lCppUTest -lCppUTestExt
+LDLIBSOPTIONS=-Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gnu -L/usr/include/cppconn -L/usr/include/cppunit -lCppUTest -lCppUTestExt
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${TESTDIR}/TestFiles/f6
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest
 
-${TESTDIR}/TestFiles/f6: ${OBJECTFILES}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn -s
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTest -lCppUTestExt -lpthread -lmysqlclient -lmysqlcppconn -lcppunit -ldl -lwiringPi -s
+
+${OBJECTDIR}/ExternalConnector.o: ExternalConnector.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExternalConnector.o ExternalConnector.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -141,35 +150,39 @@ ${OBJECTDIR}/src/StorageManagement.o: src/StorageManagement.cxx
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ConfigParserRunner.o ${TESTDIR}/tests/ConfigParserTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/EntityTest.o ${TESTDIR}/tests/EntityTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/ExternalConnectorTest.o ${TESTDIR}/tests/ExternalTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/IndexAllocRunner.o ${TESTDIR}/tests/IndexAllocationTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}  -lmysqlclient -lmysqlcppconn -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gnu -L/usr/include/cppconn 
+	${LINK.cc} -lwiringPi  -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gnu -L/usr/include/cppconn 
 
 ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/MatrixControlTest.o ${TESTDIR}/tests/MatrixControlTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ModuleServerTest.o ${TESTDIR}/tests/ModuleServerTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+	${LINK.cc} -lwiringPi  -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
 
 
 ${TESTDIR}/tests/ConfigParserRunner.o: tests/ConfigParserRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserRunner.o tests/ConfigParserRunner.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --libs` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserRunner.o tests/ConfigParserRunner.cpp
 
 
 ${TESTDIR}/tests/ConfigParserTest.o: tests/ConfigParserTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserTest.o tests/ConfigParserTest.cpp
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --libs` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ConfigParserTest.o tests/ConfigParserTest.cpp
 
 
 ${TESTDIR}/tests/EntityTest.o: tests/EntityTest.cpp 
@@ -182,6 +195,18 @@ ${TESTDIR}/tests/EntityTestRunner.o: tests/EntityTestRunner.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTestRunner.o tests/EntityTestRunner.cpp
+
+
+${TESTDIR}/tests/ExternalConnectorTest.o: tests/ExternalConnectorTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExternalConnectorTest.o tests/ExternalConnectorTest.cpp
+
+
+${TESTDIR}/tests/ExternalTestRunner.o: tests/ExternalTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExternalTestRunner.o tests/ExternalTestRunner.cpp
 
 
 ${TESTDIR}/tests/IndexAllocRunner.o: tests/IndexAllocRunner.cpp 
@@ -219,6 +244,19 @@ ${TESTDIR}/tests/ModuleServerTestRunner.o: tests/ModuleServerTestRunner.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
 
+
+${OBJECTDIR}/ExternalConnector_nomain.o: ${OBJECTDIR}/ExternalConnector.o ExternalConnector.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExternalConnector.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExternalConnector_nomain.o ExternalConnector.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ExternalConnector.o ${OBJECTDIR}/ExternalConnector_nomain.o;\
+	fi
 
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -330,6 +368,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
@@ -340,7 +379,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${TESTDIR}/TestFiles/f6
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest
 
 # Subprojects
 .clean-subprojects:

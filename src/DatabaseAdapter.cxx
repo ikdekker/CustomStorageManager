@@ -9,7 +9,7 @@ DatabaseAdapter::DatabaseAdapter(string db, string user, string pass) {
     connection = driver->connect("localhost", user, pass);
     connection->setSchema(db);
     stmt = connection->createStatement();
-    res = stmt->executeQuery("Select * from `parts_allocation`");
+    res = stmt->executeQuery("Select * from `part_allocation`");
 
     while (res->next()) {
 //        cout << "\t" << res->getString("module_id");
@@ -27,14 +27,14 @@ int DatabaseAdapter::addProduct(int index, string license, productData product, 
     driver = get_driver_instance();
     stmt = connection->createStatement();
     string products;
-    res = stmt->executeQuery("Select * from `parts_allocation` where license_plate='" + license + "'");
+    res = stmt->executeQuery("Select * from `part_allocation` where license_plate='" + license + "'");
  
     if (!res->next()) {
         cout << "Nieuwe locatie voor " << license << endl;
         //create new entry in DB
         //bind query
         //        bind newIndex + module + license + productData as json;
-        pstmt = connection->prepareStatement("INSERT INTO parts_allocation(`index`,`module_id`,`license_plate`,`products`) VALUES (?,?,?,?)");
+        pstmt = connection->prepareStatement("INSERT INTO part_allocation(`index`,`module_id`,`license_plate`,`products`) VALUES (?,?,?,?)");
         pstmt->setInt(1, index);
         pstmt->setInt(2, modId);
         pstmt->setString(3, license);
@@ -43,7 +43,7 @@ int DatabaseAdapter::addProduct(int index, string license, productData product, 
     } else {
         res->previous();
         if (!product.empty()) {
-            pstmt = connection->prepareStatement("UPDATE parts_allocation SET products=? WHERE license=?");
+            pstmt = connection->prepareStatement("UPDATE part_allocation SET products=? WHERE license=?");
             pstmt->setString(1, products);
             pstmt->setString(2,license);
             pstmt->execute();
@@ -67,7 +67,7 @@ vector<int>* DatabaseAdapter::getEntriesByModule(int moduleId) {
     stmt = connection->createStatement();
     string products;
 
-    res = stmt->executeQuery("select * from `parts_allocation` where module_id = 0");
+    res = stmt->executeQuery("select * from `part_allocation` where module_id = 0");
 
 
     while (res->next()) {

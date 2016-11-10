@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>src/ConfigFactory.h</itemPath>
       <itemPath>src/DatabaseAdapter.h</itemPath>
+      <itemPath>ExternalConnector.h</itemPath>
       <itemPath>src/MatrixControl.h</itemPath>
       <itemPath>src/ModuleEntity.h</itemPath>
       <itemPath>src/ModuleServer.h</itemPath>
@@ -22,6 +23,7 @@
                    projectFiles="true">
       <itemPath>src/ConfigFactory.cxx</itemPath>
       <itemPath>src/DatabaseAdapter.cxx</itemPath>
+      <itemPath>ExternalConnector.cpp</itemPath>
       <itemPath>src/MatrixControl.cpp</itemPath>
       <itemPath>src/ModuleEntity.cxx</itemPath>
       <itemPath>src/ModuleServer.cxx</itemPath>
@@ -48,6 +50,14 @@
         <itemPath>tests/EntityTest.cpp</itemPath>
         <itemPath>tests/EntityTest.h</itemPath>
         <itemPath>tests/EntityTestRunner.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6"
+                     displayName="External data test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/ExternalConnectorTest.cpp</itemPath>
+        <itemPath>tests/ExternalConnectorTest.h</itemPath>
+        <itemPath>tests/ExternalTestRunner.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="Index alloc test"
@@ -108,34 +118,50 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
           <linkerAddLib>
-            <pElem>/home/nick/Desktop/stage/lib/mysql/lib</pElem>
             <pElem>lib/cpputest-3.8/lib</pElem>
             <pElem>/usr/lib/mysql</pElem>
             <pElem>/usr/lib/x86_64-linux-gnu</pElem>
             <pElem>/usr/include/cppconn</pElem>
+            <pElem>/usr/include/cppunit</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
           <linkerLibItems>
             <linkerLibLibItem>CppUTest</linkerLibLibItem>
             <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
           </linkerLibItems>
-          <commandLine>-lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn</commandLine>
+          <commandLine>-lCppUTest -lCppUTestExt -lpthread -lmysqlclient -lmysqlcppconn -lcppunit -ldl -lwiringPi</commandLine>
         </linkerTool>
       </compileType>
+      <item path="ExternalConnector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ExternalConnector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles">
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/include/cppunit</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerOptionItem>-lwiringPi</linkerOptionItem>
+            <linkerOptionItem>-lmysqlcppconn</linkerOptionItem>
+          </linkerLibItems>
+          <commandLine>-lwiringPi</commandLine>
+        </linkerTool>
+      </folder>
       <folder path="TestFiles/f1">
         <cTool>
-          <commandLine>`cppunit-config --cflags`</commandLine>
+          <commandLine>`cppunit-config --libs`</commandLine>
         </cTool>
         <ccTool>
-          <commandLine>`cppunit-config --cflags`</commandLine>
+          <commandLine>`cppunit-config --libs`</commandLine>
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f1</output>
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
+          <commandLine>-lwiringPi</commandLine>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f2">
@@ -150,6 +176,7 @@
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
+          <commandLine>-lwiringPi</commandLine>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f3">
@@ -178,6 +205,7 @@
           <linkerLibItems>
             <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
           </linkerLibItems>
+          <commandLine>-lwiringPi</commandLine>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f5">
@@ -206,7 +234,21 @@
             <pElem>/usr/lib/x86_64-linux-gnu</pElem>
             <pElem>/usr/include/cppconn</pElem>
           </linkerAddLib>
-          <commandLine>-lmysqlclient -lmysqlcppconn</commandLine>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+          <commandLine>-lwiringPi</commandLine>
         </linkerTool>
       </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -250,6 +292,12 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ExternalConnectorTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ExternalConnectorTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExternalTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/IndexAllocRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -298,8 +346,20 @@
         </asmTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerAddLib>
+            <pElem>lib/cpputest-3.8/lib</pElem>
+            <pElem>/usr/lib/mysql</pElem>
+            <pElem>/usr/lib/x86_64-linux-gnu</pElem>
+            <pElem>/usr/include/cppconn</pElem>
+            <pElem>/usr/include/cppunit</pElem>
+          </linkerAddLib>
+          <commandLine>-lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn</commandLine>
         </linkerTool>
       </compileType>
+      <item path="ExternalConnector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ExternalConnector.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -371,6 +431,20 @@
           <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ConfigFactory.cxx" ex="false" tool="1" flavor2="0">
@@ -412,6 +486,12 @@
       <item path="tests/EntityTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/EntityTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ExternalConnectorTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/ExternalConnectorTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExternalTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/IndexAllocRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>

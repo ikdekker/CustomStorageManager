@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/ExternalConnector.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
 	${OBJECTDIR}/src/DatabaseAdapter.o \
@@ -51,6 +52,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f6 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3
@@ -61,6 +63,8 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/ConfigParserTest.o \
 	${TESTDIR}/tests/EntityTest.o \
 	${TESTDIR}/tests/EntityTestRunner.o \
+	${TESTDIR}/tests/ExternalConnectorTest.o \
+	${TESTDIR}/tests/ExternalTestRunner.o \
 	${TESTDIR}/tests/IndexAllocRunner.o \
 	${TESTDIR}/tests/IndexAllocationTest.o \
 	${TESTDIR}/tests/MatrixControlTest.o \
@@ -82,7 +86,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gnu -L/usr/include/cppconn -L/usr/include/cppunit
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -90,7 +94,12 @@ LDLIBSOPTIONS=
 
 ${TESTDIR}/TestFiles/f6: ${OBJECTFILES}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn
+
+${OBJECTDIR}/ExternalConnector.o: ExternalConnector.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExternalConnector.o ExternalConnector.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -147,6 +156,10 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/EntityTest.o ${TESTDIR}/tests/EntityTe
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/ExternalConnectorTest.o ${TESTDIR}/tests/ExternalTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/IndexAllocRunner.o ${TESTDIR}/tests/IndexAllocationTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} 
@@ -184,6 +197,18 @@ ${TESTDIR}/tests/EntityTestRunner.o: tests/EntityTestRunner.cpp
 	$(COMPILE.cc) -O2 -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/EntityTestRunner.o tests/EntityTestRunner.cpp
 
 
+${TESTDIR}/tests/ExternalConnectorTest.o: tests/ExternalConnectorTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExternalConnectorTest.o tests/ExternalConnectorTest.cpp
+
+
+${TESTDIR}/tests/ExternalTestRunner.o: tests/ExternalTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExternalTestRunner.o tests/ExternalTestRunner.cpp
+
+
 ${TESTDIR}/tests/IndexAllocRunner.o: tests/IndexAllocRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
@@ -219,6 +244,19 @@ ${TESTDIR}/tests/ModuleServerTestRunner.o: tests/ModuleServerTestRunner.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
 
+
+${OBJECTDIR}/ExternalConnector_nomain.o: ${OBJECTDIR}/ExternalConnector.o ExternalConnector.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExternalConnector.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExternalConnector_nomain.o ExternalConnector.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ExternalConnector.o ${OBJECTDIR}/ExternalConnector_nomain.o;\
+	fi
 
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -330,6 +368,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
