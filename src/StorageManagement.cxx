@@ -1,5 +1,6 @@
 #include "StorageManagement.h"
 #include "src/DatabaseAdapter.h"
+#include "ScannerReader.h"
 #include <math.h>
 #include <iostream>
 #include <algorithm>
@@ -12,6 +13,7 @@ StorageManagement::StorageManagement() {
     //        dbAdapter = new DatabaseAdapter("digo_parts_db", "root", "digo_secret");
     ConfigFactory config;
     modules = new ModuleServer();
+    scanReader = new ScannerReader();
     json j = config.getModuleJson();
 
     for (auto it = j.begin(); it != j.end(); ++it) {
@@ -64,9 +66,8 @@ ModuleServer* StorageManagement::getServer() {
 int StorageManagement::addLicenseEmpty(bool print, int modId) {
     string license;
     cin >> license;
-    productData p;
     int free = findFreeSpot(modId);
-    int realIndex = dbAdapter->addProduct(free, license, p, modId);
+    int realIndex = dbAdapter->addOrder(free, license, modId);
     if (print) {
         printLicenseLocation(realIndex, license, modId);
     } 
@@ -82,4 +83,25 @@ void StorageManagement::printLicenseLocation(int index, string license, int modI
 
 void StorageManagement::setMatrix(MatrixControl* mControl) {
     matrix = mControl;
+}
+
+void StorageManagement::run() {
+    
+	scanReader->start();
+	string lastCode;
+	while (1) {
+		if (scanReader->isRunning()) {
+			if (scanReader->hasRead()) {
+				lastCode = scanReader->getLastRead();
+//				cout << lastCode << endl;
+                                //todo test for external connection result
+                                int modId = 0;
+                                int index = dbAdapter->addOrder(findFreeSpot(modId), lastCode, modId);
+                                matrix->ledOn(index, modId);
+                                
+				cout << index << endl;
+			}
+		}
+                matrix->update();
+	}
 }

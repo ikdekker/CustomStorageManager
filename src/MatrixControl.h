@@ -27,7 +27,7 @@ struct shiftData {
 class MatrixControl {
 public:
     MatrixControl(ModuleServer* server);
-    void ledOn(int, int);
+    void ledOn(int index, int modId);
     void runThrough(int);
     void reset();
     void update();

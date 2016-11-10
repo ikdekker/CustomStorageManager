@@ -29,7 +29,7 @@ class DatabaseAdapter {
 public:
 	DatabaseAdapter(string db, string user, string pass);
         virtual vector<int>* getEntriesByModule(int moduleId);;
-	int addProduct(int index, string license, productData products, int moduleId);
+	int addOrder(int index, string werkorder, int moduleId);
 private:
 	sql::Connection *connection;
 };

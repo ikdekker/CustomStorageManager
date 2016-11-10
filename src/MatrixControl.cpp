@@ -52,8 +52,6 @@ void MatrixControl::ledOn(int index, int modId) {
     // call indextolocation
     //update the shiftData registers
     Point pt = indexToLocation(index, modId);
-    cout << pt.x << endl;
-    cout << pt.y << endl;
     list<ModuleEntity*> mods = server->getModules();
 
     shiftData *s;

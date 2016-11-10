@@ -4,6 +4,7 @@
 #include "src/DatabaseAdapter.h"
 #include "src/MatrixControl.h"
 #include "MatrixControl.h"
+#include "src/ScannerReader.h"
 #include <list>
 
 using namespace std;
@@ -19,9 +20,11 @@ class StorageManagement {
                 ModuleServer* getServer();
                 int addLicenseEmpty(bool, int);
                 void printLicenseLocation(int index, string license, int modId);
+                void run();
 	private:
 		ModuleServer *modules;
                 DatabaseAdapter *dbAdapter;
                 MatrixControl *matrix;
+                ScannerReader *scanReader;
 };
 

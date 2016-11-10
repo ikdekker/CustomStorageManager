@@ -29,9 +29,9 @@ int main(int argc, char** argv) {
     DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
     s->setMatrix(a);
     s->setDbAdapter(db);
-    while(1) {
-    s->addLicenseEmpty(1,0);
-    }
+    
+    s->run();
+    
     return 0;
 }
 

@@ -35,13 +35,14 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/ExternalConnector.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
 	${OBJECTDIR}/src/DatabaseAdapter.o \
+	${OBJECTDIR}/src/ExternalConnector.o \
 	${OBJECTDIR}/src/MatrixControl.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
 	${OBJECTDIR}/src/ModuleServer.o \
+	${OBJECTDIR}/src/ScannerReader.o \
 	${OBJECTDIR}/src/SerialDriver.o \
 	${OBJECTDIR}/src/StorageManagement.o
 
@@ -96,11 +97,6 @@ ${TESTDIR}/TestFiles/f6: ${OBJECTFILES}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn
 
-${OBJECTDIR}/ExternalConnector.o: ExternalConnector.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExternalConnector.o ExternalConnector.cpp
-
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -116,6 +112,11 @@ ${OBJECTDIR}/src/DatabaseAdapter.o: src/DatabaseAdapter.cxx
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DatabaseAdapter.o src/DatabaseAdapter.cxx
 
+${OBJECTDIR}/src/ExternalConnector.o: src/ExternalConnector.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ExternalConnector.o src/ExternalConnector.cpp
+
 ${OBJECTDIR}/src/MatrixControl.o: src/MatrixControl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -130,6 +131,11 @@ ${OBJECTDIR}/src/ModuleServer.o: src/ModuleServer.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer.o src/ModuleServer.cxx
+
+${OBJECTDIR}/src/ScannerReader.o: src/ScannerReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ScannerReader.o src/ScannerReader.cpp
 
 ${OBJECTDIR}/src/SerialDriver.o: src/SerialDriver.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -245,19 +251,6 @@ ${TESTDIR}/tests/ModuleServerTestRunner.o: tests/ModuleServerTestRunner.cpp
 	$(COMPILE.cc) -O2 -I. -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
 
 
-${OBJECTDIR}/ExternalConnector_nomain.o: ${OBJECTDIR}/ExternalConnector.o ExternalConnector.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExternalConnector.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExternalConnector_nomain.o ExternalConnector.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/ExternalConnector.o ${OBJECTDIR}/ExternalConnector_nomain.o;\
-	fi
-
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/main.o`; \
@@ -297,6 +290,19 @@ ${OBJECTDIR}/src/DatabaseAdapter_nomain.o: ${OBJECTDIR}/src/DatabaseAdapter.o sr
 	    ${CP} ${OBJECTDIR}/src/DatabaseAdapter.o ${OBJECTDIR}/src/DatabaseAdapter_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/ExternalConnector_nomain.o: ${OBJECTDIR}/src/ExternalConnector.o src/ExternalConnector.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/ExternalConnector.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ExternalConnector_nomain.o src/ExternalConnector.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/ExternalConnector.o ${OBJECTDIR}/src/ExternalConnector_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/MatrixControl_nomain.o: ${OBJECTDIR}/src/MatrixControl.o src/MatrixControl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/MatrixControl.o`; \
@@ -334,6 +340,19 @@ ${OBJECTDIR}/src/ModuleServer_nomain.o: ${OBJECTDIR}/src/ModuleServer.o src/Modu
 	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ModuleServer_nomain.o src/ModuleServer.cxx;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ModuleServer.o ${OBJECTDIR}/src/ModuleServer_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/ScannerReader_nomain.o: ${OBJECTDIR}/src/ScannerReader.o src/ScannerReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/ScannerReader.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ScannerReader_nomain.o src/ScannerReader.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/ScannerReader.o ${OBJECTDIR}/src/ScannerReader_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/SerialDriver_nomain.o: ${OBJECTDIR}/src/SerialDriver.o src/SerialDriver.cpp 
