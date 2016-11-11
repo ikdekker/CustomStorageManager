@@ -117,7 +117,7 @@
             <pElem>lib/cpputest-3.8</pElem>
             <pElem>lib/cpputest-3.8/include</pElem>
             <pElem>.</pElem>
-            <pElem>/home/nick/hidapi/hidapi</pElem>
+            <pElem>lib/hidapi/hidapi</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
