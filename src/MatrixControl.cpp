@@ -26,6 +26,7 @@ MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
         shiftData *s = new shiftData();
         s->id = (*it)->getId();
         //        cout << s->id << "id";
+	//change to reset
         s->reg1 = 0;
         s->reg2 = 0;
         moduleData.insert(moduleData.begin(), s);
@@ -44,7 +45,7 @@ Point MatrixControl::indexToLocation(int index, int modId) {
     int rows = ent->getRows();
     pt.y = floor(index / cols);
     pt.x = index - (pt.y * cols);
-
+	cout << pt.y << " = y " << pt.x << " = x \n";
     return pt;
 }
 

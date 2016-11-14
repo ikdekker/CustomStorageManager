@@ -89,6 +89,7 @@ void StorageManagement::run() {
     
 	scanReader->start();
 	string lastCode;
+	int change = 1;
 	while (1) {
 		if (scanReader->isRunning()) {
 			if (scanReader->hasRead()) {
@@ -98,10 +99,12 @@ void StorageManagement::run() {
                                 int modId = 0;
                                 int index = dbAdapter->addOrder(findFreeSpot(modId), lastCode, modId);
                                 matrix->ledOn(index, modId);
-                                
+                                change = 1;
 				cout << index << endl;
 			}
 		}
-                matrix->update();
+		if (change) {
+                matrix->update(); change = 0;
+		}
 	}
 }
