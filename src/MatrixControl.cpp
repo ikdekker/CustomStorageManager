@@ -26,11 +26,10 @@ MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
         shiftData *s = new shiftData();
         s->id = (*it)->getId();
         //        cout << s->id << "id";
-	//change to reset
-        s->reg1 = 0;
-        s->reg2 = 0;
         moduleData.insert(moduleData.begin(), s);
     }
+    blink = true;
+    runThrough(-1);
 }
 
 Point MatrixControl::indexToLocation(int index, int modId) {
@@ -45,13 +44,14 @@ Point MatrixControl::indexToLocation(int index, int modId) {
     int rows = ent->getRows();
     pt.y = floor(index / cols);
     pt.x = index - (pt.y * cols);
-	cout << pt.y << " = y " << pt.x << " = x \n";
+//	cout << pt.y << " = y " << pt.x << " = x \n";
     return pt;
 }
 
 void MatrixControl::ledOn(int index, int modId) {
     // call indextolocation
     //update the shiftData registers
+//cout << index << endl;
     Point pt = indexToLocation(index, modId);
     list<ModuleEntity*> mods = server->getModules();
 
@@ -71,11 +71,51 @@ void MatrixControl::ledOn(int index, int modId) {
 
 void MatrixControl::reset() {
     //reset all the leds to off-mode
+    for (auto moduleIterator = moduleData.begin(); moduleIterator != moduleData.end(); moduleIterator++) {
+        (*moduleIterator)->reg1 = 0;
+        (*moduleIterator)->reg2 = 0;
+    }
+
 }
 
 void MatrixControl::runThrough(int modId) {
     //loops through all leds to test 
-
+    bool blinkHist = blink;
+   blink = 1;
+    if (modId != -1) {
+    for (auto moduleIterator = moduleData.begin(); moduleIterator != moduleData.end(); moduleIterator++) {
+        if ((*moduleIterator)->id != modId) {
+            continue;
+        }//@todo: fix the single module runthrough
+        ModuleEntity *mEnt = server->getModuleById((*moduleIterator)->id);
+        for (int i = 0; i < mEnt->getRows(); i++) {
+            (*moduleIterator)->reg1 = i;
+            for (int j = 0; j < mEnt->getCols(); j++) {
+		reset();
+                (*moduleIterator)->reg2 = j;
+		delay(200);
+		update();
+            }
+        }
+    }
+    } else {
+        for (auto moduleIterator = moduleData.begin(); moduleIterator != moduleData.end(); moduleIterator++) {
+	    int mId = (*moduleIterator)->id;
+            ModuleEntity *mEnt = server->getModuleById(mId);
+            for (int i = 0; i < mEnt->getRows() * mEnt->getCols(); i++) {
+		    if (mEnt->checkDisabled(i)) {
+			continue;
+		    }
+		    reset();
+	            ledOn(i, mId);
+		    update();
+		    delay(200);
+                }
+        }
+    }
+    reset();
+    update();
+    blink = blinkHist;
 }
 
 void MatrixControl::update() {
@@ -85,6 +125,10 @@ void MatrixControl::update() {
     for (auto it = moduleData.begin(); it != moduleData.end(); it++) {
         unsigned char firstByte = (*it)->reg1;
         unsigned char secondByte = (*it)->reg2;
+	if (!blink) {
+		firstByte = 0;
+		secondByte = 0;
+	}
         for (int flipBit = 10; flipBit <= 15; flipBit++) {
             auto findMappedPin = pinMapping.find(flipBit);
             int mapPin = findMappedPin->second;
@@ -102,7 +146,7 @@ void MatrixControl::update() {
 //                            printf("flip %02x\n",firstByte);
 //                            printf("flip %02x\n",secondByte);
         }
-        
+
         sd.sendShiftData(secondByte);
         sd.sendShiftData(firstByte);
     }

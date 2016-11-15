@@ -34,8 +34,11 @@ public:
     virtual ~MatrixControl();
     ModuleServer* getServer() {return server;};
     Point indexToLocation(int index, int modId);
+    void setBlink(bool blinkVal) {blink = blinkVal;};
+    bool getBlink() {return blink;};
 private:
     ModuleServer* server;
+    bool blink;
     vector<shiftData*> moduleData;
     unsigned char getFirstByte(int,int);
     unsigned char getSecondByte(int,int);

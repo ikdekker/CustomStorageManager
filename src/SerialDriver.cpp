@@ -25,7 +25,7 @@ SerialDriver::~SerialDriver() {
 
 void SerialDriver::sendShiftData(unsigned char data) {
         shiftOut(dataPin, clockPin, MSBFIRST, data);
-//        printf("test\r\n%02X\r\n", data);
+//        printf("test\r\n%d\r\n", data);
 }
 
 void SerialDriver::setLatch(bool state) {
