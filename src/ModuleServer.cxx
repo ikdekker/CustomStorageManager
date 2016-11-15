@@ -1,11 +1,7 @@
 #include "ModuleServer.h"
-
+#include <iostream>
 void ModuleServer::addModule(ModuleEntity* module) {
         modules.push_back(module);
-        // vector<int> aids = module->getDisabledRows();
-        // for(int i = 0; i < aids.size(); i++ ){
-                // cout << aids.at(i) << endl;
-        // }
 }
 
 ModuleEntity* ModuleServer::getModuleById(int id) {
@@ -19,4 +15,8 @@ ModuleEntity* ModuleServer::getModuleById(int id) {
 
 bool ModuleServer::removeModuleById(int id) {
 //remove
+}
+
+ModuleServer::~ModuleServer() {
+        while(!modules.empty()) delete modules.front(), modules.pop_front();
 }

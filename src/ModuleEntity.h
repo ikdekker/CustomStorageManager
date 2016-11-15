@@ -14,6 +14,7 @@ public:
 	int getId() const;
 	int getRows() const;
 	int getCols() const;
+	bool checkDisabled(int index) const;
 	vector<int> getDisabledRows() const;
 private:
 	int id;

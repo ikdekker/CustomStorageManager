@@ -1,0 +1,22 @@
+{
+  "data_entry": {
+    "id": "1",
+    "products": {
+      "product": [
+        {
+          "name": "name",
+          "quantity": "2",
+          "id": "1"
+        },
+        {
+          "name": "name2",
+          "quantity": "1",
+          "id": "2"
+        }
+      ]
+    },
+    "license": "123",
+    "mechanic": "A",
+    "status": "B"
+  }
+}

@@ -11,6 +11,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 #include "../src/ConfigFactory.h"
+
 class ConfigParser : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(ConfigParser);
 

@@ -44,9 +44,9 @@ void EntityTest::testEntityValidFromVars() {
     
     CPPUNIT_ASSERT_EQUAL_MESSAGE( "The expected id was not equal to the actual id. (EnitityTest)" ,1,testEntity.getId());
     
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "The expected amount of rows was not equal to the actual amount. (EnitityTest)" ,2,testEntity.getRows());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE( "The expected amount of rows was not equal to the actual amount. (EnitityTest)" ,3,testEntity.getRows());
     CPPUNIT_ASSERT_MESSAGE("The disabled rows were not as expected. (EnitityTest)", vect == testEntity.getDisabledRows());
-    CPPUNIT_ASSERT_EQUAL_MESSAGE( "The expected amount of columns was not equal to the actual amount. (EnitityTest)" ,3,testEntity.getCols());
+    CPPUNIT_ASSERT_EQUAL_MESSAGE( "The expected amount of columns was not equal to the actual amount. (EnitityTest)" ,2,testEntity.getCols());
 }
 
 void EntityTest::testEntityInvalidData() {
@@ -55,5 +55,12 @@ void EntityTest::testEntityInvalidData() {
     
     CPPUNIT_ASSERT_THROW(ModuleEntity testEntity(1,3,3,vect), std::out_of_range);
     CPPUNIT_ASSERT_THROW(ModuleEntity testEntity(&modData);, std::out_of_range);
+}
+
+void EntityTest::testEntityEmptyVect() {
+    vector<int> vect {};
+    ModuleEntity testEntity(1,2,3, vect);
+    
+    CPPUNIT_ASSERT(testEntity.getDisabledRows() == vect);
 }
 
