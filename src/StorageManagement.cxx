@@ -105,7 +105,7 @@ void StorageManagement::run() {
 			}
 		}
 		time_t seconds;
-		seconds = (int)(time (NULL) * 4);
+		seconds = (int)(time (NULL));
 		bool blinker = !!(seconds % 2);
 		if (change || blinker != matrix->getBlink()) {
 		  //  if (seconds % 2 == 0) {
