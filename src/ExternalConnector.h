@@ -16,6 +16,8 @@
 
 #include <src/DatabaseAdapter.h>
 #include <string>
+#include "include/json.hpp"
+using json = nlohmann::json;
 
 class ExternalConnector {
 public:
