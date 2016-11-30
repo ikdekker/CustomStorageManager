@@ -27,8 +27,10 @@ int DatabaseAdapter::addOrder(int index, string werkorder, int modId) {
     driver = get_driver_instance();
     stmt = connection->createStatement();
     string products;
-    res = stmt->executeQuery("Select * from `order_indexing` where werkorder='" + werkorder + "'");
- 
+    sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*>(connection);
+    string escaped = mysql_conn->escapeString(werkorder);
+    res = stmt->executeQuery("Select * from `order_indexing` where werkorder='" + escaped + "'");
+
     if (!res->next()) {
         cout << "Nieuwe locatie voor " << werkorder << endl;
         //create new entry in DB

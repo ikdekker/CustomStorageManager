@@ -146,8 +146,10 @@
           <linkerLibItems>
             <linkerOptionItem>-lwiringPi</linkerOptionItem>
             <linkerOptionItem>-lmysqlcppconn</linkerOptionItem>
+            <linkerOptionItem>-lpthread</linkerOptionItem>
+            <linkerOptionItem>-lhidapi-hidraw</linkerOptionItem>
           </linkerLibItems>
-          <commandLine>-lwiringPi</commandLine>
+          <commandLine>-lz</commandLine>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f1">

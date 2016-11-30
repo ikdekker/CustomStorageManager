@@ -37,19 +37,29 @@ void ExternalConnector::fetchOrderData(int order) {
         cerr << "Error occurred: " << ex.what() << endl;
     }
     //parseData with retrieved data
-    productData pd = parseData(moduleJson);
+    orderData pd = parseData(moduleJson);
     //store parsed data in database    
-    productData.print();
+    
 }
 
 orderData ExternalConnector::parseData(json j) {
     orderData order;
-    j = j["/data_entry"_json_pointer];
-    order->id = j["/id"_json_pointer];
-    order->license = j["/license"_json_pointer];
-    order->mechanic = j["/mechanic"_json_pointer];
-    order->status = j["/status"_json_pointer];
-    json prodJson = j["/id"_json_pointer];
-    cout << order->id << " thats an order!" << endl;
-    
+    order.id = j["/id"_json_pointer];
+    order.license = j["/license"_json_pointer];
+    order.mechanic = j["/mechanic"_json_pointer];
+    order.status = j["/status"_json_pointer];
+    json prodJson = j["/products"_json_pointer];
+//    cout << order.id << " thats an order!" << endl;
+//    cout << order.license << " thats a license!" << endl;
+//    cout << order.mechanic << " thats a mechanic!" << endl;
+//    cout << order.status << " thats a status!" << endl;
+    for (auto prods = prodJson.begin(); prods != prodJson.end(); prods++) {
+        productData *pData = new productData;
+        pData->productId = (*prods)["/id"_json_pointer];
+        pData->productName = (*prods)["/name"_json_pointer];
+        pData->amount = (*prods)["/quantity"_json_pointer];
+//        pData->print();
+        cout << *pData;
+    }
+    return order;
 }

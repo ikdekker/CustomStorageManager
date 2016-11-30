@@ -23,15 +23,22 @@ struct productData {
 			return true;	
 		return false;		
 	}
-	void print() {
-		if (!empty()) {
-                    cout << "productId: " << productId << endl;
-                    cout << "productName: " << productName << endl;
-                    cout << "amount: " << amount << endl;
-                }
-	}
+//	void print() {
+//		if (!empty()) {
+//                    cout << "productId: " << productId << endl;
+//                    cout << "productName: " << productName << endl;
+//                    cout << "amount: " << amount << endl;
+//                }
+//	}
+        
+    friend ostream& operator<<(ostream& os, const productData& pd) {
+        os << "productId: " << pd.productId << endl;
+        os << "productName: " << pd.productName << endl;
+        os << "amount: " << pd.amount << endl;
+       
+        return os;
+    };
 };
-
 class DatabaseAdapter {
 public:
 	DatabaseAdapter(string db, string user, string pass);

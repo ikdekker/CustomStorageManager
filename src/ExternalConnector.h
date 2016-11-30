@@ -17,6 +17,11 @@
 #include <src/DatabaseAdapter.h>
 #include <string>
 #include <vector>
+#include "include/json.hpp"
+#include <fstream>
+
+using json = nlohmann::json;
+using namespace std;
 
 struct orderData {
     int id;

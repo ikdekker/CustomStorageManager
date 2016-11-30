@@ -4,6 +4,7 @@
 #include <math.h>
 #include <iostream>
 #include <algorithm>
+#include <time.h>
 
 using namespace std;
 using json = nlohmann::json;
@@ -20,7 +21,7 @@ StorageManagement::StorageManagement() {
         ModuleEntity *mod = config.getModule(*it);
         modules->addModule(mod);
     }
-    //cout <<	modules->getModuleById(0)->getRows();
+//    cout <<	modules->getModuleById(0)->getRows();
 
 }
 
@@ -86,7 +87,6 @@ void StorageManagement::setMatrix(MatrixControl* mControl) {
 }
 
 void StorageManagement::run() {
-    
 	scanReader->start();
 	string lastCode;
 	int change = 1;
@@ -98,13 +98,21 @@ void StorageManagement::run() {
                                 //todo test for external connection result
                                 int modId = 0;
                                 int index = dbAdapter->addOrder(findFreeSpot(modId), lastCode, modId);
-                                matrix->ledOn(index, modId);
+                                matrix->reset();
+				matrix->ledOn(index, modId);
                                 change = 1;
-				cout << index << endl;
+//				cout << index << endl;
 			}
 		}
-		if (change) {
-                matrix->update(); change = 0;
+		time_t seconds;
+		seconds = (int)(time (NULL));
+		bool blinker = !!(seconds % 2);
+		if (change || blinker != matrix->getBlink()) {
+		  //  if (seconds % 2 == 0) {
+      		        matrix->setBlink(blinker);
+ 		    //}
+                    matrix->update();
+		    change = 0;
 		}
 	}
 }

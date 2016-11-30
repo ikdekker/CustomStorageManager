@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
-CND_DLIB_EXT=dll
+CND_PLATFORM=GNU-Linux
+CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -91,9 +91,9 @@ LDLIBSOPTIONS=-Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gn
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTest -lCppUTestExt -lpthread -lmysqlclient -lmysqlcppconn -lhidapi-hidraw -lcppunit -ldl -lwiringPi -s
 
@@ -156,27 +156,27 @@ ${OBJECTDIR}/src/StorageManagement.o: src/StorageManagement.cxx
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ConfigParserRunner.o ${TESTDIR}/tests/ConfigParserTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
+	${LINK.cc} -lz -lwiringPi -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -lpthread -lhidapi-hidraw `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/EntityTest.o ${TESTDIR}/tests/EntityTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
+	${LINK.cc} -lz -lwiringPi -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -lpthread -lhidapi-hidraw `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/ExternalConnectorTest.o ${TESTDIR}/tests/ExternalTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
+	${LINK.cc} -lz -lwiringPi -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -lpthread -lhidapi-hidraw `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/IndexAllocRunner.o ${TESTDIR}/tests/IndexAllocationTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -lwiringPi  -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gnu -L/usr/include/cppconn 
+	${LINK.cc} -lz  -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -lpthread -lhidapi-hidraw -L/home/nick/Desktop/stage/lib/mysql/lib -Llib/cpputest-3.8/lib -L/usr/lib/mysql -L/usr/lib/x86_64-linux-gnu -L/usr/include/cppconn 
 
 ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/MatrixControlTest.o ${TESTDIR}/tests/MatrixControlTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -lwiringPi -lwiringPi -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
+	${LINK.cc} -lz -lwiringPi -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -lpthread -lhidapi-hidraw `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ModuleServerTest.o ${TESTDIR}/tests/ModuleServerTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -lwiringPi  -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn `cppunit-config --libs`   
+	${LINK.cc} -lz  -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -L/usr/include/cppunit -lwiringPi -lmysqlcppconn -lpthread -lhidapi-hidraw `cppunit-config --libs`   
 
 
 ${TESTDIR}/tests/ConfigParserRunner.o: tests/ConfigParserRunner.cpp 
@@ -398,7 +398,7 @@ ${OBJECTDIR}/src/StorageManagement_nomain.o: ${OBJECTDIR}/src/StorageManagement.
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest.exe
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/utest
 
 # Subprojects
 .clean-subprojects:
