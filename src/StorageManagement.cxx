@@ -92,50 +92,50 @@ void StorageManagement::setMatrix(MatrixControl* mControl) {
 }
 
 void StorageManagement::run() {
-    scanReader->start();
+//    scanReader->start();
     string lastCode;
     int change = 1;
     while (1) {
         if (!scanReader->isRunning() || !scanReader->hasRead()) {
-        }
-        lastCode = scanReader->getLastRead();
-        //cout << lastCode << endl;
-        //todo test for external connection result
-        int modId = 0;
-        int ext = true;
-        int index;
-        try {
-            orderData od = externalConnection->fetchOrderData(lastCode);
-            index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
-        } catch (string a) {
-            //no order
-            ext = false;
-        }
-
-        if (!ext) {
+            lastCode = scanReader->getLastRead();
+            //cout << lastCode << endl;
+            //todo test for external connection result
+            int modId = 0;
+            int ext = true;
+            int index;
             try {
-                orderData od = dbAdapter->getOrderData(lastCode);
-                index = od.index;
-                modId = od.module;
+                orderData od = externalConnection->fetchOrderData(lastCode);
+                index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
             } catch (string a) {
                 //no order
+                ext = false;
             }
+
+            if (!ext) {
+                try {
+                    orderData od = dbAdapter->getOrderData(lastCode);
+                    index = od.index;
+                    modId = od.module;
+                } catch (string a) {
+                    //no order
+                }
+            }
+
+            matrix->reset();
+            matrix->ledOn(index, modId);
+            change = 1;
+            //				cout << index << endl;
+        }
+        time_t seconds;
+        seconds = (int) (time(NULL));
+        bool blinker = !!(seconds % 2);
+        if (change || blinker != matrix->getBlink()) {
+            //  if (seconds % 2 == 0) {
+            matrix->setBlink(blinker);
+            //}
+            matrix->update();
+            change = 0;
         }
 
-        matrix->reset();
-        matrix->ledOn(index, modId);
-        change = 1;
-        //				cout << index << endl;
     }
-    time_t seconds;
-    seconds = (int) (time(NULL));
-    bool blinker = !!(seconds % 2);
-    if (change || blinker != matrix->getBlink()) {
-        //  if (seconds % 2 == 0) {
-        matrix->setBlink(blinker);
-        //}
-        matrix->update();
-        change = 0;
-    }
-
 }
