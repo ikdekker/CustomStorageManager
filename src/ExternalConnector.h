@@ -23,22 +23,14 @@
 using json = nlohmann::json;
 using namespace std;
 
-struct orderData {
-    int id;
-    string license;
-    string mechanic;
-    int status;
-    vector<productData*> products;
-};
-
 class ExternalConnector {
 public:
     ExternalConnector();
-    void fetchOrderData(int order);
-    orderData parseData(json j);
+    virtual orderData fetchOrderData(string order) = 0;
+    virtual productData fetchOrderProduct(string productId) = 0;
+    virtual orderData parseData(json j) = 0;
     virtual ~ExternalConnector();
 private:
-    
 };
 
 #endif /* CONNECTOR_H */

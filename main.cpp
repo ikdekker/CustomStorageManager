@@ -17,24 +17,16 @@
 #include "src/MatrixControl.h"
 #include "src/DatabaseAdapter.h"
 #include "src/ExternalConnector.h"
+#include "src/FakeExternalConnection.h"
+#include "src/ExternalGHSConnection.h"
 using namespace std;
 
 /*
  * 
  */
 int main(int argc, char** argv) {
-//    StorageManagement *s = new StorageManagement();
-    ExternalConnector* exCon = new ExternalConnector();
-    exCon->fetchOrderData(1);
-//    MatrixControl *a = new MatrixControl(s->getServer());
-////    a->ledOn(10, 0);
-////    a->update();
-//    DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
-//    s->setMatrix(a);
-//    s->setDbAdapter(db);
-//    
-//    s->run();
-//    
+    StorageManagement *s = new StorageManagement();
+    s->run();
     return 0;
 }
 

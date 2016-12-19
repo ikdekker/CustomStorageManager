@@ -5,6 +5,8 @@
 #include "src/MatrixControl.h"
 #include "MatrixControl.h"
 #include "src/ScannerReader.h"
+#include "ExternalConnector.h"
+#include "FakeExternalConnection.h"
 #include <list>
 
 using namespace std;
@@ -26,5 +28,7 @@ class StorageManagement {
                 DatabaseAdapter *dbAdapter;
                 MatrixControl *matrix;
                 ScannerReader *scanReader;
+                ExternalConnector *externalConnection;
+                ExternalConnector *fakeIntDigo;
 };
 

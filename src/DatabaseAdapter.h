@@ -14,23 +14,11 @@
 using namespace std;
 
 struct productData {
-	int productId = -1;
+	string productId = "-1";
 	string productName = "";
 	int amount = 0;
 	
-	bool empty() {
-		if (productId == -1 && productName.empty() || amount == 0)
-			return true;	
-		return false;		
-	}
-//	void print() {
-//		if (!empty()) {
-//                    cout << "productId: " << productId << endl;
-//                    cout << "productName: " << productName << endl;
-//                    cout << "amount: " << amount << endl;
-//                }
-//	}
-        
+	bool empty();        
     friend ostream& operator<<(ostream& os, const productData& pd) {
         os << "productId: " << pd.productId << endl;
         os << "productName: " << pd.productName << endl;
@@ -39,11 +27,38 @@ struct productData {
         return os;
     };
 };
+
+struct orderData {
+    string extId;
+    string intId;
+    string license;
+    string mechanic;
+    string deliveryRoute;
+    string ref;
+    int status;
+    int module;
+    int index;
+    vector<productData*> products;
+
+    productData* getProductById(string id) {
+        for (auto it = products.begin(); it != products.end(); it++) {
+            if ((*it)->productId == id)
+                return *it;
+        }
+        return nullptr;
+    }
+};
+
 class DatabaseAdapter {
 public:
 	DatabaseAdapter(string db, string user, string pass);
-        virtual vector<int>* getEntriesByModule(int moduleId);;
-	int addOrder(int index, string werkorder, int moduleId);
+        virtual vector<int>* getEntriesByModule(int moduleId);
+	int addOrder(int index, orderData werkorder, int moduleId);
+	string fetchOrderByExternalId(string id);
+	string fetchOrderByInternalId(string id);
+	void addExternalOrder(string extId, string intId, string data);
+	vector<string> fetchOrders(string column);
+        orderData getOrderData(string order);
 private:
 	sql::Connection *connection;
 };

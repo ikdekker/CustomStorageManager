@@ -7,6 +7,8 @@
       <itemPath>src/ConfigFactory.h</itemPath>
       <itemPath>src/DatabaseAdapter.h</itemPath>
       <itemPath>src/ExternalConnector.h</itemPath>
+      <itemPath>src/ExternalGHSConnection.h</itemPath>
+      <itemPath>src/FakeExternalConnection.h</itemPath>
       <itemPath>src/MatrixControl.h</itemPath>
       <itemPath>src/ModuleEntity.h</itemPath>
       <itemPath>src/ModuleServer.h</itemPath>
@@ -25,6 +27,8 @@
       <itemPath>src/ConfigFactory.cxx</itemPath>
       <itemPath>src/DatabaseAdapter.cxx</itemPath>
       <itemPath>src/ExternalConnector.cpp</itemPath>
+      <itemPath>src/ExternalGHSConnection.cpp</itemPath>
+      <itemPath>src/FakeExternalConnection.cpp</itemPath>
       <itemPath>src/MatrixControl.cpp</itemPath>
       <itemPath>src/ModuleEntity.cxx</itemPath>
       <itemPath>src/ModuleServer.cxx</itemPath>
@@ -91,6 +95,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>data/productDataGHS.json</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -118,6 +123,8 @@
             <pElem>lib/cpputest-3.8/include</pElem>
             <pElem>.</pElem>
             <pElem>lib/hidapi/hidapi</pElem>
+            <pElem>lib/curl</pElem>
+            <pElem>lib/restclient-cpp/include</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -129,15 +136,18 @@
             <pElem>/usr/include/cppconn</pElem>
             <pElem>/usr/include/cppunit</pElem>
             <pElem>/usr/local/lib</pElem>
+            <pElem>lib/restclient-cpp</pElem>
           </linkerAddLib>
           <stripSymbols>true</stripSymbols>
           <linkerLibItems>
             <linkerLibLibItem>CppUTest</linkerLibLibItem>
             <linkerLibLibItem>CppUTestExt</linkerLibLibItem>
           </linkerLibItems>
-          <commandLine>-lCppUTest -lCppUTestExt -lpthread -lmysqlclient -lmysqlcppconn -lhidapi-hidraw -lcppunit -ldl -lwiringPi</commandLine>
+          <commandLine>-lCppUTest -lCppUTestExt -lpthread -lmysqlclient -lmysqlcppconn -lhidapi-hidraw -lcppunit -ldl -lwiringPi -lrestclient-cpp</commandLine>
         </linkerTool>
       </compileType>
+      <item path="data/productDataGHS.json" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles">
         <linkerTool>
           <linkerAddLib>
@@ -268,6 +278,14 @@
       </item>
       <item path="src/ExternalConnector.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/ExternalGHSConnection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ExternalGHSConnection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/FakeExternalConnection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/FakeExternalConnection.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/MatrixControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/MatrixControl.h" ex="false" tool="3" flavor2="0">
@@ -367,6 +385,8 @@
           <commandLine>-lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn</commandLine>
         </linkerTool>
       </compileType>
+      <item path="data/productDataGHS.json" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <commandLine>`cppunit-config --cflags`</commandLine>
@@ -465,6 +485,14 @@
       <item path="src/ExternalConnector.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ExternalConnector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ExternalGHSConnection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ExternalGHSConnection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/FakeExternalConnection.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/FakeExternalConnection.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/MatrixControl.cpp" ex="false" tool="1" flavor2="0">
       </item>

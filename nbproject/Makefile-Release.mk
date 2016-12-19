@@ -39,6 +39,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ConfigFactory.o \
 	${OBJECTDIR}/src/DatabaseAdapter.o \
 	${OBJECTDIR}/src/ExternalConnector.o \
+	${OBJECTDIR}/src/ExternalGHSConnection.o \
+	${OBJECTDIR}/src/FakeExternalConnection.o \
 	${OBJECTDIR}/src/MatrixControl.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
 	${OBJECTDIR}/src/ModuleServer.o \
@@ -116,6 +118,16 @@ ${OBJECTDIR}/src/ExternalConnector.o: src/ExternalConnector.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ExternalConnector.o src/ExternalConnector.cpp
+
+${OBJECTDIR}/src/ExternalGHSConnection.o: src/ExternalGHSConnection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ExternalGHSConnection.o src/ExternalGHSConnection.cpp
+
+${OBJECTDIR}/src/FakeExternalConnection.o: src/FakeExternalConnection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FakeExternalConnection.o src/FakeExternalConnection.cpp
 
 ${OBJECTDIR}/src/MatrixControl.o: src/MatrixControl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -301,6 +313,32 @@ ${OBJECTDIR}/src/ExternalConnector_nomain.o: ${OBJECTDIR}/src/ExternalConnector.
 	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ExternalConnector_nomain.o src/ExternalConnector.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ExternalConnector.o ${OBJECTDIR}/src/ExternalConnector_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/ExternalGHSConnection_nomain.o: ${OBJECTDIR}/src/ExternalGHSConnection.o src/ExternalGHSConnection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/ExternalGHSConnection.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ExternalGHSConnection_nomain.o src/ExternalGHSConnection.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/ExternalGHSConnection.o ${OBJECTDIR}/src/ExternalGHSConnection_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/FakeExternalConnection_nomain.o: ${OBJECTDIR}/src/FakeExternalConnection.o src/FakeExternalConnection.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/FakeExternalConnection.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I. -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FakeExternalConnection_nomain.o src/FakeExternalConnection.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/FakeExternalConnection.o ${OBJECTDIR}/src/FakeExternalConnection_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/MatrixControl_nomain.o: ${OBJECTDIR}/src/MatrixControl.o src/MatrixControl.cpp 

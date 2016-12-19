@@ -1,6 +1,7 @@
 #include "StorageManagement.h"
 #include "src/DatabaseAdapter.h"
 #include "ScannerReader.h"
+#include "ExternalGHSConnection.h"
 #include <math.h>
 #include <iostream>
 #include <algorithm>
@@ -14,14 +15,16 @@ StorageManagement::StorageManagement() {
     //        dbAdapter = new DatabaseAdapter("digo_parts_db", "root", "digo_secret");
     ConfigFactory config;
     modules = new ModuleServer();
-    scanReader = new ScannerReader();
+    //    scanReader = new ScannerReader();
     json j = config.getModuleJson();
 
     for (auto it = j.begin(); it != j.end(); ++it) {
         ModuleEntity *mod = config.getModule(*it);
         modules->addModule(mod);
     }
-//    cout <<	modules->getModuleById(0)->getRows();
+    DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
+    externalConnection = new ExternalGHSConnection(db);
+    //    cout <<	modules->getModuleById(0)->getRows();
 
 }
 
@@ -65,13 +68,15 @@ ModuleServer* StorageManagement::getServer() {
 }
 
 int StorageManagement::addLicenseEmpty(bool print, int modId) {
+    orderData order;
     string license;
     cin >> license;
+    order.license = license;
     int free = findFreeSpot(modId);
-    int realIndex = dbAdapter->addOrder(free, license, modId);
+    int realIndex = dbAdapter->addOrder(free, order, modId);
     if (print) {
         printLicenseLocation(realIndex, license, modId);
-    } 
+    }
     return 1;
 }
 
@@ -79,7 +84,7 @@ void StorageManagement::printLicenseLocation(int index, string license, int modI
     productData p;
     Point loc = matrix->indexToLocation(index, modId);
     cout << "De locatie voor onderdelen voor de auto met kenteken " << license;
-        printf(" is: rij %d kolom %d\n", loc.y + 1, loc.x + 1);
+    printf(" is: rij %d kolom %d\n", loc.y + 1, loc.x + 1);
 }
 
 void StorageManagement::setMatrix(MatrixControl* mControl) {
@@ -87,32 +92,50 @@ void StorageManagement::setMatrix(MatrixControl* mControl) {
 }
 
 void StorageManagement::run() {
-	scanReader->start();
-	string lastCode;
-	int change = 1;
-	while (1) {
-		if (scanReader->isRunning()) {
-			if (scanReader->hasRead()) {
-				lastCode = scanReader->getLastRead();
-//				cout << lastCode << endl;
-                                //todo test for external connection result
-                                int modId = 0;
-                                int index = dbAdapter->addOrder(findFreeSpot(modId), lastCode, modId);
-                                matrix->reset();
-				matrix->ledOn(index, modId);
-                                change = 1;
-//				cout << index << endl;
-			}
-		}
-		time_t seconds;
-		seconds = (int)(time (NULL));
-		bool blinker = !!(seconds % 2);
-		if (change || blinker != matrix->getBlink()) {
-		  //  if (seconds % 2 == 0) {
-      		        matrix->setBlink(blinker);
- 		    //}
-                    matrix->update();
-		    change = 0;
-		}
-	}
+    scanReader->start();
+    string lastCode;
+    int change = 1;
+    while (1) {
+        if (!scanReader->isRunning() || !scanReader->hasRead()) {
+        }
+        lastCode = scanReader->getLastRead();
+        //cout << lastCode << endl;
+        //todo test for external connection result
+        int modId = 0;
+        int ext = true;
+        int index;
+        try {
+            orderData od = externalConnection->fetchOrderData(lastCode);
+            index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
+        } catch (string a) {
+            //no order
+            ext = false;
+        }
+
+        if (!ext) {
+            try {
+                orderData od = dbAdapter->getOrderData(lastCode);
+                index = od.index;
+                modId = od.module;
+            } catch (string a) {
+                //no order
+            }
+        }
+
+        matrix->reset();
+        matrix->ledOn(index, modId);
+        change = 1;
+        //				cout << index << endl;
+    }
+    time_t seconds;
+    seconds = (int) (time(NULL));
+    bool blinker = !!(seconds % 2);
+    if (change || blinker != matrix->getBlink()) {
+        //  if (seconds % 2 == 0) {
+        matrix->setBlink(blinker);
+        //}
+        matrix->update();
+        change = 0;
+    }
+
 }
