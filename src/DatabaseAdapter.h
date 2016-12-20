@@ -52,7 +52,7 @@ struct orderData {
 class DatabaseAdapter {
 public:
 	DatabaseAdapter(string db, string user, string pass);
-        virtual vector<int>* getEntriesByModule(int moduleId);
+        virtual vector<int> getEntriesByModule(int moduleId);
 	int addOrder(int index, orderData werkorder, int moduleId);
 	string fetchOrderByExternalId(string id);
 	string fetchOrderByInternalId(string id);

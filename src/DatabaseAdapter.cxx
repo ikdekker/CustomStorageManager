@@ -78,7 +78,7 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
 }
 
 vector<int> DatabaseAdapter::getEntriesByModule(int moduleId) {
-    vector<int> entries = new vector<int>;
+    vector<int> entries;
 
     sql::Driver *driver;
     sql::Statement *stmt;

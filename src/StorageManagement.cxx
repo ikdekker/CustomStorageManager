@@ -33,7 +33,7 @@ void StorageManagement::setDbAdapter(DatabaseAdapter* db) {
 }
 
 int StorageManagement::findFreeSpot(int modId) {
-    vector<int> *res = dbAdapter->getEntriesByModule(modId);
+    vector<int> res = dbAdapter->getEntriesByModule(modId);
     ModuleEntity *mod = modules->getModuleById(modId);
 
     int nextSpot = 0;
@@ -41,7 +41,7 @@ int StorageManagement::findFreeSpot(int modId) {
     spotTotal--;
     for (; nextSpot < spotTotal; nextSpot++) {
         //check if spot has been taken, if so skip.
-        if (std::find(res->begin(), res->end(), nextSpot) != res->end())
+        if (std::find(res.begin(), res.end(), nextSpot) != res.end())
             continue;
 
         //check if row is disabled, if not, return the open spot
@@ -50,7 +50,6 @@ int StorageManagement::findFreeSpot(int modId) {
         }
 
     }
-    delete res;
     return 1;
 }
 
