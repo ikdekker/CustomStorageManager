@@ -77,8 +77,8 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
     return index;
 }
 
-vector<int>* DatabaseAdapter::getEntriesByModule(int moduleId) {
-    vector<int>* entries = new vector<int>;
+vector<int> DatabaseAdapter::getEntriesByModule(int moduleId) {
+    vector<int> entries = new vector<int>;
 
     sql::Driver *driver;
     sql::Statement *stmt;
@@ -87,11 +87,11 @@ vector<int>* DatabaseAdapter::getEntriesByModule(int moduleId) {
     stmt = connection->createStatement();
     string products;
 
-    res = stmt->executeQuery("select * from `order_indexing` where module_id=0");
+    res = stmt->executeQuery("select * from `order_indexing` where module_id=" + moduleId);
 
 
     while (res->next()) {
-        entries->push_back(res->getInt("index"));
+        entries.push_back(res->getInt("index"));
     }
 
     return entries;

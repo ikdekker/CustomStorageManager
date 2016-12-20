@@ -74,7 +74,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     
     string data = dbAdapter->fetchOrderByExternalId(order);
     if (data == "") {
-        throw 0;
+        throw "Data of order is empty";
     }
     json orderJson = json::parse(dbAdapter->fetchOrderByExternalId(order));
 

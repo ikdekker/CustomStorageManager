@@ -15,7 +15,7 @@ StorageManagement::StorageManagement() {
     //        dbAdapter = new DatabaseAdapter("digo_parts_db", "root", "digo_secret");
     ConfigFactory config;
     modules = new ModuleServer();
-    //    scanReader = new ScannerReader();
+        scanReader = new ScannerReader();
     json j = config.getModuleJson();
 
     for (auto it = j.begin(); it != j.end(); ++it) {
@@ -92,22 +92,23 @@ void StorageManagement::setMatrix(MatrixControl* mControl) {
 }
 
 void StorageManagement::run() {
-//    scanReader->start();
+    scanReader->start();
     string lastCode;
     int change = 1;
     while (1) {
-        if (!scanReader->isRunning() || !scanReader->hasRead()) {
+        if (scanReader->isRunning() && scanReader->hasRead()) {
             lastCode = scanReader->getLastRead();
             //cout << lastCode << endl;
             //todo test for external connection result
             int modId = 0;
             int ext = true;
-            int index;
+            int index = -1;
             try {
                 orderData od = externalConnection->fetchOrderData(lastCode);
                 index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
             } catch (string a) {
                 //no order
+		cout << a;
                 ext = false;
             }
 
@@ -116,14 +117,17 @@ void StorageManagement::run() {
                     orderData od = dbAdapter->getOrderData(lastCode);
                     index = od.index;
                     modId = od.module;
+		    ext = true;
                 } catch (string a) {
                     //no order
                 }
             }
-
+/*
             matrix->reset();
-            matrix->ledOn(index, modId);
+	    if (ext)
+              matrix->ledOn(index, modId);
             change = 1;
+*/
             //				cout << index << endl;
         }
         time_t seconds;
