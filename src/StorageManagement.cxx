@@ -23,6 +23,7 @@ StorageManagement::StorageManagement() {
         modules->addModule(mod);
     }
     DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
+    dbAdapter = db;
     externalConnection = new ExternalGHSConnection(db);
     //    cout <<	modules->getModuleById(0)->getRows();
 

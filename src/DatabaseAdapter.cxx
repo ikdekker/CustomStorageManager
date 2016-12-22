@@ -80,14 +80,14 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
 vector<int> DatabaseAdapter::getEntriesByModule(int moduleId) {
     vector<int> entries;
 
-    sql::Driver *driver;
     sql::Statement *stmt;
     sql::ResultSet *res;
-    driver = get_driver_instance();
     stmt = connection->createStatement();
-    string products;
-
-    res = stmt->executeQuery("select * from `order_indexing` where module_id=" + moduleId);
+    stringstream ss;
+    ss << "select * from `order_indexing` where module_id='";
+    ss << moduleId;
+    ss << "'";
+    res = stmt->executeQuery(ss.str());
 
 
     while (res->next()) {
