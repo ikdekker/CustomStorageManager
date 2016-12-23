@@ -23,6 +23,7 @@ StorageManagement::StorageManagement() {
         modules->addModule(mod);
     }
     DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
+    dbAdapter = db;
     externalConnection = new ExternalGHSConnection(db);
     //    cout <<	modules->getModuleById(0)->getRows();
 
@@ -121,24 +122,23 @@ void StorageManagement::run() {
                     //no order
                 }
             }
-/*
+
             matrix->reset();
 	    if (ext)
               matrix->ledOn(index, modId);
             change = 1;
-*/
             //				cout << index << endl;
         }
-        time_t seconds;
-        seconds = (int) (time(NULL));
-        bool blinker = !!(seconds % 2);
-        if (change || blinker != matrix->getBlink()) {
-            //  if (seconds % 2 == 0) {
-            matrix->setBlink(blinker);
-            //}
-            matrix->update();
-            change = 0;
-        }
+//        time_t seconds;
+//        seconds = (int) (time(NULL));
+//        bool blinker = !!(seconds % 2);
+//        if (change || blinker != matrix->getBlink()) {
+//            //  if (seconds % 2 == 0) {
+//            matrix->setBlink(blinker);
+//            //}
+//            matrix->update();
+//            change = 0;
+//        }
 
     }
 }

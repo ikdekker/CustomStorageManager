@@ -158,6 +158,7 @@
             <linkerOptionItem>-lmysqlcppconn</linkerOptionItem>
             <linkerOptionItem>-lpthread</linkerOptionItem>
             <linkerOptionItem>-lhidapi-hidraw</linkerOptionItem>
+            <linkerOptionItem>-lrestclient-cpp</linkerOptionItem>
           </linkerLibItems>
           <commandLine>-lz</commandLine>
         </linkerTool>
