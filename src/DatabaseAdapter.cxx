@@ -2,6 +2,12 @@
 #include <iostream>
 #include "ExternalConnector.h"
 
+/**
+ * Construct the database with the local mysql host.
+ * @param db Name of the database
+ * @param user Username to access the database
+ * @param pass Password to access the database
+ */
 DatabaseAdapter::DatabaseAdapter(string db, string user, string pass) {
     sql::Driver *driver;
     sql::Statement *stmt;
@@ -11,6 +17,15 @@ DatabaseAdapter::DatabaseAdapter(string db, string user, string pass) {
     connection->setSchema(db);
 }
 
+/**
+ * Add a new order to the database if it doesn't exist.
+ * @param index
+ * @param werkorder A struct with all the orderdata in it,
+ * uses the license, external id, internal id, products to enter into the 
+ * part_allocation table
+ * @param modId Which module to add the order to (only affects database).
+ * @return int Index of the added/retrieved order.
+ */
 int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
     sql::Statement *stmt;
     sql::ResultSet *res;
@@ -72,6 +87,10 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
     return index;
 }
 
+/**
+ * Purge an order and it's related rows from the database
+ * @param werkorder
+ */
 void DatabaseAdapter::removeOrder(string werkorder) {
     execQueryOnly("DELETE IGNORE from ghs_orders where digo_id='" + werkorder + "'");
     execQueryOnly("DELETE IGNORE from order_info where werkorder='" + werkorder + "'");
@@ -79,6 +98,10 @@ void DatabaseAdapter::removeOrder(string werkorder) {
     execQueryOnly("DELETE IGNORE from order_indexing where werkorder='" + werkorder + "'");
 }
 
+/**
+ * Execute a query and catch the error to prevent a program crash.
+ * @param query The query to be executed.
+ */
 void DatabaseAdapter::execQueryOnly(string query) {
     sql::Statement *stmt;
     stmt = connection->createStatement();
@@ -89,6 +112,10 @@ void DatabaseAdapter::execQueryOnly(string query) {
     }
 }
 
+/**
+ * Takes a prepared statement and handles the execute function.
+ * @param pstmt The pointer to a prepared statement
+ */
 void DatabaseAdapter::execPrepStmtOnly(sql::PreparedStatement* pstmt) {
     try {
         pstmt->execute();
@@ -96,7 +123,13 @@ void DatabaseAdapter::execPrepStmtOnly(sql::PreparedStatement* pstmt) {
         cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
     }
 }
-
+/**
+ * @param stmt
+ * @param query
+ * @return sql::ResultSet* Pointer to the result set which can be iterated
+ * through.
+ * Can be checked on valid result on the validity of the rowsCount function.
+ */
 sql::ResultSet* DatabaseAdapter::exec(sql::Statement* stmt, string query) {
     try {
         return stmt->executeQuery(query);
@@ -105,6 +138,12 @@ sql::ResultSet* DatabaseAdapter::exec(sql::Statement* stmt, string query) {
     }
 }
 
+/**
+ * Retrieve entries by module id from th order_indexing table.
+ * Returns a list containing all the used indexes on the requested module.
+ * @param moduleId Id of the module to check the entries on
+ * @return vector<int> A list with occupied indexes
+ */
 vector<int> DatabaseAdapter::getEntriesByModule(int moduleId) {
     vector<int> entries;
 
@@ -124,6 +163,12 @@ vector<int> DatabaseAdapter::getEntriesByModule(int moduleId) {
     return entries;
 }
 
+/**
+ * Gets the order data from ghs_orders tables through an external id.
+ * @param id The external id to check
+ * @return string Json data which was fetched previously by the API connection.
+ * Empty when the row was not found.
+ */
 string DatabaseAdapter::fetchOrderByExternalId(string id) {
     sql::Statement *stmt;
     sql::ResultSet *res;
@@ -136,6 +181,12 @@ string DatabaseAdapter::fetchOrderByExternalId(string id) {
     return "";
 }
 
+/**
+ * Gets the order data from ghs_orders tables through an internal id.
+ * @param id The internal id to check
+ * @return string Json data which was fetched previously by the API connection.
+ * Empty when the row was not found.
+ */
 string DatabaseAdapter::fetchOrderByInternalId(string id) {
     sql::Statement *stmt;
     sql::ResultSet *res;
@@ -148,6 +199,12 @@ string DatabaseAdapter::fetchOrderByInternalId(string id) {
     return "";
 }
 
+/**
+ * Get a list of all the order ids in the ghs_orders table
+ * @param column This table has multiple columns which can be used to fetch an 
+ * orderlist. "digo_id" for the internal id list, "ghs_id" for the external one
+ * @return vector<string> A list containing all the ids existing in the column.
+ */
 vector<string> DatabaseAdapter::fetchOrders(string column) {
     sql::Statement *stmt;
     sql::ResultSet *res;
@@ -163,9 +220,13 @@ vector<string> DatabaseAdapter::fetchOrders(string column) {
     return orderIds;
 }
 
+/**
+ * Add an entry to the ghs_orders table.
+ * @param extId external id
+ * @param intId internal id
+ * @param data json data as string.
+ */
 void DatabaseAdapter::addExternalOrder(string extId, string intId, string data) {
-    sql::Statement *stmt;
-    sql::ResultSet *res;
     sql::PreparedStatement *pstmt;
 
     pstmt = connection->prepareStatement("INSERT INTO ghs_orders(`ghs_id`,`digo_id`,`data`) VALUES (?,?,?)");
@@ -178,7 +239,7 @@ void DatabaseAdapter::addExternalOrder(string extId, string intId, string data) 
 /**
  * Retrieve the location of an existing order
  * @param order
- * @return 
+ * @return orderData Struct with the index, module and order id as data
  */
 orderData DatabaseAdapter::getOrderData(string order) {
     sql::Statement *stmt;

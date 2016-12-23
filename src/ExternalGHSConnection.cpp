@@ -17,8 +17,8 @@
  * Construct a connection with the external data source from GHS.
  * Establishes connection and posts to the credentials endpoint to
  * retrieve a session id which will be used in all further calls.
+ * @param db DatabaseAdapter* pointer to the DatabaseAdapter to make db calls with
  */
-
 ExternalGHSConnection::ExternalGHSConnection(DatabaseAdapter* db) : dbAdapter(db) {
     //establish connection with ghs site
     conn = new RestClient::Connection("https://api2.ghs-automotive.nl/api");
@@ -55,6 +55,11 @@ ExternalGHSConnection::ExternalGHSConnection(DatabaseAdapter* db) : dbAdapter(db
 ExternalGHSConnection::~ExternalGHSConnection() {
 }
 
+/**
+ * Retrieve a single order.
+ * @param order string the order id
+ * @return orderData
+ */
 orderData ExternalGHSConnection::fetchOrderData(string order) {
     orderData od;
     vector<string> orderIds = dbAdapter->fetchOrders("ghs_id");
@@ -125,10 +130,20 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     return od;
 }
 
+/**
+ * Fetch only the product from the external connection.
+ * @param productId
+ * @return 
+ */
 productData ExternalGHSConnection::fetchOrderProduct(string productId) {
     
 }
 
+/**
+ * Create a usable orderData struct with all the relevant data parsed from json
+ * @param j The json data to be parsed
+ * @return orderData
+ */
 orderData ExternalGHSConnection::parseData(json j) {
 
 }
