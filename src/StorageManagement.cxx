@@ -130,16 +130,16 @@ void StorageManagement::run() {
 
             //				cout << index << endl;
         }
-        time_t seconds;
-        seconds = (int) (time(NULL));
-        bool blinker = !!(seconds % 2);
-        if (change || blinker != matrix->getBlink()) {
-            //  if (seconds % 2 == 0) {
-            matrix->setBlink(blinker);
-            //}
-            matrix->update();
-            change = 0;
-        }
+//        time_t seconds;
+//        seconds = (int) (time(NULL));
+//        bool blinker = !!(seconds % 2);
+//        if (change || blinker != matrix->getBlink()) {
+//            //  if (seconds % 2 == 0) {
+//            matrix->setBlink(blinker);
+//            //}
+//            matrix->update();
+//            change = 0;
+//        }
 
     }
 }

@@ -47,7 +47,7 @@ ExternalGHSConnection::ExternalGHSConnection(DatabaseAdapter* db) : dbAdapter(db
             throw std::runtime_error("404 in API"); 
             break;
         default:
-            throw r.code;
+//            throw r.code;
             break;
     }
 }

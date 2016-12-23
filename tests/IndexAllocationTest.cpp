@@ -21,11 +21,11 @@ public:
     DatabaseMock(string db, string user, string pass) : DatabaseAdapter(db, user, pass) {
     };
 
-    virtual vector<int>* getEntriesByModule(int moduleId) {
+    virtual vector<int> getEntriesByModule(int moduleId) {
         //        vector<int> disabledNextEmpty =;
         //        vector<int> fullIndex ={0,1,2,3,4,5,6};
         mock().actualCall("getEntriesByModule").onObject(this).withIntParameter("moduleId", 1).returnValue().getPointerValue();
-        return (vector<int>*) mock().returnPointerValueOrDefault(nullptr);
+        return vector<int> ();
     }
 };
 
