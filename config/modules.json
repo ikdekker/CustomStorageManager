@@ -1,14 +1,8 @@
 [
   {
     "id" : 0,
-    "rows": 6,
-    "columns": 8,
-    "disableRows": ""
-  },
-  {
-    "id" : 1,
-    "rows": 4,
-    "columns": 8,
+    "rows": 1,
+    "columns": 5,
     "disableRows": ""
   }
 ]

@@ -127,6 +127,7 @@ void StorageManagement::run() {
 	    if (ext)
               matrix->ledOn(index, modId);
             change = 1;
+
             //				cout << index << endl;
         }
 //        time_t seconds;
