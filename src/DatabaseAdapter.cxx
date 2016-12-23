@@ -64,11 +64,6 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
         pstmt->setString(6, werkorder.extId);
         try {
             pstmt->executeUpdate();
-        } catch (sql::SQLException &e) {
-            cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
-            cout << "Error: " << e.what();
-            cout << "Error code: " << e.getErrorCode();
-            cout << "SqlState: " << e.getSQLState() << endl;
         } catch (...) {
             cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
         }
@@ -89,11 +84,6 @@ void DatabaseAdapter::execQueryOnly(string query) {
     stmt = connection->createStatement();
     try {
         stmt->executeQuery(query);
-    } catch (sql::SQLException &e) {
-        cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
-        cout << "Error: " << e.what();
-        cout << "Error code: " << e.getErrorCode();
-        cout << "SqlState: " << e.getSQLState() << endl;
     } catch (...) {
         cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
     }
@@ -102,11 +92,6 @@ void DatabaseAdapter::execQueryOnly(string query) {
 void DatabaseAdapter::execPrepStmtOnly(sql::PreparedStatement* pstmt) {
     try {
         pstmt->execute();
-    } catch (sql::SQLException &e) {
-        cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
-        cout << "Error: " << e.what();
-        cout << "Error code: " << e.getErrorCode();
-        cout << "SqlState: " << e.getSQLState() << endl;
     } catch (...) {
         cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
     }
@@ -115,11 +100,6 @@ void DatabaseAdapter::execPrepStmtOnly(sql::PreparedStatement* pstmt) {
 sql::ResultSet* DatabaseAdapter::exec(sql::Statement* stmt, string query) {
     try {
         return stmt->executeQuery(query);
-    } catch (sql::SQLException &e) {
-        cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
-        cout << "Error: " << e.what();
-        cout << "Error code: " << e.getErrorCode();
-        cout << "SqlState: " << e.getSQLState() << endl;
     } catch (...) {
         cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
     }
