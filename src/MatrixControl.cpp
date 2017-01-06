@@ -17,6 +17,10 @@ using namespace std;
 MatrixControl::~MatrixControl() {
 }
 
+/**
+ * Setup the GPIO pins and initialize the matrix by looping through all the LEDs
+ * turning them on one by one in sequence.
+ */
 MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
     //create Control with server holding modules
 
@@ -32,6 +36,13 @@ MatrixControl::MatrixControl(ModuleServer* serv) : server(serv) {
     runThrough(-1);
 }
 
+/**
+ * Find a location through an index. Uses rows and colums to calculate the
+ * index in the module.
+ * @param index
+ * @param modId
+ * @return 
+ */
 Point MatrixControl::indexToLocation(int index, int modId) {
     Point pt;
     ModuleEntity* ent = server->getModuleById(modId);
@@ -48,6 +59,11 @@ Point MatrixControl::indexToLocation(int index, int modId) {
     return pt;
 }
 
+/**
+ * Sets a LED to be on in the matrix. The LED will stay on until reset().
+ * @param index
+ * @param modId
+ */
 void MatrixControl::ledOn(int index, int modId) {
     // call indextolocation
     //update the shiftData registers
@@ -68,6 +84,9 @@ void MatrixControl::ledOn(int index, int modId) {
     setByte(pt.y + 10, s);
 }
 
+/**
+ * Reset the matrix, turning off all the LEDs on the next matrix update().
+ */
 void MatrixControl::reset() {
     //reset all the leds to off-mode
     for (auto moduleIterator = moduleData.begin(); moduleIterator != moduleData.end(); moduleIterator++) {
@@ -77,6 +96,11 @@ void MatrixControl::reset() {
 
 }
 
+/**
+ * Turns on all LEDs in sequence, excluding only disabled rows.
+ * Calls reset() and update() when finished.
+ * @param modId
+ */
 void MatrixControl::runThrough(int modId) {
     //loops through all leds to test 
     bool blinkHist = blink;
@@ -117,6 +141,9 @@ void MatrixControl::runThrough(int modId) {
     blink = blinkHist;
 }
 
+/**
+ * 
+ */
 void MatrixControl::update() {
     //send shiftData to SPI
     SerialDriver sd;

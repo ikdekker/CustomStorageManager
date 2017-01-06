@@ -2,7 +2,11 @@
 #include <stdexcept>
 #include <sstream>
 #include <vector>
-
+ 
+/**
+ * Reads module config file in config folder.
+ * @return json The moduledata from the file as a json object
+ */
 json ConfigFactory::getModuleJson() {
     ifstream f("config/modules.json");
     json moduleJson;
@@ -17,6 +21,10 @@ json ConfigFactory::getModuleJson() {
     return moduleJson;
 }
 
+/**
+ * @param j Data with id, columns, rows and disabled rows
+ * @return ModuleEntity* Pointer to the parsed module data object
+ */
 ModuleEntity* ConfigFactory::getModule(json j) {
 
     moduleData *modData = parseModuleJson(j);
@@ -27,6 +35,10 @@ ModuleEntity* ConfigFactory::getModule(json j) {
     return module;
 }
 
+/**
+ * @param j Json data to be parsed into a module
+ * @return moduleData struct with all module data.
+ */
 moduleData* ConfigFactory::parseModuleJson(json j) {
     stringstream ss;
     ss << j["/disableRows"_json_pointer];
