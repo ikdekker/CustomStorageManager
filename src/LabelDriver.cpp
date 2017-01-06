@@ -25,5 +25,5 @@ void LabelDriver::printLabel(string text) {
     stringstream ss;
     ss << "echo " << text << " > /home/pi/label.txt";
     system(ss.str().c_str());
-//    exec("print..");
+    system("lp -o orientation-requested=4 -o fit-to-page -d stickers /home/pi/label.txt -o cpi=6 lpi=2 -o media=Custom.28x89mm -o job-sheets=none");
 }
