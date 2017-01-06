@@ -19,17 +19,21 @@
 #include "src/ExternalConnector.h"
 #include "src/FakeExternalConnection.h"
 #include "src/ExternalGHSConnection.h"
+#include "src/LabelDriver.h"
 using namespace std;
 
 /*
  * 
  */
 int main(int argc, char** argv) {
-    StorageManagement *s = new StorageManagement();
-    MatrixControl *a = new MatrixControl(s->getServer());
-    s->setMatrix(a);
-    
-    s->run();
+LabelDriver l;
+l.printLabel("a && rm");
+//    StorageManagement *s = new StorageManagement();
+  //  MatrixControl *a = new MatrixControl(s->getServer());
+   // s->setMatrix(a);
+//while(1)
+  //  a->runThrough(-1);
+//    s->run();
     return 0;
 }
 
