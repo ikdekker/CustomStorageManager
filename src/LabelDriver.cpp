@@ -13,6 +13,8 @@
 
 #include "LabelDriver.h"
 #include <sstream>
+#include <iostream>
+#include <fstream>
 
 LabelDriver::LabelDriver() {
     
@@ -22,8 +24,9 @@ LabelDriver::~LabelDriver() {
 }
 
 void LabelDriver::printLabel(string text) {
-    stringstream ss;
-    ss << "echo " << text << " > /home/pi/label.txt";
-    system(ss.str().c_str());
-    system("lp -o orientation-requested=4 -o fit-to-page -d stickers /home/pi/label.txt -o cpi=6 lpi=2 -o media=Custom.28x89mm -o job-sheets=none");
+    ofstream labelFile;
+    labelFile.open ("/home/pi/label.txt", ios::out || ios::trunc);
+    labelFile << text;
+    labelFile.close();
+    system("lp -o orientation-requested=4 -o fit-to-page -d stickers /home/pi/label.txt -o cpi=4 lpi=1 -o media=Custom.50x85    mm -o job-sheets=none");
 }
