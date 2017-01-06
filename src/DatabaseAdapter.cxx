@@ -209,8 +209,9 @@ orderData DatabaseAdapter::getOrderData(string order) {
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
 
     string escapedInternal = mysql_conn->escapeString(order);
+    exec(stmt, "Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
     res = exec(stmt, "Select * from `order_indexing` where werkorder='" + escapedInternal + "'");
-
+    
     int index, module;
     string intId;
     if (!res->rowsCount()) {

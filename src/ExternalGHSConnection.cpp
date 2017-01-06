@@ -144,7 +144,7 @@ bool ExternalGHSConnection::fetchOrders() {
     vector<string> orderIds = dbAdapter->fetchOrders("ghs_id");
     bool exists = 0;
     int offset = 0;
-    while (!exists && offset < 100) {
+    while (!exists && offset < 500) {
         stringstream orderCall;
         orderCall << "/orders?skip=" << offset << "&take=10";
         RestClient::Response r = conn->get(orderCall.str());
