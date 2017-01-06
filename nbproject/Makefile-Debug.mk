@@ -35,13 +35,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/LabelDriver.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/src/ConfigFactory.o \
 	${OBJECTDIR}/src/DatabaseAdapter.o \
 	${OBJECTDIR}/src/ExternalConnector.o \
 	${OBJECTDIR}/src/ExternalGHSConnection.o \
 	${OBJECTDIR}/src/FakeExternalConnection.o \
+	${OBJECTDIR}/src/LabelDriver.o \
 	${OBJECTDIR}/src/MatrixControl.o \
 	${OBJECTDIR}/src/ModuleEntity.o \
 	${OBJECTDIR}/src/ModuleServer.o \
@@ -100,11 +100,6 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/storage-indexer: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/storage-indexer ${OBJECTFILES} ${LDLIBSOPTIONS} -lCppUTest -lCppUTestExt -lpthread -lmysqlclient -lmysqlcppconn -lhidapi-hidraw -lcppunit -ldl -lwiringPi -lrestclient-cpp -s
 
-${OBJECTDIR}/LabelDriver.o: LabelDriver.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -Ilib/hidapi/hidapi -Ilib/curl -Ilib/restclient-cpp/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LabelDriver.o LabelDriver.cpp
-
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -134,6 +129,11 @@ ${OBJECTDIR}/src/FakeExternalConnection.o: src/FakeExternalConnection.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -Ilib/hidapi/hidapi -Ilib/curl -Ilib/restclient-cpp/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FakeExternalConnection.o src/FakeExternalConnection.cpp
+
+${OBJECTDIR}/src/LabelDriver.o: src/LabelDriver.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -Ilib/hidapi/hidapi -Ilib/curl -Ilib/restclient-cpp/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LabelDriver.o src/LabelDriver.cpp
 
 ${OBJECTDIR}/src/MatrixControl.o: src/MatrixControl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -269,19 +269,6 @@ ${TESTDIR}/tests/ModuleServerTestRunner.o: tests/ModuleServerTestRunner.cpp
 	$(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -Ilib/hidapi/hidapi -Ilib/curl -Ilib/restclient-cpp/include -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ModuleServerTestRunner.o tests/ModuleServerTestRunner.cpp
 
 
-${OBJECTDIR}/LabelDriver_nomain.o: ${OBJECTDIR}/LabelDriver.o LabelDriver.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/LabelDriver.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -Ilib/hidapi/hidapi -Ilib/curl -Ilib/restclient-cpp/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LabelDriver_nomain.o LabelDriver.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/LabelDriver.o ${OBJECTDIR}/LabelDriver_nomain.o;\
-	fi
-
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/main.o`; \
@@ -358,6 +345,19 @@ ${OBJECTDIR}/src/FakeExternalConnection_nomain.o: ${OBJECTDIR}/src/FakeExternalC
 	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -Ilib/hidapi/hidapi -Ilib/curl -Ilib/restclient-cpp/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/FakeExternalConnection_nomain.o src/FakeExternalConnection.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/FakeExternalConnection.o ${OBJECTDIR}/src/FakeExternalConnection_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/LabelDriver_nomain.o: ${OBJECTDIR}/src/LabelDriver.o src/LabelDriver.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/LabelDriver.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -s -I/usr/include/cppunit -I/usr/lib -Ilib/gtest -I/usr/include/cppconn -Ilib/cpputest-3.8 -Ilib/cpputest-3.8/include -I. -Ilib/hidapi/hidapi -Ilib/curl -Ilib/restclient-cpp/include -std=c++11 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LabelDriver_nomain.o src/LabelDriver.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/LabelDriver.o ${OBJECTDIR}/src/LabelDriver_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/MatrixControl_nomain.o: ${OBJECTDIR}/src/MatrixControl.o src/MatrixControl.cpp 

@@ -9,7 +9,7 @@
       <itemPath>src/ExternalConnector.h</itemPath>
       <itemPath>src/ExternalGHSConnection.h</itemPath>
       <itemPath>src/FakeExternalConnection.h</itemPath>
-      <itemPath>LabelDriver.h</itemPath>
+      <itemPath>src/LabelDriver.h</itemPath>
       <itemPath>src/MatrixControl.h</itemPath>
       <itemPath>src/ModuleEntity.h</itemPath>
       <itemPath>src/ModuleServer.h</itemPath>
@@ -30,7 +30,7 @@
       <itemPath>src/ExternalConnector.cpp</itemPath>
       <itemPath>src/ExternalGHSConnection.cpp</itemPath>
       <itemPath>src/FakeExternalConnection.cpp</itemPath>
-      <itemPath>LabelDriver.cpp</itemPath>
+      <itemPath>src/LabelDriver.cpp</itemPath>
       <itemPath>src/MatrixControl.cpp</itemPath>
       <itemPath>src/ModuleEntity.cxx</itemPath>
       <itemPath>src/ModuleServer.cxx</itemPath>
@@ -148,10 +148,6 @@
           <commandLine>-lCppUTest -lCppUTestExt -lpthread -lmysqlclient -lmysqlcppconn -lhidapi-hidraw -lcppunit -ldl -lwiringPi -lrestclient-cpp</commandLine>
         </linkerTool>
       </compileType>
-      <item path="LabelDriver.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="LabelDriver.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="data/productDataGHS.json" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles">
@@ -293,6 +289,10 @@
       </item>
       <item path="src/FakeExternalConnection.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/LabelDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/LabelDriver.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/MatrixControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/MatrixControl.h" ex="false" tool="3" flavor2="0">
@@ -392,10 +392,6 @@
           <commandLine>-lCppUTest -lCppUTestExt -lwiringPi -lpthread -lmysqlclient -lmysqlcppconn</commandLine>
         </linkerTool>
       </compileType>
-      <item path="LabelDriver.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="LabelDriver.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="data/productDataGHS.json" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles/f1">
@@ -504,6 +500,10 @@
       <item path="src/FakeExternalConnection.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/FakeExternalConnection.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/LabelDriver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/LabelDriver.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/MatrixControl.cpp" ex="false" tool="1" flavor2="0">
       </item>
