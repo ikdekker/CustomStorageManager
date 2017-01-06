@@ -19,6 +19,7 @@
 #include "src/ExternalConnector.h"
 #include "src/FakeExternalConnection.h"
 #include "src/ExternalGHSConnection.h"
+#include "src/LabelDriver.h"
 using namespace std;
 
 /*
