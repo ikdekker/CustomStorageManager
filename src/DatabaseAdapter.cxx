@@ -270,3 +270,16 @@ orderData DatabaseAdapter::getOrderData(string order) {
 
     return od;
 }
+
+string DatabaseAdapter::doPrint() {
+    sql::Statement *stmt;
+    sql::ResultSet *res;
+    string query = "Select working from `system_status` where placeholder=0'";
+    res = exec(stmt, query);
+    string license;
+    while (res->next()) {
+        license = res->getString("working");
+    }
+    execQueryOnly("Update system_status set working='invalid' where placeholder=0");
+    return license;
+}

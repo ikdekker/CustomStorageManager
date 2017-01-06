@@ -25,6 +25,7 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
+    //normal routine
     StorageManagement *s = new StorageManagement();
     MatrixControl *a = new MatrixControl(s->getServer());
     s->setMatrix(a);

@@ -7,6 +7,7 @@
 #include "src/ScannerReader.h"
 #include "ExternalConnector.h"
 #include "FakeExternalConnection.h"
+#include "LabelDriver.h"
 #include <list>
 
 using namespace std;
@@ -28,6 +29,7 @@ class StorageManagement {
                 DatabaseAdapter *dbAdapter;
                 MatrixControl *matrix;
                 ScannerReader *scanReader;
+                LabelDriver *labelDriver;
                 ExternalConnector *externalConnection;
                 ExternalConnector *fakeIntDigo;
 };

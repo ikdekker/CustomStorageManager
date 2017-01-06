@@ -26,7 +26,7 @@ StorageManagement::StorageManagement() {
     dbAdapter = db;
     externalConnection = new ExternalGHSConnection(db);
     //    cout <<	modules->getModuleById(0)->getRows();
-
+    labelDriver = new LabelDriver();
 }
 
 void StorageManagement::setDbAdapter(DatabaseAdapter* db) {
@@ -96,6 +96,10 @@ void StorageManagement::run() {
     string lastCode;
     int change = 1;
     while (1) {
+        string licenseString = dbAdapter->doPrint();
+        if (licenseString != "invalid") {
+            labelDriver->printLabel(licenseString);
+        }
         if (scanReader->isRunning() && scanReader->hasRead()) {
             lastCode = scanReader->getLastRead();
             //cout << lastCode << endl;
