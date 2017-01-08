@@ -243,7 +243,8 @@ void DatabaseAdapter::addExternalOrder(string extId, string intId, string data) 
  */
 orderData DatabaseAdapter::getOrderData(string order) {
     sql::Statement *stmt;
-    sql::ResultSet *res;
+    sql::ResultSet *resOrderIndexing;
+    sql::ResultSet *resOrderInfo;
 
     stmt = connection->createStatement();
     string products;
@@ -251,19 +252,25 @@ orderData DatabaseAdapter::getOrderData(string order) {
 
     string escapedInternal = mysql_conn->escapeString(order);
     exec(stmt, "Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
-    res = exec(stmt, "Select * from `order_indexing` where werkorder='" + escapedInternal + "'");
+    resOrderIndexing = exec(stmt, "Select * from `order_indexing` where werkorder='" + escapedInternal + "'");
+    resOrderInfo = exec(stmt, "Select * from `order_info` where werkorder='" + escapedInternal + "'");
     
     int index, module;
     string intId;
-    if (!res->rowsCount()) {
+    if (!resOrderIndexing->rowsCount()) {
         throw "Did not find the order " + order;
     }
-    while (res->next()) {
-        index = res->getInt("index");
-        module = res->getInt("module_id");
+    while (resOrderIndexing->next()) {
+        index = resOrderIndexing->getInt("index");
+        module = resOrderIndexing->getInt("module_id");
     }
 
     orderData od;
+    if (resOrderInfo->rowsCount()) {
+        od.license = resOrderInfo->getString("license");
+        od.status = resOrderInfo->getInt("status");
+        od.mechanic = resOrderInfo->getString("mechanic");
+    }
     od.index = index;
     od.module = module;
     od.intId = order;
@@ -271,15 +278,15 @@ orderData DatabaseAdapter::getOrderData(string order) {
     return od;
 }
 
-string DatabaseAdapter::doPrint() {
+int DatabaseAdapter::doPrint() {
     sql::Statement *stmt;
     sql::ResultSet *res;
     string query = "Select working from `system_status` where placeholder=0'";
     res = exec(stmt, query);
-    string license;
+    int license;
     while (res->next()) {
-        license = res->getString("working");
+        license = res->getInt("working");
     }
-    execQueryOnly("Update system_status set working='invalid' where placeholder=0");
+    execQueryOnly("Update system_status set working=0 where placeholder=0");
     return license;
 }

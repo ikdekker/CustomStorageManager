@@ -96,9 +96,12 @@ void StorageManagement::run() {
     string lastCode;
     int change = 1;
     while (1) {
-        string licenseString = dbAdapter->doPrint();
-        if (licenseString != "invalid") {
-            labelDriver->printLabel(licenseString);
+        int printOrder = dbAdapter->doPrint();
+        if (printOrder != 0) {
+            orderData od = dbAdapter->getOrderData(printOrder);
+            if (od.license) {
+                labelDriver->printLabel(od.license);
+            }
         }
         if (scanReader->isRunning() && scanReader->hasRead()) {
             lastCode = scanReader->getLastRead();
