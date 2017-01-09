@@ -254,7 +254,7 @@ orderData DatabaseAdapter::getOrderData(string order) {
     string escapedInternal = mysql_conn->escapeString(order);
     resOrderIndexing = exec(stmt, "Select * from `order_indexing` where werkorder='" + escapedInternal + "'");
     resOrderInfo = exec(stmt, "Select * from `order_info` where werkorder='" + escapedInternal + "'");
- cout << escapedInternal << 1;
+
     int index, module;
     string intId;
 
