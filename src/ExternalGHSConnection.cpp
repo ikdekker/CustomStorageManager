@@ -111,6 +111,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
         od.license = "";
     }
     od.intId = intId;
+    dbAdapter->updateCurrent(intId);
     od.license = license;
 //    @todo call parsedata
 //    store orderdata into struct + loop over product ids and store in struct as well.

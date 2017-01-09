@@ -123,6 +123,7 @@ void DatabaseAdapter::execPrepStmtOnly(sql::PreparedStatement* pstmt) {
         cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
     }
 }
+
 /**
  * @param stmt
  * @param query
@@ -154,7 +155,7 @@ vector<int> DatabaseAdapter::getEntriesByModule(int moduleId) {
     ss << "select * from `order_indexing` where module_id='";
     ss << moduleId;
     ss << "'";
-        res = exec(stmt, ss.str());
+    res = exec(stmt, ss.str());
 
     while (res->next()) {
         entries.push_back(res->getInt("index"));
@@ -251,12 +252,12 @@ orderData DatabaseAdapter::getOrderData(string order) {
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
 
     string escapedInternal = mysql_conn->escapeString(order);
-    exec(stmt, "Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
     resOrderIndexing = exec(stmt, "Select * from `order_indexing` where werkorder='" + escapedInternal + "'");
     resOrderInfo = exec(stmt, "Select * from `order_info` where werkorder='" + escapedInternal + "'");
-    
+
     int index, module;
     string intId;
+
     if (!resOrderIndexing->rowsCount()) {
         throw "Did not find the order " + order;
     }
@@ -267,9 +268,11 @@ orderData DatabaseAdapter::getOrderData(string order) {
 
     orderData od;
     if (resOrderInfo->rowsCount()) {
-        od.license = resOrderInfo->getString("license");
-        od.status = resOrderInfo->getInt("status");
-        od.mechanic = resOrderInfo->getString("mechanic");
+        while (resOrderIndexing->next()) {
+            od.license = resOrderInfo->getString("license");
+            od.status = resOrderInfo->getInt("status");
+            od.mechanic = resOrderInfo->getString("mechanic");
+        }
     }
     od.index = index;
     od.module = module;
@@ -303,7 +306,7 @@ bool DatabaseAdapter::getBusy() {
     stmt = connection->createStatement();
     string query = "Select orderid from `system_status` where placeholder=0";
     res = exec(stmt, query);
-    
+
     while (res->next()) {
         string orderId = res->getString("orderid");
         if (orderId != "0") {
@@ -313,4 +316,10 @@ bool DatabaseAdapter::getBusy() {
         }
     }
     return false;
+}
+
+void DatabaseAdapter::updateCurrent(string order) {
+    sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
+    string escapedInternal = mysql_conn->escapeString(order);
+    execQueryOnly("Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
 }

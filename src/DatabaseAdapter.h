@@ -61,6 +61,7 @@ public:
 	vector<string> fetchOrders(string column);
         orderData getOrderData(string order);
         void execQueryOnly(string query);
+        void updateCurrent(string order);
         sql::ResultSet* exec(sql::Statement*, string query);
         void execPrepStmtOnly(sql::PreparedStatement*);
         string doPrint();
