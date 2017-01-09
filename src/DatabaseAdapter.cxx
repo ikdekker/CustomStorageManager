@@ -262,7 +262,6 @@ orderData DatabaseAdapter::getOrderData(string order) {
     string escapedInternal = mysql_conn->escapeString(order);
     resOrderIndexing = exec(stmt, "Select * from `order_indexing` where werkorder='" + escapedInternal + "'");
     resOrderInfo = exec(stmt, "Select * from `order_info` where werkorder='" + escapedInternal + "'");
-
     int index, module;
     string intId;
 
@@ -270,6 +269,8 @@ orderData DatabaseAdapter::getOrderData(string order) {
         delete resOrderInfo, resOrderIndexing, stmt;
         throw "Did not find the order " + order;
     }
+    execQueryOnly("UPDATE system_status set werkorder=0 where placeholder=0");
+
     while (resOrderIndexing->next()) {
         index = resOrderIndexing->getInt("index");
         module = resOrderIndexing->getInt("module_id");
