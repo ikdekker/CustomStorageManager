@@ -135,7 +135,7 @@ sql::ResultSet* DatabaseAdapter::exec(sql::Statement* stmt, string query) {
     try {
         return stmt->executeQuery(query);
     } catch (...) {
-        cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
+        cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl << "query:" << query << endl;
     }
 }
 
