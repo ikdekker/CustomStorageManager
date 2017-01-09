@@ -96,8 +96,8 @@ void StorageManagement::run() {
     string lastCode;
     int change = 1;
     while (1) {
-        int printOrder = dbAdapter->doPrint();
-        if (printOrder != 0) {
+        string printOrder = dbAdapter->doPrint();
+        if (printOrder != "0") {
             orderData od = dbAdapter->getOrderData(printOrder);
             if (od.license != "0") {
                 labelDriver->printLabel(od.license);

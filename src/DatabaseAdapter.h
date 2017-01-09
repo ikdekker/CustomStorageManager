@@ -63,7 +63,7 @@ public:
         void execQueryOnly(string query);
         sql::ResultSet* exec(sql::Statement*, string query);
         void execPrepStmtOnly(sql::PreparedStatement*);
-        int doPrint();
+        string doPrint();
 private:
 	sql::Connection *connection;
 };

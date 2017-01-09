@@ -278,15 +278,15 @@ orderData DatabaseAdapter::getOrderData(string order) {
     return od;
 }
 
-int DatabaseAdapter::doPrint() {
+string DatabaseAdapter::doPrint() {
     sql::Statement *stmt;
     sql::ResultSet *res;
     string query = "Select working from `system_status` where placeholder=0'";
     res = exec(stmt, query);
-    int licenseId = 0;
+    string licenseId = "0";
     bool done = false;
     while (res->next()) {
-        licenseId = res->getInt("working");
+        licenseId = res->getString("working");
         done = true;
     }
     if (done)
