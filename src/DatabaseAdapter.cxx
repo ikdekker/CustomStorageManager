@@ -246,7 +246,6 @@ orderData DatabaseAdapter::getOrderData(string order) {
     sql::Statement *stmt;
     sql::ResultSet *resOrderIndexing;
     sql::ResultSet *resOrderInfo;
-
     stmt = connection->createStatement();
     string products;
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
@@ -268,7 +267,7 @@ orderData DatabaseAdapter::getOrderData(string order) {
 
     orderData od;
     if (resOrderInfo->rowsCount()) {
-        while (resOrderIndexing->next()) {
+        while (resOrderInfo->next()) {
             od.license = resOrderInfo->getString("license");
             od.status = resOrderInfo->getInt("status");
             od.mechanic = resOrderInfo->getString("mechanic");
