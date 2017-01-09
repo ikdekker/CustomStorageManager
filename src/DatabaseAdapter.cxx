@@ -293,3 +293,20 @@ string DatabaseAdapter::doPrint() {
         execQueryOnly("Update system_status set working=0 where placeholder=0");
     return licenseId;
 }
+
+bool DatabaseAdapter::getBusy() {
+    sql::Statement *stmt;
+    sql::ResultSet *res;
+    string query = "Select orderid from `system_status` where placeholder=0'";
+    res = exec(stmt, query);
+    
+    while (res->next()) {
+        string orderId = res->getString("orderid");
+        if (orderId != "0") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    return false;
+}

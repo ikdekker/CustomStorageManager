@@ -64,6 +64,7 @@ public:
         sql::ResultSet* exec(sql::Statement*, string query);
         void execPrepStmtOnly(sql::PreparedStatement*);
         string doPrint();
+        bool getBusy();
 private:
 	sql::Connection *connection;
 };

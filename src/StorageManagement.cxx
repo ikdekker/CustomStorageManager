@@ -97,6 +97,10 @@ void StorageManagement::run() {
     int change = 1;
     while (1) {
         string printOrder = dbAdapter->doPrint();
+        bool busy = dbAdapter->getBusy();
+        if (!busy) {
+            matrix->reset();
+        }
         if (printOrder != "0") {
             orderData od = dbAdapter->getOrderData(printOrder);
             if (od.license != "0") {
