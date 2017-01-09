@@ -281,7 +281,8 @@ orderData DatabaseAdapter::getOrderData(string order) {
 string DatabaseAdapter::doPrint() {
     sql::Statement *stmt;
     sql::ResultSet *res;
-    string query = "Select working from `system_status` where placeholder=0'";
+    stmt = connection->createStatement();
+    string query = "Select working from `system_status` where placeholder=0";
     res = exec(stmt, query);
     string licenseId = "0";
     bool done = false;
@@ -290,14 +291,15 @@ string DatabaseAdapter::doPrint() {
         done = true;
     }
     if (done)
-        execQueryOnly("Update system_status set working=0 where placeholder=0");
+        execQueryOnly("Update system_status set working='0' where placeholder=0");
     return licenseId;
 }
 
 bool DatabaseAdapter::getBusy() {
     sql::Statement *stmt;
     sql::ResultSet *res;
-    string query = "Select orderid from `system_status` where placeholder=0'";
+    stmt = connection->createStatement();
+    string query = "Select orderid from `system_status` where placeholder=0";
     res = exec(stmt, query);
     
     while (res->next()) {
