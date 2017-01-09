@@ -10,8 +10,6 @@
  */
 DatabaseAdapter::DatabaseAdapter(string db, string user, string pass) {
     sql::Driver *driver;
-    sql::Statement *stmt;
-    sql::ResultSet *res;
     driver = get_driver_instance();
     connection = driver->connect("localhost", user, pass);
     connection->setSchema(db);
@@ -30,6 +28,7 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
     sql::Statement *stmt;
     sql::ResultSet *res;
     sql::PreparedStatement *pstmt;
+
     stmt = connection->createStatement();
 
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
@@ -83,7 +82,7 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
             cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
         }
     }
-
+    delete res, stmt, pstmt, mysql_conn;
     return index;
 }
 
@@ -110,6 +109,8 @@ void DatabaseAdapter::execQueryOnly(string query) {
     } catch (...) {
         cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl << "query:" << query << endl;
     }
+
+    delete stmt;
 }
 
 /**
@@ -161,6 +162,7 @@ vector<int> DatabaseAdapter::getEntriesByModule(int moduleId) {
         entries.push_back(res->getInt("index"));
     }
 
+    delete res, stmt;
     return entries;
 }
 
@@ -177,8 +179,10 @@ string DatabaseAdapter::fetchOrderByExternalId(string id) {
     res = exec(stmt, "Select data from `ghs_orders` where ghs_id=\"" + id + "\"");
 
     while (res->next()) {
-        return res->getString("data");
+        string data = res->getString("data");
+        delete res, stmt;
     }
+    delete res, stmt;
     return "";
 }
 
@@ -195,8 +199,11 @@ string DatabaseAdapter::fetchOrderByInternalId(string id) {
     res = exec(stmt, "Select data from `ghs_orders` where digo_id=\"" + id + "\"");
 
     while (res->next()) {
-        return res->getString("data");
+        string data = res->getString("data");
+        delete res, stmt;
+        return data;
     }
+    delete res, stmt;
     return "";
 }
 
@@ -218,6 +225,7 @@ vector<string> DatabaseAdapter::fetchOrders(string column) {
     while (res->next()) {
         orderIds.push_back(res->getString(cleanCol));
     }
+    delete res, stmt;
     return orderIds;
 }
 
@@ -235,6 +243,7 @@ void DatabaseAdapter::addExternalOrder(string extId, string intId, string data) 
     pstmt->setString(2, intId);
     pstmt->setString(3, data);
     execPrepStmtOnly(pstmt);
+    delete pstmt;
 }
 
 /**
@@ -259,6 +268,7 @@ orderData DatabaseAdapter::getOrderData(string order) {
     string intId;
 
     if (!resOrderIndexing->rowsCount()) {
+        delete resOrderInfo, resOrderIndexing, stmt;
         throw "Did not find the order " + order;
     }
     while (resOrderIndexing->next()) {
@@ -278,6 +288,7 @@ orderData DatabaseAdapter::getOrderData(string order) {
     od.module = module;
     od.intId = order;
 
+    delete resOrderInfo, resOrderIndexing, stmt;
     return od;
 }
 
@@ -297,6 +308,7 @@ string DatabaseAdapter::doPrint() {
     }
     if (done)
         execQueryOnly("Update system_status set working='0' where placeholder=0");
+    delete res, stmt;
     return licenseId;
 }
 
@@ -310,8 +322,10 @@ bool DatabaseAdapter::getBusy() {
     while (res->next()) {
         string orderId = res->getString("orderid");
         if (orderId != "0") {
+            delete res, stmt;
             return true;
         } else {
+            delete res, stmt;
             return false;
         }
     }
@@ -322,4 +336,5 @@ void DatabaseAdapter::updateCurrent(string order) {
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
     string escapedInternal = mysql_conn->escapeString(order);
     execQueryOnly("Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
+    delete mysql_conn;
 }
