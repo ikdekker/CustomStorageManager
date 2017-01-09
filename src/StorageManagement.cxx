@@ -148,7 +148,7 @@ void StorageManagement::run() {
 //            //  if (seconds % 2 == 0) {
 //            matrix->setBlink(blinker);
 //            //}
-//            matrix->update();
+            matrix->update();
 //            change = 0;
 //        }
 
