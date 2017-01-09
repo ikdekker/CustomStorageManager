@@ -102,10 +102,14 @@ void StorageManagement::run() {
             matrix->reset();
         }
         if (printOrder != "0") {
+	    try {
             orderData od = dbAdapter->getOrderData(printOrder);
             if (od.license != "0") {
                 labelDriver->printLabel(od.license);
             }
+	    } catch (string a) {
+		cout << a;
+	    }
         }
         if (scanReader->isRunning() && scanReader->hasRead()) {
             lastCode = scanReader->getLastRead();
@@ -148,7 +152,7 @@ void StorageManagement::run() {
 //            //  if (seconds % 2 == 0) {
 //            matrix->setBlink(blinker);
 //            //}
-//            matrix->update();
+            matrix->update();
 //            change = 0;
 //        }
 
