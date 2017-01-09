@@ -283,13 +283,13 @@ int DatabaseAdapter::doPrint() {
     sql::ResultSet *res;
     string query = "Select working from `system_status` where placeholder=0'";
     res = exec(stmt, query);
-    int license;
+    int licenseId = 0;
     bool done = false;
     while (res->next()) {
-        license = res->getInt("working");
+        licenseId = res->getInt("working");
         done = true;
     }
     if (done)
         execQueryOnly("Update system_status set working=0 where placeholder=0");
-    return license;
+    return licenseId;
 }

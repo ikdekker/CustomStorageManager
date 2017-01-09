@@ -99,7 +99,7 @@ void StorageManagement::run() {
         int printOrder = dbAdapter->doPrint();
         if (printOrder != 0) {
             orderData od = dbAdapter->getOrderData(printOrder);
-            if (od.license) {
+            if (od.license != 0) {
                 labelDriver->printLabel(od.license);
             }
         }
