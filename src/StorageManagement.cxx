@@ -103,6 +103,7 @@ void StorageManagement::run() {
         }
         if (printOrder != "0") {
 	    try {
+cout << "print" << printOrder << endl;
             orderData od = dbAdapter->getOrderData(printOrder);
             if (od.license != "0") {
                 labelDriver->printLabel(od.license);
