@@ -288,7 +288,9 @@ string DatabaseAdapter::doPrint() {
     bool done = false;
     while (res->next()) {
         licenseId = res->getString("working");
-        done = true;
+        if (licenseId != "0") {
+            done = true;
+        }
     }
     if (done)
         execQueryOnly("Update system_status set working='0' where placeholder=0");
