@@ -65,6 +65,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     vector<string> orderIds = dbAdapter->fetchOrders("ghs_id");
     auto it = find(orderIds.begin(), orderIds.end(), order);
     if (it == orderIds.end()) {
+        cout << "wrong";
         bool newOrders = fetchOrders();
         if (!newOrders) {
             //throw except
@@ -76,7 +77,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
             throw "No such order " + order;
         }
     }
-
+    cout<< "good";
     string data = dbAdapter->fetchOrderByExternalId(order);
     if (data == "") {
         throw "Data of order is empty";
@@ -95,6 +96,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     string license = "";
     string cur;
     int i = 0;
+    cout << od.intId;
     while (getline(ss, cur, ',')) {
         if (i == 0) {
             //probably license ?
