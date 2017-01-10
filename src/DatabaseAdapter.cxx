@@ -105,7 +105,22 @@ void DatabaseAdapter::execQueryOnly(string query) {
     sql::Statement *stmt;
     stmt = connection->createStatement();
     try {
-        stmt->executeQuery(query);
+        stmt->execute(query);
+    } catch (...) {
+        cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl << "query:" << query << endl;
+    }
+
+    delete stmt;
+}
+/**
+ * Execute a query and catch the error to prevent a program crash.
+ * @param query The query to be executed.
+ */
+void DatabaseAdapter::execUpdateOnly(string query) {
+    sql::Statement *stmt;
+    stmt = connection->createStatement();
+    try {
+        stmt->executeUpdate(query);
     } catch (...) {
         cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl << "query:" << query << endl;
     }
@@ -222,7 +237,7 @@ vector<string> DatabaseAdapter::fetchOrders(string column) {
     string cleanCol = mysql_conn->escapeString(column);
     res = exec(stmt, "Select " + cleanCol + " from `ghs_orders`");
 
-    vector<string> orderIds;
+    vector<string> orderIds {};
     while (res->next()) {
         orderIds.push_back(res->getString(cleanCol));
     }
@@ -270,7 +285,7 @@ orderData DatabaseAdapter::getOrderData(string order) {
         delete resOrderInfo, resOrderIndexing, stmt;
         throw "Did not find the order " + order;
     }
-    execQueryOnly("UPDATE system_status set orderid='0' where placeholder=0");
+    execUpdateOnly("UPDATE system_status set orderid='0' where placeholder=0");
 
     while (resOrderIndexing->next()) {
         index = resOrderIndexing->getInt("index");
@@ -308,7 +323,7 @@ string DatabaseAdapter::doPrint() {
         }
     }
     if (done)
-        execQueryOnly("Update system_status set working='0' where placeholder=0");
+        execUpdateOnly("Update system_status set working='0' where placeholder=0");
     delete res, stmt;
     return licenseId;
 }
@@ -336,5 +351,5 @@ bool DatabaseAdapter::getBusy() {
 void DatabaseAdapter::updateCurrent(string order) {
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
     string escapedInternal = mysql_conn->escapeString(order);
-    execQueryOnly("Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
+    execUpdateOnly("Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
 }

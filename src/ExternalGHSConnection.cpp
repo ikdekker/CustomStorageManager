@@ -28,7 +28,7 @@ ExternalGHSConnection::ExternalGHSConnection(DatabaseAdapter* db) : dbAdapter(db
     headers["X-ApiKey"] = "f8408869-4c8e-49dc-8dda-fcf5332d9a7f";
     conn->SetHeaders(headers);
     RestClient::Response r = conn->post("/auth/credentials", "{\"username\": \"10769\", \"password\": \"07122007digo\"}");
-    
+
     switch (r.code) {
         case 200:
         {
@@ -38,16 +38,16 @@ ExternalGHSConnection::ExternalGHSConnection(DatabaseAdapter* db) : dbAdapter(db
             conn->AppendHeader("Cookie", "ss-id=" + ssId);
             break;
         }
-        case 401: 
+        case 401:
         {
-            throw std::runtime_error("401 in API"); 
+            throw std::runtime_error("401 in API");
             break;
         }
-        case 404: 
-            throw std::runtime_error("404 in API"); 
+        case 404:
+            throw std::runtime_error("404 in API");
             break;
         default:
-//            throw r.code;
+            //            throw r.code;
             break;
     }
 }
@@ -76,7 +76,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
             throw "No such order " + order;
         }
     }
-    
+
     string data = dbAdapter->fetchOrderByExternalId(order);
     if (data == "") {
         throw "Data of order is empty";
@@ -84,8 +84,8 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     json orderJson = json::parse(dbAdapter->fetchOrderByExternalId(order));
 
     string routeStr = orderJson["deliveryRoute"];
-    od.deliveryRoute = routeStr.substr(6,13);
-    
+    od.deliveryRoute = routeStr.substr(6, 13);
+
     od.extId = orderJson["orderId"];
     string digoIdStr = orderJson["externalOrderId"];
     od.intId = "";
@@ -112,12 +112,11 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     }
     od.intId = intId;
     dbAdapter->updateCurrent(intId);
-cout << 2 << endl;
     od.license = license;
-//    @todo call parsedata
-//    store orderdata into struct + loop over product ids and store in struct as well.
+    //    @todo call parsedata
+    //    store orderdata into struct + loop over product ids and store in struct as well.
     json productJson = orderJson["/items"_json_pointer];
-    
+
     for (auto elem : productJson) {
         string prodId = elem["productId"];
         string prodName = elem["productName"];
@@ -128,7 +127,6 @@ cout << 2 << endl;
         pd->productName = prodName;
         od.products.push_back(pd);
     }
-    cout << 2 << endl;
 
     return od;
 }
@@ -139,7 +137,7 @@ cout << 2 << endl;
  * @return 
  */
 productData ExternalGHSConnection::fetchOrderProduct(string productId) {
-    
+
 }
 
 /**
@@ -166,12 +164,22 @@ bool ExternalGHSConnection::fetchOrders() {
         stringstream orderCall;
         orderCall << "/orders?skip=" << offset << "&take=10";
         RestClient::Response r = conn->get(orderCall.str());
-        json orders = json::parse(r.body);
+        json orders;
+        try {
+            orders = json::parse(r.body);
+        } catch (...) {
+            cout << "parse failed";
+        }
         orders = orders["orders"];
         for (auto it = orders.begin(); it != orders.end(); it++) {
             stringstream orderJ;
             orderJ << *it;
-            json a = json::parse(orderJ.str());
+            json a;
+            try {
+                a = json::parse(orderJ.str());
+            } catch (...) {
+                cout << "parse of orderJ failed";
+            }
             string extId = a["orderId"];
             string intIdStr = a["externalOrderId"];
             stringstream ss(intIdStr);
@@ -185,8 +193,8 @@ bool ExternalGHSConnection::fetchOrders() {
                 }
                 i++;
             }
-            
-//            string intId = 
+
+            //            string intId = 
             auto findOrder = find(orderIds.begin(), orderIds.end(), extId);
             if (findOrder != orderIds.end()) {
                 //the order already exists
