@@ -28,7 +28,6 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
     sql::Statement *stmt;
     sql::ResultSet *res;
     sql::PreparedStatement *pstmt;
-
     stmt = connection->createStatement();
 
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
@@ -61,6 +60,7 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
     }
 
 
+
     pstmt = connection->prepareStatement("INSERT INTO part_allocation(`werkorder`, `product_id`, `amount`, `description`, `sorted`, `external_id`) VALUES (?,?,?,?,?,?)");
 
     for (auto it = werkorder.products.begin(); it != werkorder.products.end(); it++) {
@@ -82,7 +82,7 @@ int DatabaseAdapter::addOrder(int index, orderData werkorder, int modId) {
             cout << "Something went wrong here." << endl << "File: " << __FILE__ << endl << "Function: " << __FUNCTION__ << endl << "Line: " << __LINE__ << endl;
         }
     }
-    delete res, stmt, pstmt, mysql_conn;
+    delete res, stmt, pstmt;
     return index;
 }
 
@@ -181,6 +181,7 @@ string DatabaseAdapter::fetchOrderByExternalId(string id) {
     while (res->next()) {
         string data = res->getString("data");
         delete res, stmt;
+	return data;
     }
     delete res, stmt;
     return "";
@@ -269,7 +270,7 @@ orderData DatabaseAdapter::getOrderData(string order) {
         delete resOrderInfo, resOrderIndexing, stmt;
         throw "Did not find the order " + order;
     }
-    execQueryOnly("UPDATE system_status set werkorder=0 where placeholder=0");
+    execQueryOnly("UPDATE system_status set orderid='0' where placeholder=0");
 
     while (resOrderIndexing->next()) {
         index = resOrderIndexing->getInt("index");
@@ -336,5 +337,4 @@ void DatabaseAdapter::updateCurrent(string order) {
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
     string escapedInternal = mysql_conn->escapeString(order);
     execQueryOnly("Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
-    delete mysql_conn;
 }

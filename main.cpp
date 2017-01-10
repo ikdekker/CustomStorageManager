@@ -30,8 +30,13 @@ int main(int argc, char** argv) {
     StorageManagement *s = new StorageManagement();
     MatrixControl *a = new MatrixControl(s->getServer());
     s->setMatrix(a);
-    
-    s->run();
+//DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
+  //  ExternalGHSConnection *a = new ExternalGHSConnection(db);
+//orderData od = a->fetchOrderData("0201295293");
+
+  //         int     index = db->addOrder(0, od, 0);
+
+ s->run();
     return 0;
 }
 

@@ -94,24 +94,10 @@ void StorageManagement::setMatrix(MatrixControl* mControl) {
 void StorageManagement::run() {
     scanReader->start();
     string lastCode;
-    int change = 1;
+    int change;
+    time_t ledStart;
+    bool noReset = false;
     while (1) {
-        string printOrder = dbAdapter->doPrint();
-        bool busy = dbAdapter->getBusy();
-        if (!busy) {
-            matrix->reset();
-        }
-        if (printOrder != "0") {
-	    try {
-cout << "print" << printOrder << endl;
-            orderData od = dbAdapter->getOrderData(printOrder);
-            if (od.license != "0") {
-                labelDriver->printLabel(od.license);
-            }
-	    } catch (string a) {
-		cout << a;
-	    }
-        }
         if (scanReader->isRunning() && scanReader->hasRead()) {
             lastCode = scanReader->getLastRead();
             //cout << lastCode << endl;
@@ -134,14 +120,16 @@ cout << "print" << printOrder << endl;
                     index = od.index;
                     modId = od.module;
 		    ext = true;
+	  	    noReset = true;
+		    ledStart = (int)time(NULL);
                 } catch (string a) {
                     //no order
                 }
             }
-
             matrix->reset();
-	    if (ext)
+	    if (ext) {
               matrix->ledOn(index, modId);
+	    }
             change = 1;
 
             //				cout << index << endl;
@@ -156,6 +144,24 @@ cout << "print" << printOrder << endl;
             matrix->update();
 //            change = 0;
 //        }
+        bool busy = dbAdapter->getBusy();
+        if ((!busy && !noReset) || difftime(time(NULL),ledStart) >= 30) {
+            matrix->reset();
+	    noReset = false;
+        }
 
-    }
+        string printOrder = dbAdapter->doPrint();
+        if (printOrder != "0") {
+	    try {
+		cout << "print" << printOrder << endl;
+                orderData od = dbAdapter->getOrderData(printOrder);
+                if (od.license != "0") {
+                    labelDriver->printLabel(od.license);
+                }
+	    } catch (string a) {
+		cout << a;
+	    }
+        }
+
+   }
 }

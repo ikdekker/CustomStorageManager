@@ -112,6 +112,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     }
     od.intId = intId;
     dbAdapter->updateCurrent(intId);
+cout << 2 << endl;
     od.license = license;
 //    @todo call parsedata
 //    store orderdata into struct + loop over product ids and store in struct as well.
@@ -127,7 +128,8 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
         pd->productName = prodName;
         od.products.push_back(pd);
     }
-    
+    cout << 2 << endl;
+
     return od;
 }
 
