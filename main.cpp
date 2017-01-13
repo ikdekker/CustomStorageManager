@@ -35,7 +35,6 @@ int main(int argc, char** argv) {
 //orderData od = a->fetchOrderData("0201295293");
 
   //         int     index = db->addOrder(0, od, 0);
-
  s->run();
     return 0;
 }

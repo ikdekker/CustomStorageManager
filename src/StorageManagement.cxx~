@@ -15,7 +15,7 @@ StorageManagement::StorageManagement() {
     //        dbAdapter = new DatabaseAdapter("digo_parts_db", "root", "digo_secret");
     ConfigFactory config;
     modules = new ModuleServer();
-    scanReader = new ScannerReader();
+        scanReader = new ScannerReader();
     json j = config.getModuleJson();
 
     for (auto it = j.begin(); it != j.end(); ++it) {
@@ -94,88 +94,83 @@ void StorageManagement::setMatrix(MatrixControl* mControl) {
 void StorageManagement::run() {
     scanReader->start();
     string lastCode;
-    int change, count = 0;
+    int change, printCount = 0;
     time_t ledStart;
-    bool noReset = false, timerActive = false;
-    time_t now = (int)time(NULL);
+    bool noReset = false;
     while (1) {
-        //    cout << (scanReader->isRunning() && scanReader->hasRead());
+	printCount++;
         if (scanReader->isRunning() && scanReader->hasRead()) {
             lastCode = scanReader->getLastRead();
-            cout << lastCode << endl;
+            //cout << lastCode << endl;
             //todo test for external connection result
             int modId = 0;
             int ext = true;
             int index = -1;
             try {
                 orderData od = externalConnection->fetchOrderData(lastCode);
+cout << od.intId << "int";
+cout << od.extId << "ext";
                 index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
-                cout << od.intId<<endl;
+cout << index << "index";
             } catch (string a) {
                 //no order
-                cout << a;
+		cout << a;
                 ext = false;
-            }
+            } catch (...) {
+		cout << "Something went wrong getting the order";
+	    }
 
             if (!ext) {
                 try {
                     orderData od = dbAdapter->getOrderData(lastCode);
                     index = od.index;
                     modId = od.module;
-                    ext = true;
-                    noReset = true;
-                    ledStart = (int) time(NULL);
-		    timerActive = true;
+		    ext = true;
+	  	    noReset = true;
+		    ledStart = (int)time(NULL);
                 } catch (string a) {
                     //no order
                 }
             }
             matrix->reset();
-            if (ext) {
-                matrix->ledOn(index, modId);
-                change = 1;
-            }
+	    if (ext) {
+              matrix->ledOn(index, modId);
+	    }
+            change = 1;
 
             //				cout << index << endl;
         }
-        //        time_t seconds;
-        //        seconds = (int) (time(NULL));
-        //        bool blinker = !!(seconds % 2);
-        //        if (change || blinker != matrix->getBlink()) {
-        //            //  if (seconds % 2 == 0) {
-        //            matrix->setBlink(blinker);
-        //            //}
-        if (change) {
+//        time_t seconds;
+//        seconds = (int) (time(NULL));
+//        bool blinker = !!(seconds % 2);
+//        if (change || blinker != matrix->getBlink()) {
+//            //  if (seconds % 2 == 0) {
+//            matrix->setBlink(blinker);
+//            //}
+if (change) {
             matrix->update();
             change = 0;
         }
-//        cout << now % 5;
-        
-        now = (int)time(NULL);
+        bool busy = dbAdapter->getBusy();
+        if ((!busy && !noReset) || difftime(time(NULL),ledStart) >= 30) {
+            matrix->reset();
+	    noReset = false;
+        }
 
-        if (now % 5 != count) {
-            bool busy = dbAdapter->getBusy();
-            if ((!busy && !noReset) || (difftime(time(NULL), ledStart) >= 30 && timerActive)) {
-                matrix->reset();
-		noReset = false;
-	 	change = 1;
-		timerActive = false;
-            }
-
-            string printOrder = dbAdapter->doPrint();
-            if (printOrder != "0") {
-                try {
-                    cout << "print" << printOrder << endl;
-                    orderData od = dbAdapter->getOrderData(printOrder);
-                    if (od.license != "0") {
-                        labelDriver->printLabel(od.license);
-                    }
-                } catch (string a) {
-                    cout << a;
+       if (printCount > 1000) {
+        string printOrder = dbAdapter->doPrint();
+        if (printOrder != "0") {
+	    try {
+		cout << "print" << printOrder << endl;
+                orderData od = dbAdapter->getOrderData(printOrder);
+                if (od.license != "0") {
+                    labelDriver->printLabel(od.license);
                 }
-            }
-            count = now % 5;
-        } 
-        
-    }
+	    } catch (string a) {
+		cout << a;
+	    }
+        }
+       }
+
+   }
 }

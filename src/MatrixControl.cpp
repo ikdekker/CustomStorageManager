@@ -116,7 +116,7 @@ void MatrixControl::runThrough(int modId) {
             for (int j = 0; j < mEnt->getCols(); j++) {
 		reset();
                 (*moduleIterator)->reg2 = j;
-		delay(200);
+		delay(220);
 		update();
             }
         }
