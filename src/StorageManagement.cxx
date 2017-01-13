@@ -97,7 +97,7 @@ void StorageManagement::run() {
     int change, count = 0;
     time_t ledStart;
     bool noReset = false, timerActive = false;
-    time_t now = (int)time(NULL);
+    time_t now = (int) time(NULL);
     while (1) {
         //    cout << (scanReader->isRunning() && scanReader->hasRead());
         if (scanReader->isRunning() && scanReader->hasRead()) {
@@ -108,26 +108,26 @@ void StorageManagement::run() {
             int ext = true;
             int index = -1;
             try {
-                orderData od = externalConnection->fetchOrderData(lastCode);
-                index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
-                cout << od.intId<<endl;
+                orderData od = dbAdapter->getOrderData(lastCode);
+                index = od.index;
+                modId = od.module;
+                ext = true;
+                noReset = true;
+                ledStart = (int) time(NULL);
+                timerActive = true;
             } catch (string a) {
                 //no order
-                cout << a;
-                ext = false;
             }
 
             if (!ext) {
                 try {
-                    orderData od = dbAdapter->getOrderData(lastCode);
-                    index = od.index;
-                    modId = od.module;
-                    ext = true;
-                    noReset = true;
-                    ledStart = (int) time(NULL);
-		    timerActive = true;
+                    orderData od = externalConnection->fetchOrderData(lastCode);
+                    index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
+                    cout << od.intId << endl;
                 } catch (string a) {
                     //no order
+                    cout << a;
+                    ext = false;
                 }
             }
             matrix->reset();
@@ -149,17 +149,17 @@ void StorageManagement::run() {
             matrix->update();
             change = 0;
         }
-//        cout << now % 5;
-        
-        now = (int)time(NULL);
+        //        cout << now % 5;
 
-        if (now % 5 != count) {
+        now = (int) time(NULL);
+
+        if (now != count) {
             bool busy = dbAdapter->getBusy();
             if ((!busy && !noReset) || (difftime(time(NULL), ledStart) >= 30 && timerActive)) {
                 matrix->reset();
-		noReset = false;
-	 	change = 1;
-		timerActive = false;
+                noReset = false;
+                change = 1;
+                timerActive = false;
             }
 
             string printOrder = dbAdapter->doPrint();
@@ -174,8 +174,8 @@ void StorageManagement::run() {
                     cout << a;
                 }
             }
-            count = now % 5;
-        } 
-        
+            count = now;
+        }
+
     }
 }
