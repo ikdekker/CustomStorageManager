@@ -285,8 +285,9 @@ orderData DatabaseAdapter::getOrderData(string order) {
         delete resOrderInfo, resOrderIndexing, stmt;
         throw "Did not find the order " + order;
     }
-    execUpdateOnly("UPDATE system_status set orderid='0' where placeholder=0");
-
+    
+    updateCurrent("digo" + escapedInternal);
+    
     while (resOrderIndexing->next()) {
         index = resOrderIndexing->getInt("index");
         module = resOrderIndexing->getInt("module_id");
