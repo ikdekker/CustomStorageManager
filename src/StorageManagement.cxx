@@ -105,29 +105,30 @@ void StorageManagement::run() {
             cout << lastCode << endl;
             //todo test for external connection result
             int modId = 0;
-            int ext = true;
+	    bool ext = true;
             int index = -1;
             try {
                 orderData od = dbAdapter->getOrderData(lastCode);
                 index = od.index;
                 modId = od.module;
-                ext = true;
                 noReset = true;
                 ledStart = (int) time(NULL);
                 timerActive = true;
             } catch (string a) {
-                //no order
-            }
+                //no order                    ext = false;
+                    ext = false;
+		cout << a;
+           }
 
             if (!ext) {
                 try {
                     orderData od = externalConnection->fetchOrderData(lastCode);
                     index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
                     cout << od.intId << endl;
+	 	    ext= true;
                 } catch (string a) {
                     //no order
                     cout << a;
-                    ext = false;
                 }
             }
             matrix->reset();
