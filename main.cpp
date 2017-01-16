@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     //normal routine
     StorageManagement *s = new StorageManagement();
     MatrixControl *a = new MatrixControl(s->getServer());
-    s->setMatrix(a); ////DatabaseAdapter *db = new 
+    s->setMatrix(a);
     s->run();
 
     return 0;
