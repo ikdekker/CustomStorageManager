@@ -160,7 +160,10 @@ void StorageManagement::run() {
                 matrix->reset();
                 noReset = false;
                 change = 1;
-                timerActive = false;
+		if (timerActive) {
+		    dbAdapter->updateCurrent("0");
+                    timerActive = false;
+		}
             }
 
             string printOrder = dbAdapter->doPrint();

@@ -29,22 +29,10 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     //normal routine
-//    StorageManagement *s = new StorageManagement();
-//    MatrixControl *a = new MatrixControl(s->getServer());
-//    s->setMatrix(a);
-////DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
-//  //  ExternalGHSConnection *a = new ExternalGHSConnection(db);
-////orderData od = a->fetchOrderData("0201295293");
-//
-//  //         int     index = db->addOrder(0, od, 0);
-// s->run();
-    
-       string idSkips[] = {"MILIEU"};
-    string *end = idSkips + sizeof(idSkips) / sizeof(idSkips[0]);
-        string prodId = "MILIEaU";
-        if (std::find(idSkips, end,prodId) != end) {
-            cout << 1;
-        }
+    StorageManagement *s = new StorageManagement();
+    MatrixControl *a = new MatrixControl(s->getServer());
+    s->setMatrix(a); ////DatabaseAdapter *db = new 
+    s->run();
 
     return 0;
 }
