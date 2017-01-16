@@ -220,6 +220,6 @@ string ExternalGHSConnection::trim(string str) {
     if (first == string::npos)
         return "";
     size_t last = str.find_last_not_of(' ');
-    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    
     return str.substr(first, (last-first+1));
 }
