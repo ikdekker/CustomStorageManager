@@ -118,11 +118,9 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     //    @todo call parsedata
     //    store orderdata into struct + loop over product ids and store in struct as well.
     json productJson = orderJson["/items"_json_pointer];
-    string idSkips[] = {"MILIEU"};
-    string *end = idSkips + sizeof(idSkips) / sizeof(idSkips[0]);
     for (auto elem : productJson) {
         string prodId = elem["productId"];
-        if (std::find(idSkips, end, trim(prodId)) != end) {
+        if (std::find(idSkips.begin(), idSkips.end(), trim(prodId)) != idSkips.end()) {
             continue;
         }
         string prodName = elem["productName"];
@@ -222,4 +220,8 @@ string ExternalGHSConnection::trim(string str) {
     size_t last = str.find_last_not_of(' ');
     
     return str.substr(first, (last-first+1));
+}
+
+void ExternalGHSConnection::addSkipEntry(string entry) {
+    idSkips.push_back(entry);
 }

@@ -24,7 +24,11 @@ StorageManagement::StorageManagement() {
     }
     DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
     dbAdapter = db;
-    externalConnection = new ExternalGHSConnection(db);
+    ExternalGHSConnection *extGHS = new ExternalGHSConnection(db);
+    vector<string> skips = config.getSkips();
+    extGHS->setSkips(skips);
+    externalConnection = extGHS;
+
     //    cout <<	modules->getModuleById(0)->getRows();
     labelDriver = new LabelDriver();
 }
@@ -105,7 +109,7 @@ void StorageManagement::run() {
             cout << lastCode << endl;
             //todo test for external connection result
             int modId = 0;
-	    bool ext = true;
+            bool ext = true;
             int index = -1;
             try {
                 orderData od = dbAdapter->getOrderData(lastCode);
@@ -116,16 +120,16 @@ void StorageManagement::run() {
                 timerActive = true;
             } catch (string a) {
                 //no order                    ext = false;
-                    ext = false;
-		cout << a;
-           }
+                ext = false;
+                cout << a;
+            }
 
             if (!ext) {
                 try {
                     orderData od = externalConnection->fetchOrderData(lastCode);
                     index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
                     cout << od.intId << endl;
-	 	    ext= true;
+                    ext = true;
                 } catch (string a) {
                     //no order
                     cout << a;
@@ -160,10 +164,10 @@ void StorageManagement::run() {
                 matrix->reset();
                 noReset = false;
                 change = 1;
-		if (timerActive) {
-		    dbAdapter->updateCurrent("0");
+                if (timerActive) {
+                    dbAdapter->updateCurrent("0");
                     timerActive = false;
-		}
+                }
             }
 
             string printOrder = dbAdapter->doPrint();

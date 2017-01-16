@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <vector>
- 
+
 /**
  * Reads module config file in config folder.
  * @return json The moduledata from the file as a json object
@@ -11,14 +11,14 @@ json ConfigFactory::getModuleJson() {
     ifstream f("config/modules.json");
     json moduleJson;
     try {
-        moduleJson << f;
+        configJson << f;
     } catch (const exception& ex) {
         // specific handling for all exceptions extending std::exception
         cerr << "Error occurred: " << ex.what() << endl;
     }
-//    cout << moduleJson;
+    //    cout << moduleJson;
 
-    return moduleJson;
+    return configJson["modules"];
 }
 
 /**
@@ -84,4 +84,17 @@ moduleData* ConfigFactory::parseModuleJson(json j) {
     //	cout << "returning2 " << modData->id;
 
     return modData;
+}
+
+vector<string> ConfigFactory::getSkips() {
+    vector<string> skips;
+    string s = configJson["skips"];
+    std::istringstream ss(s);
+    std::string token;
+
+    while(std::getline(ss, token, ',')) {
+        skips.push_back(token);
+    }
+
+    return skips;
 }

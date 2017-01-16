@@ -2,7 +2,7 @@
 #include "ModuleEntity.h"
 #include <fstream>
 #include <cstdio>
-
+#include <string>
 
 using namespace std;
 using json = nlohmann::json;
@@ -22,6 +22,7 @@ public:
 	json getModuleJson();
 	ModuleEntity* getModule(json);
 	moduleData* parseModuleJson(json);
+	vector<string> getSkips();
 private:
 	json configJson;
 };

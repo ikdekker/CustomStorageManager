@@ -29,7 +29,10 @@ public:
     productData fetchOrderProduct(string productId) override;
     orderData parseData(json j) override;
     bool fetchOrders();
+    void addSkipEntry(string);
+    void setSkips(vector<string> sVect) {idSkips = sVect;};
 private:
+    vector<string> idSkips;
     RestClient::Connection *conn;
     DatabaseAdapter *dbAdapter;
     string trim(string str);
