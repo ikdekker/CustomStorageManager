@@ -118,9 +118,13 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     //    @todo call parsedata
     //    store orderdata into struct + loop over product ids and store in struct as well.
     json productJson = orderJson["/items"_json_pointer];
-
+    string idSkips[] = {"MILIEU"};
+    string *end = idSkips + sizeof(idSkips) / sizeof(idSkips[0]);
     for (auto elem : productJson) {
         string prodId = elem["productId"];
+        if (std::find(idSkips, end,prodId) != end) {
+            continue;
+        }
         string prodName = elem["productName"];
         int prodQuant = elem["quantity"];
         productData *pd = new productData;
