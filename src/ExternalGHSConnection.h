@@ -32,6 +32,7 @@ public:
 private:
     RestClient::Connection *conn;
     DatabaseAdapter *dbAdapter;
+    string trim(string str);
 };
 
 #endif /* EXTERNALGHSCONNECTION_H */

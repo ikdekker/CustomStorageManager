@@ -122,7 +122,7 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
     string *end = idSkips + sizeof(idSkips) / sizeof(idSkips[0]);
     for (auto elem : productJson) {
         string prodId = elem["productId"];
-        if (std::find(idSkips, end,prodId) != end) {
+        if (std::find(idSkips, end, trim(prodId)) != end) {
             continue;
         }
         string prodName = elem["productName"];
@@ -213,4 +213,13 @@ bool ExternalGHSConnection::fetchOrders() {
         newOrder = true;
     }
     return newOrder;
+}
+
+string ExternalGHSConnection::trim(string str) {
+    size_t first = str.find_first_not_of(' ');
+    if (first == string::npos)
+        return "";
+    size_t last = str.find_last_not_of(' ');
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    return str.substr(first, (last-first+1));
 }
