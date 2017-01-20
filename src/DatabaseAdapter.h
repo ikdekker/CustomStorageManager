@@ -59,7 +59,7 @@ public:
 	string fetchOrderByInternalId(string id);
 	void addExternalOrder(string extId, string intId, string data);
 	vector<string> fetchOrders(string column);
-        orderData getOrderData(string order, bool updateDb);
+        orderData getOrderData(string order, int updateDb);
         void execQueryOnly(string query);
         void execUpdateOnly(string query);
         void updateCurrent(string order);

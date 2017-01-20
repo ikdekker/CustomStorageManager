@@ -112,7 +112,7 @@ void StorageManagement::run() {
             bool ext = true;
             int index = -1;
             try {
-                orderData od = dbAdapter->getOrderData(lastCode, 0);
+                orderData od = dbAdapter->getOrderData(lastCode, 1);
                 index = od.index;
                 modId = od.module;
                 noReset = true;
