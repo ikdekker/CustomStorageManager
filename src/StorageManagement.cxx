@@ -112,7 +112,7 @@ void StorageManagement::run() {
             bool ext = true;
             int index = -1;
             try {
-                orderData od = dbAdapter->getOrderData(lastCode);
+                orderData od = dbAdapter->getOrderData(lastCode, 0);
                 index = od.index;
                 modId = od.module;
                 noReset = true;
@@ -174,7 +174,7 @@ void StorageManagement::run() {
             if (printOrder != "0") {
                 try {
                     cout << "print" << printOrder << endl;
-                    orderData od = dbAdapter->getOrderData(printOrder);
+                    orderData od = dbAdapter->getOrderData(printOrder, 0);
                     if (od.license != "0") {
                         labelDriver->printLabel(od.license);
                     }

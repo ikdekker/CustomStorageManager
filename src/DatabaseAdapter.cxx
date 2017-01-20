@@ -267,7 +267,7 @@ void DatabaseAdapter::addExternalOrder(string extId, string intId, string data) 
  * @param order
  * @return orderData Struct with the index, module and order id as data
  */
-orderData DatabaseAdapter::getOrderData(string order) {
+orderData DatabaseAdapter::getOrderData(string order, bool updateDb) {
     sql::Statement *stmt;
     sql::ResultSet *resOrderIndexing;
     sql::ResultSet *resOrderInfo;
@@ -285,8 +285,8 @@ orderData DatabaseAdapter::getOrderData(string order) {
         delete resOrderInfo, resOrderIndexing, stmt;
         throw "Did not find the order " + order;
     }
-    
-    updateCurrent("digo" + escapedInternal);
+    if (updateDb)
+        updateCurrent("digo" + escapedInternal);
     
     while (resOrderIndexing->next()) {
         index = resOrderIndexing->getInt("index");
