@@ -10,7 +10,8 @@ nbproject/
 
 #me specific
 lib/
-
+update.log
+update.bash
 
 =======
 #nbproject/
