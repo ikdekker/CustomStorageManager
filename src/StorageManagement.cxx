@@ -28,7 +28,9 @@ StorageManagement::StorageManagement() {
     vector<string> skips = config.getSkips();
     extGHS->setSkips(skips);
     externalConnection = extGHS;
-
+    try {
+        externalConnection->fetchOrderData("1");
+    } catch (string a) {}
     //    cout <<	modules->getModuleById(0)->getRows();
     labelDriver = new LabelDriver();
 }
