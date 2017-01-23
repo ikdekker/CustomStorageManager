@@ -55,7 +55,7 @@ int StorageManagement::findFreeSpot(int modId) {
         }
 
     }
-    return 1;
+    return -1;
 }
 
 void StorageManagement::setModuleServer(ModuleServer* mServer) {
@@ -127,7 +127,11 @@ void StorageManagement::run() {
             if (!ext) {
                 try {
                     orderData od = externalConnection->fetchOrderData(lastCode);
-                    index = dbAdapter->addOrder(findFreeSpot(modId), od, modId);
+                    int newIndex = findFreeSpot(modId);
+                    if (newIndex == -1) {
+                        throw "no spots left";
+                    }
+                    index = dbAdapter->addOrder(newIndex, od, modId);
                     cout << od.intId << endl;
                     ext = true;
                 } catch (string a) {
