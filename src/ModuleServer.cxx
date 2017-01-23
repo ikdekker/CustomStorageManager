@@ -2,6 +2,7 @@
 #include <iostream>
 void ModuleServer::addModule(ModuleEntity* module) {
         modules.push_back(module);
+        moduleAmount++;
 }
 
 ModuleEntity* ModuleServer::getModuleById(int id) {

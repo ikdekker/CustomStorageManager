@@ -127,7 +127,17 @@ void StorageManagement::run() {
             if (!ext) {
                 try {
                     orderData od = externalConnection->fetchOrderData(lastCode);
-                    int newIndex = findFreeSpot(modId);
+                    int modAmount = modules->getModuleAmount();
+                    int curMod = 0;
+                    int newIndex;
+                    while (curMod < modAmount) {
+                        newIndex = findFreeSpot(curMod);
+                        if (newIndex != -1) {
+                            modId = curMod;
+                            break;
+                        }
+                        curMod++;
+                    }
                     if (newIndex == -1) {
                         throw "no spots left";
                     }

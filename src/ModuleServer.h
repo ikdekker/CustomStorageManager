@@ -7,14 +7,16 @@
 
 class ModuleServer {
 public:
-//        ModuleServer();
+        ModuleServer() { int moduleAmount = 0; };
 	void addModule(ModuleEntity*);
 	bool removeModuleById(int);
 	ModuleEntity* getModuleById(int);
         virtual ~ModuleServer();
         std::list<ModuleEntity*> getModules() {return modules;};
+        int getModuleAmount() {return moduleAmount;};
 private:
 	void removeModule();
+        int moduleAmount;
 	std::list<ModuleEntity*> modules;
 };
 
