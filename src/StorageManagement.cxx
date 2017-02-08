@@ -12,7 +12,6 @@ using json = nlohmann::json;
 
 StorageManagement::StorageManagement() {
     //@todo: change into digo_user
-    //        dbAdapter = new DatabaseAdapter("digo_parts_db", "root", "digo_secret");
     ConfigFactory config;
     modules = new ModuleServer();
     scanReader = new ScannerReader();

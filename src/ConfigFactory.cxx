@@ -38,10 +38,7 @@ apiCredentials ConfigFactory::getAPIConfig() {
 }
 
 json ConfigFactory::getCredentialsJson() {
-    if (credentialsJson != "") {
-        return credentialsJson;
-    }
-    ifstream f("config/modules.json");
+    ifstream f("config/config.json");
     credentialsJson << f;
     return credentialsJson;
 }
