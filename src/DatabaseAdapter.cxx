@@ -357,6 +357,12 @@ void DatabaseAdapter::updateCurrent(string order) {
     execUpdateOnly("Update system_status set orderid='" + escapedInternal + "' where placeholder=0");
 }
 
+void DatabaseAdapter::updatePrint(string order) {
+    sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
+    string escapedInternal = mysql_conn->escapeString(order);
+    execUpdateOnly("Update system_status set working='" + escapedInternal + "' where placeholder=0");
+}
+
 void DatabaseAdapter::updateMessage(string message) {
     sql::mysql::MySQL_Connection * mysql_conn = dynamic_cast<sql::mysql::MySQL_Connection*> (connection);
     string escapedInternal = mysql_conn->escapeString(message);

@@ -23,7 +23,7 @@ using json = nlohmann::json;
 
 class ExternalGHSConnection : public ExternalConnector {
 public:
-    ExternalGHSConnection(DatabaseAdapter *db);
+    ExternalGHSConnection(DatabaseAdapter *db, string endpoint, string user, string pass, string key);
     virtual ~ExternalGHSConnection();
     orderData fetchOrderData(string order) override;
     productData fetchOrderProduct(string productId) override;

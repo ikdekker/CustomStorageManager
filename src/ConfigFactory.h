@@ -17,14 +17,31 @@ struct moduleData {
 	std::vector<int> disabled; 
 };
 
+struct apiCredentials {
+	string endpoint;
+	string username;
+	string password;
+	string key;
+};
+
+struct dbCredentials {
+	string db;
+	string name;
+	string pass;
+};
+
 class ConfigFactory {
 public:
 	json getModuleJson();
+	json getCredentialsJson();
+	apiCredentials getAPIConfig();
+	dbCredentials getDbConfig();
 	ModuleEntity* getModule(json);
 	moduleData* parseModuleJson(json);
 	vector<string> getSkips();
 private:
 	json configJson;
+	json credentialsJson;
 };
 
 #endif

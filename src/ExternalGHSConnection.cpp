@@ -19,15 +19,16 @@
  * retrieve a session id which will be used in all further calls.
  * @param db DatabaseAdapter* pointer to the DatabaseAdapter to make db calls with
  */
-ExternalGHSConnection::ExternalGHSConnection(DatabaseAdapter* db) : dbAdapter(db) {
+ExternalGHSConnection::ExternalGHSConnection(DatabaseAdapter* db, string endpoint, string user, string pass, string key) : dbAdapter(db) {
     //establish connection with ghs site
-    conn = new RestClient::Connection("https://api2.ghs-automotive.nl/api");
+    conn = new RestClient::Connection(endpoint);
     RestClient::HeaderFields headers;
     headers["Accept"] = "application/json";
     headers["Content-Type"] = "application/json";
-    headers["X-ApiKey"] = "f8408869-4c8e-49dc-8dda-fcf5332d9a7f";
+    headers["X-ApiKey"] = key;
     conn->SetHeaders(headers);
-    RestClient::Response r = conn->post("/auth/credentials", "{\"username\": \"10769\", \"password\": \"07122007digo\"}");
+cout << key;
+    RestClient::Response r = conn->post("/auth/credentials", "{\"username\": \"" + user + "\", \"password\": \"" + pass + "\"}");
 
     switch (r.code) {
         case 200:
@@ -105,14 +106,17 @@ orderData ExternalGHSConnection::fetchOrderData(string order) {
         if (i == 1) {
             //probably a workorder id here
             intId = cur.substr(3);
+	    od.ref = intId;
         }
         i++;
     }
+    od.intId = intId;
     if (i == 1) {
         //probably not a license plate in the intid, what to do?
-        od.license = "";
+	dbAdapter->updateMessage("De referentie is niet goed ingevuld. Er wordt geen bak toegewezen en er wordt een sticker met referentie geprint");
+	dbAdapter->updatePrint(od.ref);
+	od.intId = od.ref;
     }
-    od.intId = intId;
     dbAdapter->updateCurrent(intId);
     od.license = license;
     //    @todo call parsedata

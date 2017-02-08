@@ -1,0 +1,13 @@
+{
+    "ghs": {
+	"endpoint": "https://api2.ghs-automotive.nl/api",
+	"username": "",
+	"password": "",
+	"key": ""
+    },
+    "internal_db": {
+	"database": "",
+	"username": "",
+	"password": ""
+    }
+}

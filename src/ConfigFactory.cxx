@@ -21,6 +21,31 @@ json ConfigFactory::getModuleJson() {
     return configJson["modules"];
 }
 
+dbCredentials ConfigFactory::getDbConfig() {
+    json credJson = getCredentialsJson();
+    dbCredentials dbc;
+    return dbc;
+}
+
+apiCredentials ConfigFactory::getAPIConfig() {
+    json credJson = getCredentialsJson();
+    apiCredentials apic;
+    apic.endpoint = credJson["ghs"]["endpoint"];
+    apic.username = credJson["ghs"]["username"];
+    apic.password = credJson["ghs"]["password"];
+    apic.key = credJson["ghs"]["key"];
+    return apic;
+}
+
+json ConfigFactory::getCredentialsJson() {
+    if (credentialsJson != "") {
+        return credentialsJson;
+    }
+    ifstream f("config/modules.json");
+    credentialsJson << f;
+    return credentialsJson;
+}
+
 /**
  * @param j Data with id, columns, rows and disabled rows
  * @return ModuleEntity* Pointer to the parsed module data object

@@ -13,6 +13,7 @@ lib/
 update.log
 update.bash
 config/*.json
+*.log
 =======
 #nbproject/
 >>>>>>> db-nb

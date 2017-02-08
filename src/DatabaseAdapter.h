@@ -63,6 +63,7 @@ public:
         void execQueryOnly(string query);
         void execUpdateOnly(string query);
         void updateCurrent(string order);
+        void updatePrint(string order);
         void updateMessage(string message);
         sql::ResultSet* exec(sql::Statement*, string query);
         void execPrepStmtOnly(sql::PreparedStatement*);

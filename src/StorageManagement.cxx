@@ -24,7 +24,8 @@ StorageManagement::StorageManagement() {
     }
     DatabaseAdapter *db = new DatabaseAdapter("digo_parts_db", "digo_user", "such_secret_many_wow");
     dbAdapter = db;
-    ExternalGHSConnection *extGHS = new ExternalGHSConnection(db);
+    apiCredentials apiCred = config.getAPIConfig();
+    ExternalGHSConnection *extGHS = new ExternalGHSConnection(db, apiCred.endpoint, apiCred.username, apiCred.password, apiCred.key);
     vector<string> skips = config.getSkips();
     extGHS->setSkips(skips);
     externalConnection = extGHS;
@@ -192,9 +193,11 @@ void StorageManagement::run() {
                 try {
                     cout << "print" << printOrder << endl;
                     orderData od = dbAdapter->getOrderData(printOrder, 0);
-                    if (od.license != "0") {
+                    if (od.license != "0" && od.license != "" && od.intId != od.ref && od.intId != "") {
                         labelDriver->printLabel(od.license);
-                    }
+                    } else {
+                        labelDriver->printLabel(od.ref);
+		    }
                 } catch (string a) {
                     cout << a;
                 }
