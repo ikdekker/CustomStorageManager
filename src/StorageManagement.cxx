@@ -141,7 +141,8 @@ void StorageManagement::run() {
                         curMod++;
                     }
                     if (newIndex == -1) {
-                        throw "no spots left";
+                        dbAdapter->updateMessage("Geen plekken meer over in de stelling.");
+                        continue;
                     }
                     index = dbAdapter->addOrder(newIndex, od, modId);
                     cout << od.intId << endl;
