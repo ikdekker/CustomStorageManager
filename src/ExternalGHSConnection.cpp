@@ -203,7 +203,7 @@ bool ExternalGHSConnection::fetchOrders() {
             if (findOrder != orderIds.end()) {
                 //the order already exists
                 exists = 1;
-                break;
+                continue;
             }
             dbAdapter->addExternalOrder(extId, intId, orderJ.str());
         }
