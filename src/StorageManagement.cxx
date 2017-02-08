@@ -42,10 +42,10 @@ void StorageManagement::setDbAdapter(DatabaseAdapter* db) {
 int StorageManagement::findFreeSpot(int modId) {
     vector<int> res = dbAdapter->getEntriesByModule(modId);
     ModuleEntity *mod = modules->getModuleById(modId);
-
+    if (mod == nullptr) return -1;
     int nextSpot = 0;
     int spotTotal = mod->getCols() * mod->getRows();
-    spotTotal--;
+    
     for (; nextSpot < spotTotal; nextSpot++) {
         //check if spot has been taken, if so skip.
         if (std::find(res.begin(), res.end(), nextSpot) != res.end())
